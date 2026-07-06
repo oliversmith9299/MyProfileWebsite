@@ -53,6 +53,13 @@ class Settings(BaseSettings):
         """Normalize managed-Postgres URLs (Railway/Heroku give postgres[ql]://)
         to SQLAlchemy's psycopg3 driver scheme."""
         url = self.database_url
+        if not url.strip():
+            raise RuntimeError(
+                "DATABASE_URL is empty. On Railway this usually means the "
+                "${{Postgres.DATABASE_URL}} reference didn't resolve — the service "
+                "name inside ${{...}} must match your actual Postgres service. "
+                "Use the autocomplete in the Variables editor instead of typing it."
+            )
         if url.startswith("postgres://"):
             return url.replace("postgres://", "postgresql+psycopg://", 1)
         if url.startswith("postgresql://"):
