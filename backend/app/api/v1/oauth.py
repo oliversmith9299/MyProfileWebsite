@@ -30,7 +30,9 @@ GITHUB_EMAILS = "https://api.github.com/user/emails"
 
 
 def _callback_url(provider: str) -> str:
-    return f"{settings.site_url}/api/oauth/{provider}/callback"
+    # Combined deploy: API shares the site domain. Split deploy: set PUBLIC_API_URL.
+    base = (settings.public_api_url or settings.site_url).rstrip("/")
+    return f"{base}/api/v1/auth/oauth/{provider}/callback"
 
 
 def _issue_state() -> str:

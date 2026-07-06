@@ -38,6 +38,9 @@ class Settings(BaseSettings):
 
     cors_origins: str = "http://localhost:3000"
     site_url: str = "http://localhost:3000"
+    # Public base URL of the API when it lives on a different domain than the site
+    # (split deploys). Empty => same domain as site_url (combined deploys).
+    public_api_url: str = ""
 
     chat_rate_limit_per_minute: int = 20
 

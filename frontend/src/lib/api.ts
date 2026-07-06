@@ -1,6 +1,8 @@
 /** Thin client for the FastAPI backend. All calls degrade gracefully if the API is down. */
 
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+// Empty string (combined single-service deploy) => same-origin /api/v1 calls.
+// Undefined (local dev without env) => the local FastAPI default.
+export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 export function visitorId(): string {
   if (typeof window === "undefined") return "ssr";

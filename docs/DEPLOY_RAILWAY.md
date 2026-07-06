@@ -1,16 +1,53 @@
 # Deploy everything on Railway (single platform)
 
-You do **not** need Vercel + a separate backend host. One Railway project runs the whole platform as 4 services:
+You do **not** need Vercel + a separate backend host. Two layouts are supported — Postgres and Redis are always separate managed Railway services (databases can't run inside the app container):
+
+## Option A — one app service (simplest, recommended for this site)
+
+The root [`Dockerfile`](../Dockerfile) builds a **combined image**: Nginx listens on Railway's `$PORT` and routes `/api/*` to FastAPI and everything else to Next.js. One domain, no CORS pain.
 
 ```
 Railway project "afnan-ai"
-├── Postgres   (Railway managed — includes pgvector)
-├── Redis      (Railway managed)
-├── backend    (backend/Dockerfile)
-└── frontend   (frontend/Dockerfile)
+├── Postgres   (managed — includes pgvector)
+├── Redis      (managed)
+└── app        (repo root — combined Dockerfile: Next + FastAPI + Nginx)
 ```
 
-Nginx is not needed on Railway — each service gets its own HTTPS domain.
+1. **New → Database → PostgreSQL**, **New → Database → Redis**.
+2. **New → GitHub Repo** → pick the repo → leave **Root Directory empty** (Railway finds the root `Dockerfile`).
+3. Variables on the app service:
+
+```
+DATABASE_URL   = ${{Postgres.DATABASE_URL}}
+REDIS_URL      = ${{Redis.REDIS_URL}}
+SECRET_KEY     = <long random string>
+ADMIN_EMAIL / ADMIN_PASSWORD
+
+OPENAI_API_KEY / OPENAI_BASE_URL / CHAT_MODEL
+EMBEDDING_MODEL / EMBEDDING_DIM / RAG_CONFIDENCE_THRESHOLD
+
+RESEND_API_KEY / NOTIFY_EMAIL / FROM_EMAIL          (optional)
+
+SITE_URL             = https://<app-domain>          (after generating the domain)
+NEXT_PUBLIC_SITE_URL = https://<app-domain>          (build-time; triggers a rebuild)
+CORS_ORIGINS         = https://<app-domain>
+```
+
+Do **not** set `NEXT_PUBLIC_API_URL` — leaving it unset makes the frontend call the API same-origin through Nginx.
+
+4. **Settings → Networking → Generate Domain**, then fill in the three domain variables above and let it redeploy.
+
+## Option B — separate frontend & backend services
+
+```
+Railway project "afnan-ai"
+├── Postgres   (managed — includes pgvector)
+├── Redis      (managed)
+├── backend    (Root Directory = backend)
+└── frontend   (Root Directory = frontend)
+```
+
+Nginx is not needed in this layout — each service gets its own HTTPS domain.
 
 ## 1. Push the repo to GitHub
 
