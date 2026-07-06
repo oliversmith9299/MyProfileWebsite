@@ -22,6 +22,7 @@ _redis: redis_lib.Redis | None = None
 def get_redis() -> redis_lib.Redis:
     global _redis
     if _redis is None:
+        # Raises on empty/malformed URLs — callers treat Redis as best-effort
         _redis = redis_lib.Redis.from_url(settings.redis_url, decode_responses=True)
     return _redis
 
@@ -64,14 +65,15 @@ def get_or_create_visitor(
 
 
 def rate_limit_chat(visitor: Visitor = Depends(get_or_create_visitor)) -> Visitor:
+    count = 0
     try:
         r = get_redis()
         key = f"rl:chat:{visitor.anon_id}"
         count = r.incr(key)
         if count == 1:
             r.expire(key, 60)
-        if count > settings.chat_rate_limit_per_minute:
-            raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "Slow down a little — try again in a minute.")
-    except redis_lib.RedisError:
-        pass  # Redis down should never take chat down
+    except Exception:
+        return visitor  # Redis missing/down/misconfigured must never take chat down
+    if count > settings.chat_rate_limit_per_minute:
+        raise HTTPException(status.HTTP_429_TOO_MANY_REQUESTS, "Slow down a little — try again in a minute.")
     return visitor
