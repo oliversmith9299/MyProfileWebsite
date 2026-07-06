@@ -176,9 +176,11 @@ export function Hero() {
             className="mt-14 grid max-w-xl grid-cols-2 gap-6 sm:grid-cols-4"
           >
             {person.stats.map((s) => (
-              <div key={s.label}>
-                <dt className="order-2 text-xs text-(--color-ink-faint)">{s.label}</dt>
-                <dd className="font-[family-name:var(--font-display)] text-2xl font-bold text-gradient">
+              /* col-reverse keeps dt-before-dd markup while showing the value on
+                 top, so all numbers sit on one aligned row and labels on the next */
+              <div key={s.label} className="flex flex-col-reverse justify-end">
+                <dt className="mt-1 text-xs leading-snug text-(--color-ink-faint)">{s.label}</dt>
+                <dd className="font-[family-name:var(--font-display)] text-2xl font-bold leading-none text-gradient">
                   {s.value}
                 </dd>
               </div>
