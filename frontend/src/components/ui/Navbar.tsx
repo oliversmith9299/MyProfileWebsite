@@ -45,7 +45,7 @@ export function Navbar() {
           ))}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3">
           <ThemeToggle />
           <ModeSwitcher />
           <button
@@ -58,12 +58,15 @@ export function Navbar() {
           </button>
           <Link
             href="/chat"
-            className="group relative overflow-hidden rounded-full bg-gradient-to-r from-(--color-violet) to-(--color-cyan) px-4 py-2 text-sm font-medium text-white transition-transform hover:scale-[1.03] active:scale-[0.98]"
+            className="group relative overflow-hidden whitespace-nowrap rounded-full bg-gradient-to-r from-(--color-violet) to-(--color-cyan) px-3 py-1.5 text-xs font-medium text-white transition-transform hover:scale-[1.03] active:scale-[0.98] sm:px-4 sm:py-2 sm:text-sm"
           >
-            <span className="relative z-10">Talk with my AI</span>
+            <span className="relative z-10">
+              <span className="sm:hidden">My AI</span>
+              <span className="hidden sm:inline">Talk with my AI</span>
+            </span>
           </Link>
           <button
-            className="lg:hidden text-(--color-ink-dim)"
+            className="ml-0.5 lg:hidden text-(--color-ink-dim)"
             onClick={() => setOpen(!open)}
             aria-label="Menu"
           >

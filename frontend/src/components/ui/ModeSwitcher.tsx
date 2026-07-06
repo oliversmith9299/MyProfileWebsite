@@ -22,7 +22,7 @@ export function ModeSwitcher() {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
+        className={`whitespace-nowrap rounded-full border px-2.5 py-1.5 text-xs transition-colors sm:px-3 ${
           mode
             ? "border-(--color-violet) text-(--color-ink)"
             : "border-(--color-line) text-(--color-ink-faint) hover:text-(--color-ink)"

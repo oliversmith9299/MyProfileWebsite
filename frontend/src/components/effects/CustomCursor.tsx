@@ -1,16 +1,22 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-/** Glowing dot + trailing ring cursor. Fine pointers only; disabled for touch & reduced motion. */
+/** Glowing dot + trailing ring cursor. Fine pointers only; not rendered at all
+ * on touch devices or for reduced-motion users. */
 export function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
     const fine = window.matchMedia("(pointer: fine)").matches;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!fine || reduced) return;
+    if (fine && !reduced) setEnabled(true);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
 
     document.body.classList.add("custom-cursor");
     const dot = dotRef.current!;
@@ -50,7 +56,9 @@ export function CustomCursor() {
       cancelAnimationFrame(raf);
       document.body.classList.remove("custom-cursor");
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) return null;
 
   return (
     <>

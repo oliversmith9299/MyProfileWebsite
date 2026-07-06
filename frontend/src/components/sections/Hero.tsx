@@ -39,11 +39,17 @@ function TypedRoles() {
     return () => clearTimeout(timeout);
   }, [text, deleting, index, roles]);
 
+  // "a" vs "an" must follow the current role (an AI Engineer, a Founder)
+  const article = /^[aeiou]/i.test(roles[index % roles.length]) ? "an" : "a";
+
   return (
-    <span className="text-gradient font-semibold">
-      {text}
-      <span className="caret ml-0.5 inline-block h-[0.9em] w-[2px] translate-y-[2px] bg-(--color-cyan)" />
-    </span>
+    <>
+      <span className="text-(--color-ink-dim)">{article} </span>
+      <span className="text-gradient font-semibold">
+        {text}
+        <span className="caret ml-0.5 inline-block h-[0.9em] w-[2px] translate-y-[2px] bg-(--color-cyan)" />
+      </span>
+    </>
   );
 }
 
@@ -133,7 +139,7 @@ export function Hero() {
           >
             {person.name.split(" ").slice(0, 2).join(" ")}
             <br />
-            <span className="text-2xl text-(--color-ink-dim) md:text-4xl">I&apos;m an </span>
+            <span className="text-2xl text-(--color-ink-dim) md:text-4xl">I&apos;m </span>
             <span className="text-2xl md:text-4xl"><TypedRoles /></span>
           </motion.h1>
 
