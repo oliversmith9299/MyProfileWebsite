@@ -16,7 +16,7 @@ export function LoadingScreen() {
     <AnimatePresence>
       {!done && (
         <motion.div
-          className="fixed inset-0 z-[200] flex items-center justify-center bg-[--color-bg]"
+          className="fixed inset-0 z-[200] flex items-center justify-center bg-(--color-bg)"
           exit={{ opacity: 0, transition: { duration: 0.6, ease: "easeInOut" } }}
           aria-hidden
         >
@@ -32,7 +32,7 @@ export function LoadingScreen() {
               </span>
             </motion.div>
             <motion.p
-              className="font-[family-name:var(--font-mono)] text-xs tracking-[0.3em] text-[--color-ink-faint] uppercase"
+              className="font-[family-name:var(--font-mono)] text-xs tracking-[0.3em] text-(--color-ink-faint) uppercase"
               initial={{ opacity: 0 }}
               animate={{ opacity: [0, 1, 0.4, 1] }}
               transition={{ duration: 1.2 }}

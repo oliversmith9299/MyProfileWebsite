@@ -21,7 +21,7 @@ export function Navbar() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled ? "glass border-b border-[--color-line] py-3" : "bg-transparent py-5"
+        scrolled ? "glass border-b border-(--color-line) py-3" : "bg-transparent py-5"
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6">
@@ -30,7 +30,7 @@ export function Navbar() {
           className="font-[family-name:var(--font-display)] text-lg font-bold tracking-tight"
         >
           <span className="text-gradient">Afnan</span>
-          <span className="text-[--color-ink-dim]">.ai</span>
+          <span className="text-(--color-ink-dim)">.ai</span>
         </Link>
 
         <div className="hidden items-center gap-6 lg:flex">
@@ -38,7 +38,7 @@ export function Navbar() {
             <a
               key={s.id}
               href={`/#${s.id}`}
-              className="text-sm text-[--color-ink-dim] transition-colors hover:text-[--color-ink]"
+              className="text-sm text-(--color-ink-dim) transition-colors hover:text-(--color-ink)"
             >
               {s.label}
             </a>
@@ -50,7 +50,7 @@ export function Navbar() {
           <ModeSwitcher />
           <button
             onClick={() => window.dispatchEvent(new CustomEvent("open-palette"))}
-            className="hidden items-center gap-2 rounded-full border border-[--color-line] px-3 py-1.5 text-xs text-[--color-ink-faint] transition-colors hover:border-[--color-violet] hover:text-[--color-ink] md:flex"
+            className="hidden items-center gap-2 rounded-full border border-(--color-line) px-3 py-1.5 text-xs text-(--color-ink-faint) transition-colors hover:border-(--color-violet) hover:text-(--color-ink) md:flex"
             aria-label="Open command palette"
           >
             <span>Search</span>
@@ -58,12 +58,12 @@ export function Navbar() {
           </button>
           <Link
             href="/chat"
-            className="group relative overflow-hidden rounded-full bg-gradient-to-r from-[--color-violet] to-[--color-cyan] px-4 py-2 text-sm font-medium text-white transition-transform hover:scale-[1.03] active:scale-[0.98]"
+            className="group relative overflow-hidden rounded-full bg-gradient-to-r from-(--color-violet) to-(--color-cyan) px-4 py-2 text-sm font-medium text-white transition-transform hover:scale-[1.03] active:scale-[0.98]"
           >
             <span className="relative z-10">Talk with my AI</span>
           </Link>
           <button
-            className="lg:hidden text-[--color-ink-dim]"
+            className="lg:hidden text-(--color-ink-dim)"
             onClick={() => setOpen(!open)}
             aria-label="Menu"
           >
@@ -81,7 +81,7 @@ export function Navbar() {
               key={s.id}
               href={`/#${s.id}`}
               onClick={() => setOpen(false)}
-              className="block rounded-lg px-3 py-2.5 text-sm text-[--color-ink-dim] hover:bg-white/5 hover:text-[--color-ink]"
+              className="block rounded-lg px-3 py-2.5 text-sm text-(--color-ink-dim) hover:bg-white/5 hover:text-(--color-ink)"
             >
               {s.label}
             </a>

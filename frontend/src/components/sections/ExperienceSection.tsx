@@ -19,18 +19,18 @@ export function ExperienceSection() {
             className="card p-7"
           >
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <h3 className="font-[family-name:var(--font-display)] text-xl font-semibold text-[--color-ink]">
+              <h3 className="font-[family-name:var(--font-display)] text-xl font-semibold text-(--color-ink)">
                 {e.org}
-                <span className="ml-3 text-sm font-normal text-[--color-cyan]">{e.role}</span>
+                <span className="ml-3 text-sm font-normal text-(--color-cyan)">{e.role}</span>
               </h3>
-              <span className="font-[family-name:var(--font-mono)] text-xs text-[--color-ink-faint]">
+              <span className="font-[family-name:var(--font-mono)] text-xs text-(--color-ink-faint)">
                 {e.period}
               </span>
             </div>
             <ul className="mt-4 space-y-2">
               {e.bullets.map((b) => (
-                <li key={b.slice(0, 32)} className="flex gap-3 text-sm leading-relaxed text-[--color-ink-dim]">
-                  <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-[--color-violet]" />
+                <li key={b.slice(0, 32)} className="flex gap-3 text-sm leading-relaxed text-(--color-ink-dim)">
+                  <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-(--color-violet)" />
                   {b}
                 </li>
               ))}

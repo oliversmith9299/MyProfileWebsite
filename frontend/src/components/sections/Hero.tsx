@@ -42,7 +42,7 @@ function TypedRoles() {
   return (
     <span className="text-gradient font-semibold">
       {text}
-      <span className="caret ml-0.5 inline-block h-[0.9em] w-[2px] translate-y-[2px] bg-[--color-cyan]" />
+      <span className="caret ml-0.5 inline-block h-[0.9em] w-[2px] translate-y-[2px] bg-(--color-cyan)" />
     </span>
   );
 }
@@ -96,8 +96,8 @@ export function Hero() {
     >
       {/* Layered background: grid, aurora, particles, cursor glow */}
       <div className="grid-bg absolute inset-0" />
-      <div className="aurora left-[8%] top-[12%] h-96 w-96 bg-[--color-violet]" />
-      <div className="aurora right-[6%] top-[38%] h-80 w-80 bg-[--color-cyan]" style={{ animationDelay: "-7s" }} />
+      <div className="aurora left-[8%] top-[12%] h-96 w-96 bg-(--color-violet)" />
+      <div className="aurora right-[6%] top-[38%] h-80 w-80 bg-(--color-cyan)" style={{ animationDelay: "-7s" }} />
       <ParticleField />
       <motion.div
         aria-hidden
@@ -116,7 +116,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.3 }}
-            className="glass mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs text-[--color-ink-dim]"
+            className="glass mb-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs text-(--color-ink-dim)"
           >
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
@@ -133,7 +133,7 @@ export function Hero() {
           >
             {person.name.split(" ").slice(0, 2).join(" ")}
             <br />
-            <span className="text-2xl text-[--color-ink-dim] md:text-4xl">I&apos;m an </span>
+            <span className="text-2xl text-(--color-ink-dim) md:text-4xl">I&apos;m an </span>
             <span className="text-2xl md:text-4xl"><TypedRoles /></span>
           </motion.h1>
 
@@ -141,7 +141,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.6 }}
-            className="mt-6 max-w-xl text-base leading-relaxed text-[--color-ink-dim] md:text-lg"
+            className="mt-6 max-w-xl text-base leading-relaxed text-(--color-ink-dim) md:text-lg"
           >
             {mode ? modes[mode].pitch : person.intro}
           </motion.p>
@@ -155,7 +155,7 @@ export function Hero() {
             <a
               href="/#contact"
               onClick={() => trackEvent("cta_hire_me")}
-              className="group relative overflow-hidden rounded-full bg-gradient-to-r from-[--color-violet] to-[--color-cyan] px-7 py-3.5 text-sm font-semibold text-white shadow-[0_8px_40px_-8px_rgba(139,92,246,0.6)] transition-transform hover:scale-[1.04] active:scale-[0.98]"
+              className="group relative overflow-hidden rounded-full bg-gradient-to-r from-(--color-violet) to-(--color-cyan) px-7 py-3.5 text-sm font-semibold text-white shadow-[0_8px_40px_-8px_rgba(139,92,246,0.6)] transition-transform hover:scale-[1.04] active:scale-[0.98]"
             >
               <span className="relative z-10">Hire Me</span>
               <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
@@ -163,7 +163,7 @@ export function Hero() {
             <Link
               href="/chat"
               onClick={() => trackEvent("cta_talk_ai")}
-              className="glass rounded-full px-7 py-3.5 text-sm font-semibold text-[--color-ink] transition-all hover:border-[--color-violet] hover:shadow-[0_8px_40px_-12px_rgba(34,211,238,0.4)]"
+              className="glass rounded-full px-7 py-3.5 text-sm font-semibold text-(--color-ink) transition-all hover:border-(--color-violet) hover:shadow-[0_8px_40px_-12px_rgba(34,211,238,0.4)]"
             >
               Talk with my AI <span aria-hidden>→</span>
             </Link>
@@ -177,7 +177,7 @@ export function Hero() {
           >
             {person.stats.map((s) => (
               <div key={s.label}>
-                <dt className="order-2 text-xs text-[--color-ink-faint]">{s.label}</dt>
+                <dt className="order-2 text-xs text-(--color-ink-faint)">{s.label}</dt>
                 <dd className="font-[family-name:var(--font-display)] text-2xl font-bold text-gradient">
                   {s.value}
                 </dd>
@@ -199,7 +199,7 @@ export function Hero() {
       <motion.a
         href="/#about"
         aria-label="Scroll to about"
-        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-[--color-ink-faint]"
+        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-(--color-ink-faint)"
         animate={{ y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
       >

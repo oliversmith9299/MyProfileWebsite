@@ -55,41 +55,41 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             >
               {project.period}
             </span>
-            <span className="text-[--color-ink-faint] transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[--color-ink]">
+            <span className="text-(--color-ink-faint) transition-transform duration-300 group-hover:translate-x-1 group-hover:text-(--color-ink)">
               →
             </span>
           </div>
-          <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[--color-ink]">
+          <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-(--color-ink)">
             {project.title}
           </h3>
           <p className="mt-1 text-sm font-medium" style={{ color: project.accent }}>
             {project.tagline}
           </p>
-          <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-[--color-ink-dim]">
+          <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-(--color-ink-dim)">
             {project.description}
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             {project.tech.slice(0, 5).map((t) => (
               <span
                 key={t}
-                className="rounded-md border border-[--color-line] px-2 py-1 font-[family-name:var(--font-mono)] text-[11px] text-[--color-ink-dim]"
+                className="rounded-md border border-(--color-line) px-2 py-1 font-[family-name:var(--font-mono)] text-[11px] text-(--color-ink-dim)"
               >
                 {t}
               </span>
             ))}
             {project.tech.length > 5 && (
-              <span className="px-1 py-1 text-[11px] text-[--color-ink-faint]">
+              <span className="px-1 py-1 text-[11px] text-(--color-ink-faint)">
                 +{project.tech.length - 5}
               </span>
             )}
           </div>
-          <div className="mt-6 grid grid-cols-2 gap-4 border-t border-[--color-line] pt-5 sm:grid-cols-3">
+          <div className="mt-6 grid grid-cols-2 gap-4 border-t border-(--color-line) pt-5 sm:grid-cols-3">
             {project.metrics.map((m) => (
               <div key={m.label}>
-                <p className="font-[family-name:var(--font-display)] text-lg font-bold text-[--color-ink]">
+                <p className="font-[family-name:var(--font-display)] text-lg font-bold text-(--color-ink)">
                   {m.value}
                 </p>
-                <p className="text-[11px] text-[--color-ink-faint]">{m.label}</p>
+                <p className="text-[11px] text-(--color-ink-faint)">{m.label}</p>
               </div>
             ))}
           </div>

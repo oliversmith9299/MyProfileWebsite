@@ -61,7 +61,7 @@ async function adminApi<T>(token: string, path: string, init: RequestInit = {}):
 }
 
 const inputCls =
-  "w-full rounded-xl border border-[--color-line] bg-white/[0.03] px-4 py-3 text-sm text-[--color-ink] outline-none placeholder:text-[--color-ink-faint] focus:border-[--color-violet]";
+  "w-full rounded-xl border border-(--color-line) bg-white/[0.03] px-4 py-3 text-sm text-(--color-ink) outline-none placeholder:text-(--color-ink-faint) focus:border-(--color-violet)";
 
 function Login({ onToken }: { onToken: (t: string) => void }) {
   const [email, setEmail] = useState("");
@@ -91,15 +91,15 @@ function Login({ onToken }: { onToken: (t: string) => void }) {
         <h1 className="font-[family-name:var(--font-display)] text-xl font-semibold">Admin sign-in</h1>
         <input required type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputCls} />
         <input required type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} className={inputCls} />
-        <button className="w-full rounded-xl bg-gradient-to-r from-[--color-violet] to-[--color-cyan] py-3 text-sm font-semibold text-white">
+        <button className="w-full rounded-xl bg-gradient-to-r from-(--color-violet) to-(--color-cyan) py-3 text-sm font-semibold text-white">
           Sign in
         </button>
-        {error && <p className="text-center text-xs text-[--color-rose]">{error}</p>}
+        {error && <p className="text-center text-xs text-(--color-rose)">{error}</p>}
         <div className="flex gap-2 pt-1">
-          <a href={`${API_URL}/api/v1/auth/oauth/google/login`} className="glass flex-1 rounded-xl py-2.5 text-center text-xs text-[--color-ink-dim] hover:text-[--color-ink]">
+          <a href={`${API_URL}/api/v1/auth/oauth/google/login`} className="glass flex-1 rounded-xl py-2.5 text-center text-xs text-(--color-ink-dim) hover:text-(--color-ink)">
             Google
           </a>
-          <a href={`${API_URL}/api/v1/auth/oauth/github/login`} className="glass flex-1 rounded-xl py-2.5 text-center text-xs text-[--color-ink-dim] hover:text-[--color-ink]">
+          <a href={`${API_URL}/api/v1/auth/oauth/github/login`} className="glass flex-1 rounded-xl py-2.5 text-center text-xs text-(--color-ink-dim) hover:text-(--color-ink)">
             GitHub
           </a>
         </div>
@@ -125,15 +125,15 @@ function QuestionCard({ q, token, onChanged }: { q: Q; token: string; onChanged:
   return (
     <div className="card p-6">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <p className="text-sm font-semibold text-[--color-ink]">
-          {q.visitor_name} <span className="font-normal text-[--color-ink-faint]">· {q.email}{q.company && ` · ${q.company}`}</span>
+        <p className="text-sm font-semibold text-(--color-ink)">
+          {q.visitor_name} <span className="font-normal text-(--color-ink-faint)">· {q.email}{q.company && ` · ${q.company}`}</span>
         </p>
-        <span className="font-[family-name:var(--font-mono)] text-[11px] text-[--color-ink-faint]">
+        <span className="font-[family-name:var(--font-mono)] text-[11px] text-(--color-ink-faint)">
           {new Date(q.created_at).toLocaleString()} · {q.context?.country || "?"}
         </span>
       </div>
-      <p className="mt-3 rounded-xl bg-white/[0.04] p-4 text-sm text-[--color-ink]">{q.question}</p>
-      {q.reason && <p className="mt-2 text-xs text-[--color-ink-faint]">Reason: {q.reason}{q.phone && ` · ${q.phone}`}</p>}
+      <p className="mt-3 rounded-xl bg-white/[0.04] p-4 text-sm text-(--color-ink)">{q.question}</p>
+      {q.reason && <p className="mt-2 text-xs text-(--color-ink-faint)">Reason: {q.reason}{q.phone && ` · ${q.phone}`}</p>}
       {q.status === "answered" ? (
         <p className="mt-3 rounded-xl border border-emerald-400/25 bg-emerald-400/5 p-4 text-sm text-emerald-200">{q.answer}</p>
       ) : (
@@ -149,14 +149,14 @@ function QuestionCard({ q, token, onChanged }: { q: Q; token: string; onChanged:
             <button
               disabled={busy || !answer.trim()}
               onClick={() => act(`/admin/questions/${q.id}/answer`, { answer })}
-              className="rounded-lg bg-gradient-to-r from-[--color-violet] to-[--color-cyan] px-4 py-2 text-xs font-semibold text-white disabled:opacity-50"
+              className="rounded-lg bg-gradient-to-r from-(--color-violet) to-(--color-cyan) px-4 py-2 text-xs font-semibold text-white disabled:opacity-50"
             >
               Answer & teach the AI
             </button>
             <button
               disabled={busy}
               onClick={() => act(`/admin/questions/${q.id}/dismiss`)}
-              className="rounded-lg border border-[--color-line] px-4 py-2 text-xs text-[--color-ink-dim]"
+              className="rounded-lg border border-(--color-line) px-4 py-2 text-xs text-(--color-ink-dim)"
             >
               Dismiss
             </button>
@@ -213,7 +213,7 @@ export default function AdminPage() {
         <h1 className="font-[family-name:var(--font-display)] text-2xl font-bold">
           <span className="text-gradient">Admin</span> dashboard
         </h1>
-        <button onClick={clear} className="text-xs text-[--color-ink-faint] hover:text-[--color-ink]">Sign out</button>
+        <button onClick={clear} className="text-xs text-(--color-ink-faint) hover:text-(--color-ink)">Sign out</button>
       </div>
 
       <div className="mt-8 flex gap-2">
@@ -222,12 +222,12 @@ export default function AdminPage() {
             key={t}
             onClick={() => setTab(t)}
             className={`rounded-full px-4 py-2 text-xs font-medium capitalize transition-colors ${
-              tab === t ? "bg-gradient-to-r from-[--color-violet] to-[--color-cyan] text-white" : "border border-[--color-line] text-[--color-ink-dim]"
+              tab === t ? "bg-gradient-to-r from-(--color-violet) to-(--color-cyan) text-white" : "border border-(--color-line) text-(--color-ink-dim)"
             }`}
           >
             {t}
             {t === "questions" && summary && summary.unanswered_questions > 0 && (
-              <span className="ml-1.5 rounded-full bg-[--color-rose] px-1.5 text-[10px] text-white">
+              <span className="ml-1.5 rounded-full bg-(--color-rose) px-1.5 text-[10px] text-white">
                 {summary.unanswered_questions}
               </span>
             )}
@@ -240,16 +240,16 @@ export default function AdminPage() {
           {stats.map((s) => (
             <div key={s.label} className="card p-5">
               <p className="font-[family-name:var(--font-display)] text-3xl font-bold text-gradient">{s.value}</p>
-              <p className="mt-1 text-xs text-[--color-ink-faint]">{s.label}</p>
+              <p className="mt-1 text-xs text-(--color-ink-faint)">{s.label}</p>
             </div>
           ))}
           {summary && summary.top_pages.length > 0 && (
             <div className="card col-span-2 p-5 md:col-span-4">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-[--color-ink-faint]">Top pages (30d)</p>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-(--color-ink-faint)">Top pages (30d)</p>
               {summary.top_pages.map((p) => (
-                <div key={p.path} className="flex justify-between border-b border-[--color-line] py-2 text-sm last:border-0">
-                  <span className="text-[--color-ink-dim]">{p.path}</span>
-                  <span className="font-[family-name:var(--font-mono)] text-[--color-ink]">{p.views}</span>
+                <div key={p.path} className="flex justify-between border-b border-(--color-line) py-2 text-sm last:border-0">
+                  <span className="text-(--color-ink-dim)">{p.path}</span>
+                  <span className="font-[family-name:var(--font-mono)] text-(--color-ink)">{p.views}</span>
                 </div>
               ))}
             </div>
@@ -259,7 +259,7 @@ export default function AdminPage() {
 
       {tab === "questions" && (
         <div className="mt-8 space-y-4">
-          {questions.length === 0 && <p className="text-sm text-[--color-ink-faint]">No visitor questions yet.</p>}
+          {questions.length === 0 && <p className="text-sm text-(--color-ink-faint)">No visitor questions yet.</p>}
           {questions.map((q) => (
             <QuestionCard key={q.id} q={q} token={token} onChanged={load} />
           ))}
@@ -281,7 +281,7 @@ export default function AdminPage() {
                 setNewDoc({ title: "", content: "" });
                 load();
               }}
-              className="rounded-lg bg-gradient-to-r from-[--color-violet] to-[--color-cyan] px-4 py-2 text-xs font-semibold text-white disabled:opacity-50"
+              className="rounded-lg bg-gradient-to-r from-(--color-violet) to-(--color-cyan) px-4 py-2 text-xs font-semibold text-white disabled:opacity-50"
             >
               Add to knowledge base
             </button>
@@ -289,8 +289,8 @@ export default function AdminPage() {
           {docs.map((d) => (
             <div key={d.id} className="card flex items-center justify-between p-5">
               <div>
-                <p className="text-sm font-medium text-[--color-ink]">{d.title}</p>
-                <p className="mt-0.5 font-[family-name:var(--font-mono)] text-[11px] text-[--color-ink-faint]">
+                <p className="text-sm font-medium text-(--color-ink)">{d.title}</p>
+                <p className="mt-0.5 font-[family-name:var(--font-mono)] text-[11px] text-(--color-ink-faint)">
                   {d.source_type} · {d.chunks} chunks · {new Date(d.created_at).toLocaleDateString()}
                 </p>
               </div>
@@ -300,7 +300,7 @@ export default function AdminPage() {
                   await adminApi(token, `/admin/knowledge/${d.id}`, { method: "DELETE" });
                   load();
                 }}
-                className="text-xs text-[--color-rose] opacity-70 hover:opacity-100"
+                className="text-xs text-(--color-rose) opacity-70 hover:opacity-100"
               >
                 Delete
               </button>
@@ -311,18 +311,18 @@ export default function AdminPage() {
 
       {tab === "contacts" && (
         <div className="mt-8 space-y-4">
-          {contacts.length === 0 && <p className="text-sm text-[--color-ink-faint]">No contact requests yet.</p>}
+          {contacts.length === 0 && <p className="text-sm text-(--color-ink-faint)">No contact requests yet.</p>}
           {contacts.map((c) => (
             <div key={c.id} className="card p-6">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <p className="text-sm font-semibold text-[--color-ink]">
-                  {c.name} <span className="font-normal text-[--color-ink-faint]">· {c.email}{c.company && ` · ${c.company}`}</span>
+                <p className="text-sm font-semibold text-(--color-ink)">
+                  {c.name} <span className="font-normal text-(--color-ink-faint)">· {c.email}{c.company && ` · ${c.company}`}</span>
                 </p>
-                <span className="rounded-full border border-[--color-line] px-2.5 py-0.5 text-[10px] uppercase tracking-wide text-[--color-ink-faint]">
+                <span className="rounded-full border border-(--color-line) px-2.5 py-0.5 text-[10px] uppercase tracking-wide text-(--color-ink-faint)">
                   {c.kind}
                 </span>
               </div>
-              <p className="mt-3 text-sm leading-relaxed text-[--color-ink-dim]">{c.message}</p>
+              <p className="mt-3 text-sm leading-relaxed text-(--color-ink-dim)">{c.message}</p>
             </div>
           ))}
         </div>

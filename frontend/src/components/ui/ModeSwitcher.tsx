@@ -24,8 +24,8 @@ export function ModeSwitcher() {
         onClick={() => setOpen(!open)}
         className={`rounded-full border px-3 py-1.5 text-xs transition-colors ${
           mode
-            ? "border-[--color-violet] text-[--color-ink]"
-            : "border-[--color-line] text-[--color-ink-faint] hover:text-[--color-ink]"
+            ? "border-(--color-violet) text-(--color-ink)"
+            : "border-(--color-line) text-(--color-ink-faint) hover:text-(--color-ink)"
         }`}
       >
         {mode ? modes[mode].label : "I'm a…"}
@@ -46,8 +46,8 @@ export function ModeSwitcher() {
                 onClick={() => pick(m)}
                 className="block w-full rounded-xl px-3 py-2.5 text-left transition-colors hover:bg-white/5"
               >
-                <span className="text-sm font-medium text-[--color-ink]">{modes[m].label}</span>
-                <span className="mt-0.5 block text-xs leading-relaxed text-[--color-ink-faint]">
+                <span className="text-sm font-medium text-(--color-ink)">{modes[m].label}</span>
+                <span className="mt-0.5 block text-xs leading-relaxed text-(--color-ink-faint)">
                   {modes[m].pitch}
                 </span>
               </button>
@@ -55,7 +55,7 @@ export function ModeSwitcher() {
             {mode && (
               <button
                 onClick={() => pick(null)}
-                className="mt-1 w-full rounded-xl px-3 py-2 text-left text-xs text-[--color-ink-faint] hover:bg-white/5"
+                className="mt-1 w-full rounded-xl px-3 py-2 text-left text-xs text-(--color-ink-faint) hover:bg-white/5"
               >
                 Clear mode
               </button>

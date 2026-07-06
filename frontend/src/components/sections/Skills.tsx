@@ -11,14 +11,14 @@ export function Skills() {
       <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr]">
         {/* AI skills with animated meters */}
         <div className="card space-y-7 p-7">
-          <p className="font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.24em] text-[--color-cyan]">
+          <p className="font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.24em] text-(--color-cyan)">
             AI Engineering
           </p>
           {aiSkills.map((s, i) => (
             <div key={s.name}>
               <div className="mb-2 flex items-baseline justify-between">
-                <span className="text-sm font-medium text-[--color-ink]">{s.name}</span>
-                <span className="font-[family-name:var(--font-mono)] text-xs text-[--color-ink-faint]">
+                <span className="text-sm font-medium text-(--color-ink)">{s.name}</span>
+                <span className="font-[family-name:var(--font-mono)] text-xs text-(--color-ink-faint)">
                   {s.items.join(" · ")}
                 </span>
               </div>
@@ -28,7 +28,7 @@ export function Skills() {
                   whileInView={{ width: `${s.level}%` }}
                   viewport={{ once: true }}
                   transition={{ duration: 1.1, delay: i * 0.1, ease: [0.21, 0.6, 0.35, 1] }}
-                  className="h-full rounded-full bg-gradient-to-r from-[--color-violet] to-[--color-cyan]"
+                  className="h-full rounded-full bg-gradient-to-r from-(--color-violet) to-(--color-cyan)"
                 />
               </div>
             </div>
@@ -37,7 +37,7 @@ export function Skills() {
 
         {/* Software skills grouped as chips */}
         <div className="space-y-4">
-          <p className="font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.24em] text-[--color-violet]">
+          <p className="font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.24em] text-(--color-violet)">
             Software Engineering
           </p>
           {softwareSkills.map((g, i) => (
@@ -49,14 +49,14 @@ export function Skills() {
               transition={{ duration: 0.5, delay: i * 0.07 }}
               className="card p-4"
             >
-              <p className="mb-2.5 text-xs font-semibold uppercase tracking-wider text-[--color-ink-faint]">
+              <p className="mb-2.5 text-xs font-semibold uppercase tracking-wider text-(--color-ink-faint)">
                 {g.group}
               </p>
               <div className="flex flex-wrap gap-2">
                 {g.items.map((item) => (
                   <span
                     key={item}
-                    className="rounded-lg border border-[--color-line] bg-white/[0.03] px-2.5 py-1 text-xs text-[--color-ink-dim] transition-colors hover:border-[--color-violet] hover:text-[--color-ink]"
+                    className="rounded-lg border border-(--color-line) bg-white/[0.03] px-2.5 py-1 text-xs text-(--color-ink-dim) transition-colors hover:border-(--color-violet) hover:text-(--color-ink)"
                   >
                     {item}
                   </span>

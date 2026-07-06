@@ -57,7 +57,7 @@ export function CustomCursor() {
       <div
         ref={dotRef}
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[100] h-1.5 w-1.5 rounded-full bg-[--color-cyan] shadow-[0_0_12px_2px_rgba(34,211,238,0.8)]"
+        className="pointer-events-none fixed left-0 top-0 z-[100] h-1.5 w-1.5 rounded-full bg-(--color-cyan) shadow-[0_0_12px_2px_rgba(34,211,238,0.8)]"
       />
       <div
         ref={ringRef}

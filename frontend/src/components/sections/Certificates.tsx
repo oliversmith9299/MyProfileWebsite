@@ -16,10 +16,10 @@ export function Certificates() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.45, delay: i * 0.06 }}
-            className="card border-l-2 border-l-[--color-violet]/40 p-5"
+            className="card border-l-2 border-l-(--color-violet)/40 p-5"
           >
-            <h3 className="text-sm font-semibold text-[--color-ink]">{c.title}</h3>
-            <p className="mt-1 text-xs text-[--color-ink-faint]">
+            <h3 className="text-sm font-semibold text-(--color-ink)">{c.title}</h3>
+            <p className="mt-1 text-xs text-(--color-ink-faint)">
               {c.issuer} · {c.year}
             </p>
           </motion.div>

@@ -27,38 +27,38 @@ export function Contact() {
   };
 
   const inputCls =
-    "w-full rounded-xl border border-[--color-line] bg-white/[0.03] px-4 py-3 text-sm text-[--color-ink] outline-none transition-colors placeholder:text-[--color-ink-faint] focus:border-[--color-violet]";
+    "w-full rounded-xl border border-(--color-line) bg-white/[0.03] px-4 py-3 text-sm text-(--color-ink) outline-none transition-colors placeholder:text-(--color-ink-faint) focus:border-(--color-violet)";
 
   return (
     <Section id="contact" eyebrow="09 · Contact" title="Let's build something.">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr]">
         <div className="space-y-6">
-          <p className="text-[15px] leading-relaxed text-[--color-ink-dim]">
+          <p className="text-[15px] leading-relaxed text-(--color-ink-dim)">
             Hiring for an AI role, need an AI MVP, or want a second brain on an LLM architecture?
             I usually reply within a day. Prefer instant answers? My{" "}
-            <a href="/chat" className="text-[--color-cyan] underline-offset-4 hover:underline">AI assistant</a>{" "}
+            <a href="/chat" className="text-(--color-cyan) underline-offset-4 hover:underline">AI assistant</a>{" "}
             knows everything on this site.
           </p>
           <dl className="space-y-3 text-sm">
             <div>
-              <dt className="text-xs uppercase tracking-wider text-[--color-ink-faint]">Email</dt>
+              <dt className="text-xs uppercase tracking-wider text-(--color-ink-faint)">Email</dt>
               <dd>
-                <a href={`mailto:${person.email}`} className="font-[family-name:var(--font-mono)] text-[--color-ink-dim] transition-colors hover:text-[--color-cyan]">
+                <a href={`mailto:${person.email}`} className="font-[family-name:var(--font-mono)] text-(--color-ink-dim) transition-colors hover:text-(--color-cyan)">
                   {person.email}
                 </a>
               </dd>
             </div>
             <div>
-              <dt className="text-xs uppercase tracking-wider text-[--color-ink-faint]">LinkedIn</dt>
+              <dt className="text-xs uppercase tracking-wider text-(--color-ink-faint)">LinkedIn</dt>
               <dd>
-                <a href={person.linkedin} target="_blank" rel="noreferrer" className="font-[family-name:var(--font-mono)] text-[--color-ink-dim] transition-colors hover:text-[--color-cyan]">
+                <a href={person.linkedin} target="_blank" rel="noreferrer" className="font-[family-name:var(--font-mono)] text-(--color-ink-dim) transition-colors hover:text-(--color-cyan)">
                   afnan-hany
                 </a>
               </dd>
             </div>
             <div>
-              <dt className="text-xs uppercase tracking-wider text-[--color-ink-faint]">Location</dt>
-              <dd className="text-[--color-ink-dim]">{person.location}</dd>
+              <dt className="text-xs uppercase tracking-wider text-(--color-ink-faint)">Location</dt>
+              <dd className="text-(--color-ink-dim)">{person.location}</dd>
             </div>
           </dl>
         </div>
@@ -66,7 +66,7 @@ export function Contact() {
         {status === "sent" ? (
           <div className="card flex flex-col items-center justify-center gap-3 p-12 text-center">
             <h3 className="font-[family-name:var(--font-display)] text-xl font-semibold text-gradient">Message received.</h3>
-            <p className="text-sm text-[--color-ink-dim]">I&apos;ll get back to you shortly. Thank you!</p>
+            <p className="text-sm text-(--color-ink-dim)">I&apos;ll get back to you shortly. Thank you!</p>
           </div>
         ) : (
           <form onSubmit={submit} className="card space-y-4 p-7">
@@ -94,12 +94,12 @@ export function Contact() {
             <button
               type="submit"
               disabled={status === "sending"}
-              className="w-full rounded-xl bg-gradient-to-r from-[--color-violet] to-[--color-cyan] py-3.5 text-sm font-semibold text-white transition-transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60"
+              className="w-full rounded-xl bg-gradient-to-r from-(--color-violet) to-(--color-cyan) py-3.5 text-sm font-semibold text-white transition-transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60"
             >
               {status === "sending" ? "Sending…" : "Send message"}
             </button>
             {status === "error" && (
-              <p className="text-center text-xs text-[--color-rose]">
+              <p className="text-center text-xs text-(--color-rose)">
                 Couldn&apos;t reach the server. Email me directly at {person.email}.
               </p>
             )}

@@ -57,7 +57,7 @@ function AskAfnanForm({
   };
 
   const inputCls =
-    "w-full rounded-lg border border-[--color-line] bg-white/[0.03] px-3 py-2 text-xs text-[--color-ink] outline-none placeholder:text-[--color-ink-faint] focus:border-[--color-violet]";
+    "w-full rounded-lg border border-(--color-line) bg-white/[0.03] px-3 py-2 text-xs text-(--color-ink) outline-none placeholder:text-(--color-ink-faint) focus:border-(--color-violet)";
 
   if (status === "sent") {
     return (
@@ -68,8 +68,8 @@ function AskAfnanForm({
   }
 
   return (
-    <form onSubmit={submit} className="mt-3 space-y-2.5 rounded-xl border border-[--color-violet]/30 bg-[--color-violet]/5 p-4">
-      <p className="text-xs text-[--color-ink-dim]">
+    <form onSubmit={submit} className="mt-3 space-y-2.5 rounded-xl border border-(--color-violet)/30 bg-(--color-violet)/5 p-4">
+      <p className="text-xs text-(--color-ink-dim)">
         Leave your details and your question goes straight to Afnan&apos;s inbox:
       </p>
       <div className="grid grid-cols-2 gap-2.5">
@@ -87,12 +87,12 @@ function AskAfnanForm({
       <button
         type="submit"
         disabled={status === "sending"}
-        className="w-full rounded-lg bg-gradient-to-r from-[--color-violet] to-[--color-cyan] py-2 text-xs font-semibold text-white disabled:opacity-60"
+        className="w-full rounded-lg bg-gradient-to-r from-(--color-violet) to-(--color-cyan) py-2 text-xs font-semibold text-white disabled:opacity-60"
       >
         {status === "sending" ? "Sending…" : "Ask Afnan directly"}
       </button>
       {status === "error" && (
-        <p className="text-center text-[11px] text-[--color-rose]">
+        <p className="text-center text-[11px] text-(--color-rose)">
           Couldn&apos;t send. Email {person.email} instead.
         </p>
       )}
@@ -155,13 +155,13 @@ export function ChatUI() {
   return (
     <main className="mx-auto flex h-dvh max-w-3xl flex-col px-4 pt-24">
       {/* Header */}
-      <div className="flex items-center gap-3 border-b border-[--color-line] pb-4">
+      <div className="flex items-center gap-3 border-b border-(--color-line) pb-4">
         <div className="ring-spin relative flex h-11 w-11 items-center justify-center rounded-xl">
           <span className="font-[family-name:var(--font-display)] text-sm font-bold text-gradient">AH</span>
         </div>
         <div>
           <h1 className="font-[family-name:var(--font-display)] text-base font-semibold">Afnan&apos;s AI</h1>
-          <p className="flex items-center gap-1.5 text-xs text-[--color-ink-faint]">
+          <p className="flex items-center gap-1.5 text-xs text-(--color-ink-faint)">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
             Answers only from verified knowledge
           </p>
@@ -182,23 +182,23 @@ export function ChatUI() {
               <div
                 className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                   m.role === "user"
-                    ? "bg-gradient-to-r from-[--color-violet] to-[#7c4fe0] text-white"
-                    : "glass text-[--color-ink]"
+                    ? "bg-gradient-to-r from-(--color-violet) to-[#7c4fe0] text-white"
+                    : "glass text-(--color-ink)"
                 }`}
               >
                 {m.content ? (
                   <p className="whitespace-pre-wrap">{m.content}</p>
                 ) : (
                   <span className="flex gap-1.5 py-1" aria-label="Thinking">
-                    <span className="dot h-1.5 w-1.5 rounded-full bg-[--color-ink-dim]" />
-                    <span className="dot h-1.5 w-1.5 rounded-full bg-[--color-ink-dim]" />
-                    <span className="dot h-1.5 w-1.5 rounded-full bg-[--color-ink-dim]" />
+                    <span className="dot h-1.5 w-1.5 rounded-full bg-(--color-ink-dim)" />
+                    <span className="dot h-1.5 w-1.5 rounded-full bg-(--color-ink-dim)" />
+                    <span className="dot h-1.5 w-1.5 rounded-full bg-(--color-ink-dim)" />
                   </span>
                 )}
                 {m.sources && m.sources.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-1.5 border-t border-[--color-line] pt-2.5">
+                  <div className="mt-3 flex flex-wrap gap-1.5 border-t border-(--color-line) pt-2.5">
                     {m.sources.map((s) => (
-                      <span key={s.title} className="rounded-md bg-white/5 px-2 py-0.5 font-[family-name:var(--font-mono)] text-[10px] text-[--color-ink-faint]">
+                      <span key={s.title} className="rounded-md bg-white/5 px-2 py-0.5 font-[family-name:var(--font-mono)] text-[10px] text-(--color-ink-faint)">
                         source: {s.title}
                       </span>
                     ))}
@@ -225,7 +225,7 @@ export function ChatUI() {
             <button
               key={s}
               onClick={() => send(s)}
-              className="rounded-full border border-[--color-line] px-3.5 py-1.5 text-xs text-[--color-ink-dim] transition-colors hover:border-[--color-violet] hover:text-[--color-ink]"
+              className="rounded-full border border-(--color-line) px-3.5 py-1.5 text-xs text-(--color-ink-dim) transition-colors hover:border-(--color-violet) hover:text-(--color-ink)"
             >
               {s}
             </button>
@@ -246,18 +246,18 @@ export function ChatUI() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask about my projects, skills, experience…"
-            className="flex-1 bg-transparent px-3 py-2.5 text-sm text-[--color-ink] outline-none placeholder:text-[--color-ink-faint]"
+            className="flex-1 bg-transparent px-3 py-2.5 text-sm text-(--color-ink) outline-none placeholder:text-(--color-ink-faint)"
             aria-label="Message"
           />
           <button
             type="submit"
             disabled={busy || !input.trim()}
-            className="rounded-xl bg-gradient-to-r from-[--color-violet] to-[--color-cyan] px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] disabled:opacity-50"
+            className="rounded-xl bg-gradient-to-r from-(--color-violet) to-(--color-cyan) px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] disabled:opacity-50"
           >
             {busy ? "…" : "Send"}
           </button>
         </form>
-        <p className="mt-2 text-center text-[10px] text-[--color-ink-faint]">
+        <p className="mt-2 text-center text-[10px] text-(--color-ink-faint)">
           Answers come only from Afnan&apos;s verified knowledge base. Unknown questions are forwarded to her inbox.
         </p>
       </div>

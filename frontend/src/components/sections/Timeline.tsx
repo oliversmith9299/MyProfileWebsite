@@ -14,7 +14,7 @@ const KIND_COLOR: Record<string, string> = {
 export function Timeline() {
   return (
     <Section id="journey" eyebrow="02 · Journey" title="From SAP scripts to agent systems.">
-      <div className="relative ml-3 border-l border-[--color-line] pl-8 md:ml-6">
+      <div className="relative ml-3 border-l border-(--color-line) pl-8 md:ml-6">
         {timeline.map((item, i) => (
           <motion.div
             key={`${item.year}-${item.title}`}
@@ -25,21 +25,21 @@ export function Timeline() {
             className="relative pb-10 last:pb-0"
           >
             <span
-              className="absolute -left-[37px] top-1 h-3.5 w-3.5 rounded-full border-2 border-[--color-bg] md:-left-[39px]"
+              className="absolute -left-[37px] top-1 h-3.5 w-3.5 rounded-full border-2 border-(--color-bg) md:-left-[39px]"
               style={{ background: KIND_COLOR[item.kind] }}
             />
-            <p className="font-[family-name:var(--font-mono)] text-xs text-[--color-ink-faint]">
+            <p className="font-[family-name:var(--font-mono)] text-xs text-(--color-ink-faint)">
               {item.year} · {item.kind}
             </p>
-            <h3 className="mt-1 font-[family-name:var(--font-display)] text-lg font-semibold text-[--color-ink]">
+            <h3 className="mt-1 font-[family-name:var(--font-display)] text-lg font-semibold text-(--color-ink)">
               {item.title}
             </h3>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[--color-ink-dim]">{item.detail}</p>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-(--color-ink-dim)">{item.detail}</p>
             <div className="mt-3 flex flex-wrap gap-2">
               {item.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-md border border-[--color-line] px-2 py-0.5 font-[family-name:var(--font-mono)] text-[11px] text-[--color-ink-faint]"
+                  className="rounded-md border border-(--color-line) px-2 py-0.5 font-[family-name:var(--font-mono)] text-[11px] text-(--color-ink-faint)"
                 >
                   {tag}
                 </span>

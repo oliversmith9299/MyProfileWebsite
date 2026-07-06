@@ -36,25 +36,25 @@ export default async function BlogPost({
       <Navbar />
       <PageAnalytics />
       <main className="mx-auto max-w-3xl px-6 pb-24 pt-36">
-        <Link href="/blog" className="text-sm text-[--color-ink-faint] transition-colors hover:text-[--color-ink]">
+        <Link href="/blog" className="text-sm text-(--color-ink-faint) transition-colors hover:text-(--color-ink)">
           ← All posts
         </Link>
         <article className="mt-8">
-          <p className="font-[family-name:var(--font-mono)] text-xs text-[--color-ink-faint]">
+          <p className="font-[family-name:var(--font-mono)] text-xs text-(--color-ink-faint)">
             {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })} · {post.readingMinutes} min read
           </p>
           <h1 className="mt-3 font-[family-name:var(--font-display)] text-4xl font-bold leading-tight tracking-tight">
             {post.title}
           </h1>
-          <p className="mt-5 text-lg leading-relaxed text-[--color-ink-dim]">{post.excerpt}</p>
-          <hr className="my-10 border-[--color-line]" />
+          <p className="mt-5 text-lg leading-relaxed text-(--color-ink-dim)">{post.excerpt}</p>
+          <hr className="my-10 border-(--color-line)" />
           <div className="space-y-10">
             {post.sections.map((s) => (
               <section key={s.heading}>
-                <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[--color-ink]">
+                <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-(--color-ink)">
                   {s.heading}
                 </h2>
-                <p className="mt-4 text-[15px] leading-[1.85] text-[--color-ink-dim]">{s.body}</p>
+                <p className="mt-4 text-[15px] leading-[1.85] text-(--color-ink-dim)">{s.body}</p>
               </section>
             ))}
           </div>
@@ -62,7 +62,7 @@ export default async function BlogPost({
         <div className="mt-16 flex justify-center">
           <Link
             href="/chat"
-            className="rounded-full bg-gradient-to-r from-[--color-violet] to-[--color-cyan] px-7 py-3.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
+            className="rounded-full bg-gradient-to-r from-(--color-violet) to-(--color-cyan) px-7 py-3.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
           >
             Questions? Ask my AI →
           </Link>

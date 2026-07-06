@@ -35,10 +35,10 @@ export function Section({
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.7, ease: [0.21, 0.6, 0.35, 1] }}
       >
-        <p className="mb-3 font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.28em] text-[--color-violet]">
+        <p className="mb-3 font-[family-name:var(--font-mono)] text-xs uppercase tracking-[0.28em] text-(--color-violet)">
           {eyebrow}
         </p>
-        <h2 className="mb-12 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight text-[--color-ink] md:text-5xl">
+        <h2 className="mb-12 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-tight text-(--color-ink) md:text-5xl">
           {title}
         </h2>
       </motion.div>

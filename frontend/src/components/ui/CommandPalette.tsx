@@ -114,11 +114,11 @@ export function CommandPalette() {
                 if (e.key === "Enter" && filtered[active]) run(filtered[active]);
               }}
               placeholder="Type a command or search…"
-              className="w-full border-b border-[--color-line] bg-transparent px-5 py-4 text-sm text-[--color-ink] outline-none placeholder:text-[--color-ink-faint]"
+              className="w-full border-b border-(--color-line) bg-transparent px-5 py-4 text-sm text-(--color-ink) outline-none placeholder:text-(--color-ink-faint)"
             />
             <div className="max-h-72 overflow-y-auto p-2">
               {filtered.length === 0 && (
-                <p className="px-3 py-6 text-center text-sm text-[--color-ink-faint]">No results</p>
+                <p className="px-3 py-6 text-center text-sm text-(--color-ink-faint)">No results</p>
               )}
               {filtered.map((c, i) => (
                 <button
@@ -126,11 +126,11 @@ export function CommandPalette() {
                   onClick={() => run(c)}
                   onMouseEnter={() => setActive(i)}
                   className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${
-                    i === active ? "bg-white/8 text-[--color-ink]" : "text-[--color-ink-dim]"
+                    i === active ? "bg-white/8 text-(--color-ink)" : "text-(--color-ink-dim)"
                   }`}
                 >
                   <span>{c.label}</span>
-                  <span className="max-w-[45%] truncate text-xs text-[--color-ink-faint]">{c.hint}</span>
+                  <span className="max-w-[45%] truncate text-xs text-(--color-ink-faint)">{c.hint}</span>
                 </button>
               ))}
             </div>

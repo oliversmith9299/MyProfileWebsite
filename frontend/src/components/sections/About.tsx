@@ -25,25 +25,25 @@ function Terminal() {
 
   return (
     <div className="card overflow-hidden font-[family-name:var(--font-mono)] text-[13px]">
-      <div className="flex items-center gap-1.5 border-b border-[--color-line] px-4 py-3">
+      <div className="flex items-center gap-1.5 border-b border-(--color-line) px-4 py-3">
         <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
         <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
         <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-        <span className="ml-3 text-xs text-[--color-ink-faint]">afnan@ai: zsh</span>
+        <span className="ml-3 text-xs text-(--color-ink-faint)">afnan@ai: zsh</span>
       </div>
       <div className="space-y-3 p-5">
         {TERMINAL_LINES.slice(0, visible).map((l) => (
           <div key={l.cmd}>
             <p>
-              <span className="text-[--color-cyan]">{l.prompt}</span>{" "}
-              <span className="text-[--color-ink]">{l.cmd}</span>
+              <span className="text-(--color-cyan)">{l.prompt}</span>{" "}
+              <span className="text-(--color-ink)">{l.cmd}</span>
             </p>
-            <p className="text-[--color-ink-dim]">{l.out}</p>
+            <p className="text-(--color-ink-dim)">{l.out}</p>
           </div>
         ))}
         <p>
-          <span className="text-[--color-cyan]">$</span>
-          <span className="caret ml-1 inline-block h-3.5 w-2 translate-y-0.5 bg-[--color-ink-dim]" />
+          <span className="text-(--color-cyan)">$</span>
+          <span className="caret ml-1 inline-block h-3.5 w-2 translate-y-0.5 bg-(--color-ink-dim)" />
         </p>
       </div>
     </div>
@@ -54,7 +54,7 @@ export function About() {
   return (
     <Section id="about" eyebrow="01 · About" title={<>AI as a product discipline,<br />not a demo.</>}>
       <div className="grid gap-10 md:grid-cols-2 md:gap-14">
-        <div className="space-y-5 text-[15px] leading-relaxed text-[--color-ink-dim]">
+        <div className="space-y-5 text-[15px] leading-relaxed text-(--color-ink-dim)">
           {person.about.map((p) => (
             <p key={p.slice(0, 24)}>{p}</p>
           ))}
