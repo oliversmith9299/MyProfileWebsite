@@ -39,22 +39,34 @@ export function Contact() {
             <a href="/chat" className="text-[--color-cyan] underline-offset-4 hover:underline">AI assistant</a>{" "}
             knows everything on this site.
           </p>
-          <div className="space-y-3 font-[family-name:var(--font-mono)] text-sm">
-            <a href={`mailto:${person.email}`} className="block text-[--color-ink-dim] transition-colors hover:text-[--color-cyan]">
-              ✉ {person.email}
-            </a>
-            <a href={person.linkedin} target="_blank" rel="noreferrer" className="block text-[--color-ink-dim] transition-colors hover:text-[--color-cyan]">
-              in/ afnan-hany
-            </a>
-            <p className="text-[--color-ink-faint]">📍 {person.location}</p>
-          </div>
+          <dl className="space-y-3 text-sm">
+            <div>
+              <dt className="text-xs uppercase tracking-wider text-[--color-ink-faint]">Email</dt>
+              <dd>
+                <a href={`mailto:${person.email}`} className="font-[family-name:var(--font-mono)] text-[--color-ink-dim] transition-colors hover:text-[--color-cyan]">
+                  {person.email}
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wider text-[--color-ink-faint]">LinkedIn</dt>
+              <dd>
+                <a href={person.linkedin} target="_blank" rel="noreferrer" className="font-[family-name:var(--font-mono)] text-[--color-ink-dim] transition-colors hover:text-[--color-cyan]">
+                  afnan-hany
+                </a>
+              </dd>
+            </div>
+            <div>
+              <dt className="text-xs uppercase tracking-wider text-[--color-ink-faint]">Location</dt>
+              <dd className="text-[--color-ink-dim]">{person.location}</dd>
+            </div>
+          </dl>
         </div>
 
         {status === "sent" ? (
           <div className="card flex flex-col items-center justify-center gap-3 p-12 text-center">
-            <span className="text-4xl">✨</span>
-            <h3 className="font-[family-name:var(--font-display)] text-xl font-semibold">Message received.</h3>
-            <p className="text-sm text-[--color-ink-dim]">I&apos;ll get back to you shortly — thank you!</p>
+            <h3 className="font-[family-name:var(--font-display)] text-xl font-semibold text-gradient">Message received.</h3>
+            <p className="text-sm text-[--color-ink-dim]">I&apos;ll get back to you shortly. Thank you!</p>
           </div>
         ) : (
           <form onSubmit={submit} className="card space-y-4 p-7">
@@ -64,8 +76,8 @@ export function Contact() {
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
               <input placeholder="Company (optional)" value={form.company} onChange={set("company")} className={inputCls} />
-              <select value={form.kind} onChange={set("kind")} className={inputCls}>
-                <option value="hire">Hiring — full-time role</option>
+              <select aria-label="Request type" value={form.kind} onChange={set("kind")} className={inputCls}>
+                <option value="hire">Hiring for a full-time role</option>
                 <option value="freelance">Freelance project</option>
                 <option value="consulting">AI consulting</option>
                 <option value="general">Something else</option>
@@ -88,7 +100,7 @@ export function Contact() {
             </button>
             {status === "error" && (
               <p className="text-center text-xs text-[--color-rose]">
-                Couldn&apos;t reach the server — email me directly at {person.email}.
+                Couldn&apos;t reach the server. Email me directly at {person.email}.
               </p>
             )}
           </form>

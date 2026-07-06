@@ -122,7 +122,7 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
             </span>
-            Open to AI roles, freelance & startup collabs — {person.location}
+            Open to AI roles, freelance, and startup collabs · {person.location}
           </motion.div>
 
           <motion.h1

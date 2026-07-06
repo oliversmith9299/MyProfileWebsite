@@ -34,7 +34,17 @@ export function Timeline() {
             <h3 className="mt-1 font-[family-name:var(--font-display)] text-lg font-semibold text-[--color-ink]">
               {item.title}
             </h3>
-            <p className="mt-1 max-w-xl text-sm leading-relaxed text-[--color-ink-dim]">{item.detail}</p>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[--color-ink-dim]">{item.detail}</p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {item.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-md border border-[--color-line] px-2 py-0.5 font-[family-name:var(--font-mono)] text-[11px] text-[--color-ink-faint]"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           </motion.div>
         ))}
       </div>

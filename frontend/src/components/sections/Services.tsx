@@ -16,12 +16,9 @@ export function Services() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.06 }}
-            className="card group p-6"
+            className="card group border-t-2 border-t-transparent p-6 transition-colors hover:border-t-[--color-violet]"
           >
-            <span className="text-2xl transition-transform duration-300 group-hover:scale-125 inline-block">
-              {s.icon}
-            </span>
-            <h3 className="mt-4 font-[family-name:var(--font-display)] text-base font-semibold text-[--color-ink]">
+            <h3 className="font-[family-name:var(--font-display)] text-base font-semibold text-[--color-ink]">
               {s.title}
             </h3>
             <p className="mt-2 text-[13px] leading-relaxed text-[--color-ink-dim]">{s.desc}</p>
@@ -29,7 +26,7 @@ export function Services() {
         ))}
       </div>
       <p className="mt-8 text-center text-sm text-[--color-ink-faint]">
-        Every engagement ships with docs, tests, and deployment — the way I built{" "}
+        Every engagement ships with docs, tests, and deployment, the same way I built{" "}
         <a href="/projects/bizify" className="text-[--color-cyan] underline-offset-4 hover:underline">
           Bizify
         </a>

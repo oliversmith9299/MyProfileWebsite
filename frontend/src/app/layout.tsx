@@ -16,8 +16,8 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${person.name} — AI Engineer`,
-    template: `%s — ${person.shortName}`,
+    default: `${person.name} | AI Engineer`,
+    template: `%s | ${person.shortName}`,
   },
   description: person.intro,
   keywords: [
@@ -27,13 +27,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    title: `${person.name} — AI Engineer`,
+    title: `${person.name} | AI Engineer`,
     description: person.intro,
     siteName: person.shortName,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${person.name} — AI Engineer`,
+    title: `${person.name} | AI Engineer`,
     description: person.intro,
   },
   robots: { index: true, follow: true },
@@ -55,6 +55,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${grotesk.variable} ${jetbrains.variable}`}>
       <body className="noise">
+        <script
+          // Apply the saved theme before first paint to avoid a flash
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("theme");if(t==="light")document.documentElement.dataset.theme="light"}catch(e){}`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

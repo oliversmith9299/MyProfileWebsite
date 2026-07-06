@@ -25,7 +25,7 @@ const SUGGESTIONS = [
 const WELCOME: ChatMessage = {
   id: 0,
   role: "assistant",
-  content: `Hi! I'm Afnan's AI twin — trained on her real CV, projects, and experience. Ask me anything about her work. If I don't know something, I won't make it up — I'll ask the real Afnan and she'll get back to you.`,
+  content: `Hi! I'm Afnan's AI twin, trained on her real CV, projects, and experience. Ask me anything about her work. If I don't know something, I won't make it up. Instead, I'll ask the real Afnan and she'll get back to you.`,
 };
 
 /** Lead-capture form shown when the AI can't answer. */
@@ -62,7 +62,7 @@ function AskAfnanForm({
   if (status === "sent") {
     return (
       <div className="mt-3 rounded-xl border border-emerald-400/30 bg-emerald-400/5 p-4 text-xs text-emerald-300">
-        ✓ Sent! Afnan gets an email right now and will reply to you directly.
+        Sent! Afnan gets an email right now and will reply to you directly.
       </div>
     );
   }
@@ -70,7 +70,7 @@ function AskAfnanForm({
   return (
     <form onSubmit={submit} className="mt-3 space-y-2.5 rounded-xl border border-[--color-violet]/30 bg-[--color-violet]/5 p-4">
       <p className="text-xs text-[--color-ink-dim]">
-        Leave your details — your question goes straight to Afnan&apos;s inbox:
+        Leave your details and your question goes straight to Afnan&apos;s inbox:
       </p>
       <div className="grid grid-cols-2 gap-2.5">
         <input required placeholder="Your name *" value={form.visitor_name}
@@ -93,7 +93,7 @@ function AskAfnanForm({
       </button>
       {status === "error" && (
         <p className="text-center text-[11px] text-[--color-rose]">
-          Couldn&apos;t send — email {person.email} instead.
+          Couldn&apos;t send. Email {person.email} instead.
         </p>
       )}
     </form>
@@ -145,7 +145,7 @@ export function ChatUI() {
         onError: () =>
           update({
             streaming: false,
-            content: `I'm offline right now — the backend isn't reachable. You can email Afnan directly at ${person.email}.`,
+            content: `I'm offline right now, the backend isn't reachable. You can email Afnan directly at ${person.email}.`,
           }),
       }
     );
@@ -163,7 +163,7 @@ export function ChatUI() {
           <h1 className="font-[family-name:var(--font-display)] text-base font-semibold">Afnan&apos;s AI</h1>
           <p className="flex items-center gap-1.5 text-xs text-[--color-ink-faint]">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            RAG-grounded · never hallucinates
+            Answers only from verified knowledge
           </p>
         </div>
       </div>
@@ -199,7 +199,7 @@ export function ChatUI() {
                   <div className="mt-3 flex flex-wrap gap-1.5 border-t border-[--color-line] pt-2.5">
                     {m.sources.map((s) => (
                       <span key={s.title} className="rounded-md bg-white/5 px-2 py-0.5 font-[family-name:var(--font-mono)] text-[10px] text-[--color-ink-faint]">
-                        📄 {s.title}
+                        source: {s.title}
                       </span>
                     ))}
                   </div>

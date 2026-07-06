@@ -120,7 +120,7 @@ export default async function ProjectPage({
             <ul className="mt-4 space-y-3">
               {project.lessons.map((l) => (
                 <li key={l.slice(0, 32)} className="flex gap-3 text-sm leading-relaxed text-[--color-ink-dim]">
-                  <span className="mt-1 text-[--color-violet]">◆</span>
+                  <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-[--color-violet]" />
                   {l}
                 </li>
               ))}

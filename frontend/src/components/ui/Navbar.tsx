@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { sections } from "@/lib/content";
 import { ModeSwitcher } from "@/components/ui/ModeSwitcher";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -45,6 +46,7 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <ModeSwitcher />
           <button
             onClick={() => window.dispatchEvent(new CustomEvent("open-palette"))}

@@ -25,9 +25,14 @@ export function CustomCursor() {
       dot.style.transform = `translate(${x - 3}px, ${y - 3}px)`;
       const t = e.target as HTMLElement;
       const interactive = !!t.closest("a, button, [role=button], input, textarea, select, [data-cursor=hover]");
+      const light = document.documentElement.dataset.theme === "light";
       ring.style.width = interactive ? "44px" : "28px";
       ring.style.height = interactive ? "44px" : "28px";
-      ring.style.borderColor = interactive ? "rgba(139,92,246,0.9)" : "rgba(255,255,255,0.45)";
+      ring.style.borderColor = interactive
+        ? "rgba(124,58,237,0.9)"
+        : light
+          ? "rgba(20,22,28,0.4)"
+          : "rgba(255,255,255,0.45)";
     };
 
     const loop = () => {

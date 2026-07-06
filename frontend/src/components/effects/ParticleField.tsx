@@ -19,6 +19,11 @@ export function ParticleField({ density = 0.00008 }: { density?: number }) {
     const mouse = { x: -9999, y: -9999 };
     let nodes: { x: number; y: number; vx: number; vy: number }[] = [];
 
+    // Theme-aware colors, refreshed when the toggle fires
+    let light = document.documentElement.dataset.theme === "light";
+    const onTheme = () => { light = document.documentElement.dataset.theme === "light"; };
+    window.addEventListener("themechange", onTheme);
+
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = canvas.offsetWidth;
@@ -49,7 +54,7 @@ export function ParticleField({ density = 0.00008 }: { density?: number }) {
       // Mouse-reactive lighting
       if (mouse.x > -999) {
         const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 260);
-        g.addColorStop(0, "rgba(139,92,246,0.08)");
+        g.addColorStop(0, light ? "rgba(124,58,237,0.06)" : "rgba(139,92,246,0.08)");
         g.addColorStop(1, "rgba(139,92,246,0)");
         ctx.fillStyle = g;
         ctx.fillRect(0, 0, w, h);
@@ -75,7 +80,9 @@ export function ParticleField({ density = 0.00008 }: { density?: number }) {
           const dx = a.x - b.x, dy = a.y - b.y;
           const dist = Math.hypot(dx, dy);
           if (dist < LINK) {
-            ctx.strokeStyle = `rgba(139,92,246,${(1 - dist / LINK) * 0.14})`;
+            ctx.strokeStyle = light
+              ? `rgba(109,40,217,${(1 - dist / LINK) * 0.16})`
+              : `rgba(139,92,246,${(1 - dist / LINK) * 0.14})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
@@ -86,7 +93,7 @@ export function ParticleField({ density = 0.00008 }: { density?: number }) {
       }
 
       for (const n of nodes) {
-        ctx.fillStyle = "rgba(196,181,253,0.55)";
+        ctx.fillStyle = light ? "rgba(109,40,217,0.45)" : "rgba(196,181,253,0.55)";
         ctx.beginPath();
         ctx.arc(n.x, n.y, 1.4, 0, Math.PI * 2);
         ctx.fill();
@@ -103,6 +110,7 @@ export function ParticleField({ density = 0.00008 }: { density?: number }) {
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("themechange", onTheme);
       canvas.removeEventListener("mousemove", onMove);
       canvas.removeEventListener("mouseleave", onLeave);
     };

@@ -140,7 +140,7 @@ function QuestionCard({ q, token, onChanged }: { q: Q; token: string; onChanged:
         <div className="mt-4 space-y-2.5">
           <textarea
             rows={3}
-            placeholder="Write the answer once — it joins the AI knowledge base automatically."
+            placeholder="Write the answer once and it joins the AI knowledge base automatically."
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
             className={inputCls}
@@ -270,7 +270,7 @@ export default function AdminPage() {
         <div className="mt-8 space-y-6">
           <div className="card space-y-3 p-6">
             <p className="text-sm font-semibold">Teach the AI something new</p>
-            <input placeholder="Title (e.g. 'New certificate — AWS AI Practitioner')" value={newDoc.title}
+            <input placeholder="Title (e.g. 'New certificate: AWS AI Practitioner')" value={newDoc.title}
               onChange={(e) => setNewDoc({ ...newDoc, title: e.target.value })} className={inputCls} />
             <textarea rows={4} placeholder="Write facts in first person. They become retrievable knowledge immediately."
               value={newDoc.content} onChange={(e) => setNewDoc({ ...newDoc, content: e.target.value })} className={inputCls} />
