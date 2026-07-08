@@ -4,8 +4,10 @@ Every fact here comes from Afnan's real CV — no invented content.
 Idempotent: runs only when the corresponding tables are empty.
 """
 
+import json
 import logging
 from datetime import datetime, timezone
+from pathlib import Path
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -17,6 +19,11 @@ from app.models import KnowledgeDocument
 from app.services import rag
 
 logger = logging.getLogger(__name__)
+
+# Deep Bizify knowledge (README + sequence diagrams), generated into a committed
+# JSON asset. Marked with this source_type so it can be re-ingested idempotently.
+BIZIFY_KB_PATH = Path(__file__).parent / "data" / "bizify_knowledge.json"
+BIZIFY_KB_SOURCE_TYPE = "bizify_deep"
 
 
 PROJECTS = [
@@ -54,7 +61,7 @@ PROJECTS = [
             "Structured AI output needs strict schemas and regeneration paths, not free-form text.",
             "Payment integration (PayPal + Paymob) taught defensive webhook handling early.",
         ],
-        "links": {},
+        "links": {"demo": "https://bizifyai-production.up.railway.app/"},
     },
     {
         "slug": "fentech",
@@ -260,7 +267,8 @@ KNOWLEDGE = [
             "research, competitor analysis, supplier discovery, business planning, roadmap tracking, "
             "and real-time business insights. Tech: React.js, FastAPI, PostgreSQL, SQLAlchemy, Redis, "
             "JWT/OAuth, SSE streaming, PayPal API, Paymob, and the OpenAI SDK. It ranked Top 4 among "
-            "graduation projects at Helwan National University.",
+            "graduation projects at Helwan National University. Bizify is live at "
+            "https://bizifyai-production.up.railway.app/",
         ],
     ),
     (
@@ -381,3 +389,38 @@ async def seed(db: Session) -> None:
         for title, source_type, texts in KNOWLEDGE:
             await rag.ingest_document(db, title=title, source_type=source_type, texts=texts)
         logger.info("Seeded knowledge base (%d documents)", len(KNOWLEDGE))
+
+    # Deep Bizify knowledge — gated separately so it can be added to an already
+    # seeded database (existing deployment) on the next boot.
+    await seed_bizify_knowledge(db)
+
+
+async def seed_bizify_knowledge(db: Session) -> None:
+    """Ingest the README + sequence-diagram knowledge for the Bizify chatbot.
+
+    Idempotent: skips if these documents are already present.
+    """
+    existing = db.execute(
+        select(func.count())
+        .select_from(KnowledgeDocument)
+        .where(KnowledgeDocument.source_type == BIZIFY_KB_SOURCE_TYPE)
+    ).scalar() or 0
+    if existing:
+        return
+    if not BIZIFY_KB_PATH.exists():
+        logger.warning("Bizify knowledge asset not found at %s — skipping", BIZIFY_KB_PATH)
+        return
+
+    docs = json.loads(BIZIFY_KB_PATH.read_text(encoding="utf-8"))
+    for doc in docs:
+        texts = [t for t in doc.get("texts", []) if t.strip()]
+        if not texts:
+            continue
+        await rag.ingest_document(
+            db,
+            title=doc["title"],
+            source_type=BIZIFY_KB_SOURCE_TYPE,
+            texts=texts,
+            source_url=doc.get("source_url"),
+        )
+    logger.info("Seeded deep Bizify knowledge (%d documents)", len(docs))

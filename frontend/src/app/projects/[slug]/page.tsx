@@ -129,6 +129,27 @@ export default async function ProjectPage({
         </section>
 
         <div className="mt-14 flex flex-wrap items-center justify-center gap-4">
+          {project.links.demo && (
+            <a
+              href={project.links.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full px-7 py-3.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"
+              style={{ background: project.accent }}
+            >
+              Visit live site ↗
+            </a>
+          )}
+          {project.links.github && (
+            <a
+              href={project.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass rounded-full px-7 py-3.5 text-sm font-semibold text-(--color-ink) transition-colors hover:border-(--color-violet)"
+            >
+              View source ↗
+            </a>
+          )}
           <Link
             href="/chat"
             className="rounded-full bg-gradient-to-r from-(--color-violet) to-(--color-cyan) px-7 py-3.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03]"

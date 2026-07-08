@@ -1,0 +1,659 @@
+[
+  {
+    "title": "Bizify — project overview",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "bizifyAI is an AI-assisted startup planning pipeline that helps founders move from a questionnaire or a raw idea into a validated, execution-ready business plan. The project is organized as a sequence of specialized agents. Each agent owns one stage of the startup-building process and produces structured output that can be saved, reviewed, refined, and passed to the next stage.\n\nThe system supports two main user scenarios:\n\n- **New user flow:** the founder completes a questionnaire, then the system analyzes their profile, discovers realistic problems, and generates a personalized startup idea.\n- **Returning user flow:** the founder already has an idea, so the system structures that idea, researches real problems around it, and helps refine it through chat.",
+      "After an idea is saved, the pipeline continues through customer analysis, competition, market potential, idea strategy, business model, product functions, MVP planning, unit economics, and go-to-market planning."
+    ]
+  },
+  {
+    "title": "Bizify — Pipeline Sequence",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "```text\nSTART\n|\n|-- New user:\n|   OneProfileAnalysis.py\n|   TwoProblemDiscovery.py\n|   ThreePersonalizeIdeaChat.py\n|\n|-- Returning user with idea:\n|   ThreeIdeaIntakeAgent.py\n|   TwoProblemDiscovery.py\n|   ThreePersonalizeIdeaChat.py\n|\nIDEA SAVED\n|\nFourCustomersAgent.py\nFiveCompetitionAgent.py\nSixMaketPotential.py\nSevenIdeaStrategy.py\nEightBusinessModel.py\nNineFunctionsList.py\nTenMVPPlanning.py\nElevenUnitEconomicsAgent.py\nTwelveGoToMarket.py\n```"
+    ]
+  },
+  {
+    "title": "Bizify — Agent Reference",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "### `OneProfileAnalysis.py`\n\nAnalyzes a new user's questionnaire output and builds a founder profile. It identifies the user's personality, motivation, strengths, weaknesses, skill gaps, risk level, readiness, preferred business direction, and realistic problem spaces. Its output is used by `TwoProblemDiscovery.py` to search for problems that match the founder's abilities, interests, region, and business goals.\n\nExpected output file:\n\n```text\ndata/profileAnalysis.json\n```\n\n### `TwoProblemDiscovery.py`",
+      "Researches real-world problems based on either the founder profile or a returning user's structured idea. It generates search queries, gathers external evidence, extracts pain points, identifies customer problems, scores validation strength, and returns problem opportunities that can become startup ideas. This agent makes sure the pipeline is grounded in real user needs instead of only assumptions.\n\nExpected output file:\n\n```text\ndata/problems.json\n```\n\n### `ThreeIdeaIntakeAgent.py`\n\nUsed only in the returning-user flow. This agent receives the user's raw idea and turns it into structured data. It extracts the idea summary, target users, industry, region, assumed problem, assumed solution, business model, and research keywords. If the idea is unclear, it should ask short clarification questions before sending anything to problem discovery.\n\nExpected output file:",
+      "```text\ndata/IdeaIntake.json\n```\n\n### `ThreePersonalizeIdeaChat.py`\n\nGenerates and discusses the startup idea with the user. In the new-user flow, it creates the first personalized idea from the profile and discovered problems. In the returning-user flow, it refines the user's own idea using the structured idea intake and problem discovery results. This agent supports conversation, alternatives, refinements, and saving the selected idea.\n\nExpected output files:\n\n```text\ndata/idea_output.json\ndata/idea_chat_output.json\ndata/personalizedideachat.json\n```\n\n### `FourCustomersAgent.py`",
+      "Defines the target customers for the saved idea. It turns the selected idea and discovered problem into clear customer segments, identifies who feels the pain most, explains why they care, and describes how they behave. It can also use CATWOE analysis to understand customers, actors, transformation, worldview, owner, and environmental constraints.\n\nExpected output file:\n\n```text\ndata/FourCustomersAgent.json\n```\n\n### `FiveCompetitionAgent.py`\n\nAnalyzes the competitive landscape around the saved idea. It identifies direct competitors, indirect alternatives, substitute solutions, pricing models, feature differences, acquisition channels, and positioning gaps. It can also use Porter's Five Forces and VRIO analysis to evaluate competitive pressure and possible defensibility.\n\nExpected output file:\n\n```text\ndata/FiveCompetitionAgent.json\n```\n\n### `SixMaketPotential.py`",
+      "Estimates the market opportunity for the saved idea. It defines the market, target region, TAM, SAM, SOM, major trends, growth drivers, adoption barriers, and opportunity attractiveness. It can also use PESTEL analysis to evaluate political, economic, social, technological, environmental, and legal factors.\n\nExpected output file:\n\n```text\ndata/SixMaketPotential.json\n```\n\n### `SevenIdeaStrategy.py`\n\nTurns the saved idea into a clear strategic direction. It defines the value proposition, positioning, core promise, differentiation strategy, key assumptions, validation priorities, and a high-level business plan. This agent acts as the bridge between research and execution.\n\nExpected output file:\n\n```text\ndata/SevenIdeaStrategy.json\n```\n\n### `EightBusinessModel.py`",
+      "Designs how the startup will create, deliver, and capture value. It defines the business model type, revenue streams, pricing logic, cost structure, key partners, key activities, resources, customer relationships, channels, and business model risks. Its output prepares the idea for unit economics and go-to-market planning.\n\nExpected output file:\n\n```text\ndata/EightBusinessModel.json\n```\n\n### `NineFunctionsList.py`\n\nTranslates the strategy into product capabilities. It defines what the product must do to deliver the value proposition, separates must-have functions from nice-to-have features, identifies future capabilities, and prevents feature creep before MVP planning. This agent should connect customer pain points, competitor gaps, and business model needs.\n\nExpected output file:\n\n```text\ndata/NineFunctionsList.json\n```\n\n### `TenMVPPlanning.py`",
+      "Plans the first buildable version of the product. It defines the MVP goal, riskiest assumptions, included and excluded scope, core user flows, milestones, testing plan, QA checklist, and launch criteria. The goal is to validate the startup idea with the smallest practical version instead of overbuilding.\n\nExpected output file:\n\n```text\ndata/TenMVPPlanning.json\n```\n\n### `ElevenUnitEconomicsAgent.py`\n\nChecks whether the business can make financial sense. It estimates revenue model, pricing assumptions, cost assumptions, gross margin, CAC, LTV, LTV/CAC ratio, payback period, break-even point, and pricing tests. This agent is optional but important for understanding whether the idea can become economically viable.\n\nExpected output file:\n\n```text\ndata/ElevenUnitEconomicsAgent.json\n```\n\n### `TwelveGoToMarket.py`",
+      "Creates the launch and customer acquisition plan. It defines the target launch segment, positioning message, marketing channels, funnel stages, first experiments, success metrics, first 100 customers plan, launch timeline, CAC tracking, and feedback loops. Its output turns the MVP into a practical market entry plan.\n\nExpected output file:\n\n```text\ndata/TwelveGoToMarket.json\n```"
+    ]
+  },
+  {
+    "title": "Bizify — Supporting Files",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "### `PipelineRunner.py`\n\nControls the pipeline execution. It should coordinate the agent sequence, pass each agent's output to the next step, save important results, and track pipeline progress. It is not a business-analysis agent by itself; it is the orchestrator for the agent workflow.\n\n### `generalBot.py`\n\nRepresents a general-purpose assistant outside the main startup pipeline. It can be used for normal support, general questions, or non-pipeline conversations.\n\n### `SkillsGap.py`\n\nCan be used as a supporting analysis step to identify what the founder needs to learn or outsource. It is useful after the MVP, business model, or go-to-market plan reveals execution gaps."
+    ]
+  },
+  {
+    "title": "Bizify — Section Refinement",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "Agents 4 through 12 should work as analysis agents with a small section-level chatbot. Each agent first generates its structured output, then the user can:\n\n- regenerate the section with the same inputs;\n- regenerate the section with a custom prompt;\n- ask for a small change inside that section;\n- keep the current result and continue to the next agent.\n\nThe refinement chat must stay inside the current section only. For example, an MVP refinement should update the MVP plan, not rewrite the customer analysis, competition analysis, or go-to-market plan."
+    ]
+  },
+  {
+    "title": "Bizify — Data Folder",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "The `data` folder contains example output schemas and saved JSON structures for the pipeline. These files document the expected shape of each agent's result and make it easier to connect the backend, frontend, and database.\n\nImportant examples:\n\n```text\ndata/questionnaireOutput.json\ndata/profileAnalysis.json\ndata/problems.json\ndata/IdeaIntake.json\ndata/FourCustomersAgent.json\ndata/FiveCompetitionAgent.json\ndata/SixMaketPotential.json\ndata/SevenIdeaStrategy.json\ndata/EightBusinessModel.json\ndata/NineFunctionsList.json\ndata/TenMVPPlanning.json\ndata/ElevenUnitEconomicsAgent.json\ndata/TwelveGoToMarket.json\n```"
+    ]
+  },
+  {
+    "title": "Bizify — Database Integration",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "The backend schema should use the shared `agents` and `agent_runs` tables as the canonical storage for AI agent execution history. Each agent is registered once in `agents`, and every run is stored in `agent_runs` with its input JSON, output JSON, status, confidence score, execution time, and roadmap stage link when available.\n\nTemporary per-agent result tables such as profile, problems, idea, or intake results may remain during transition for backward compatibility, but long-term agent outputs should be read from `agent_runs.output_data`."
+    ]
+  },
+  {
+    "title": "Bizify — Product Logic",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "The project is designed to keep the founder moving through a structured startup-building journey:\n\n1. Understand the founder or their existing idea.\n2. Discover real problems and evidence.\n3. Generate or refine a startup idea.\n4. Save the selected idea.\n5. Analyze customers and competition.\n6. Estimate market potential.\n7. Define strategy and business model.\n8. Translate the idea into product functions.\n9. Plan the MVP.\n10. Check unit economics.\n11. Build a go-to-market plan.\n\nThe final result should be more than an idea. It should be a practical startup plan with a clear customer, problem, value proposition, market logic, MVP scope, financial assumptions, and launch path."
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_01: User Registration (Entrepreneur) — Full Stack Flow",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_01: User Registration (Entrepreneur) — Full Stack Flow\n\nParticipants: User, Register UI (Next.js / bizify-v2), Users Controller POST /api/v1/users/register, UserService, ProfileService, PartnerService, Repositories (user / subscription / auth), Database (Supabase / Postgres), Email Service (SMTP / Resend).",
+      "Flow:\n1. Fill Registration Form:\n- User -> Register UI (Next.js / bizify-v2): Open /register page\n- Register UI (Next.js / bizify-v2) -> User: Render form (email, name, password, confirm, questionnaire)\n- User -> Register UI (Next.js / bizify-v2): Submit registration\n[alt Client validation fails]\n- Register UI (Next.js / bizify-v2) -> User: Show inline field errors (no request sent)\n  else if Valid form:\n- Register UI (Next.js / bizify-v2) -> Users Controller POST /api/v1/users/register: POST /api/v1/users/register { email, full_name, password, confirm_password, questionnaire_answers }\n2. Duplicate-Email Guard:\n- Users Controller POST /api/v1/users/register -> UserService: get_user_by_email(email)\n- UserService -> Repositories (user / subscription / auth): get_by_email(email)\n- Repositories (user / subscription / auth) -> Database (Supabase / Postgres): SELECT * FROM users WHERE email = "
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_02: User Login (email/password + Google OAuth) — Full Stack",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_02: User Login (email/password + Google OAuth) — Full Stack\n\nParticipants: User, Login UI (Next.js), Auth Controller /api/v1/auth, AuthService, Rate Limiter (slowapi), User DB.",
+      "Flow:\n- User -> Login UI (Next.js): Open Login Page\n- Login UI (Next.js) -> User: Display login form\n- User -> Login UI (Next.js): Enter email + password → Click Login\n- Login UI (Next.js) -> Auth Controller /api/v1/auth: POST /api/v1/auth/login (OAuth2 form: username, password)\n- Auth Controller /api/v1/auth -> Rate Limiter (slowapi): limiter \"10/minute\" per IP\n[alt Rate limit exceeded]\n- Rate Limiter (slowapi) -> Auth Controller /api/v1/auth: block\n- Auth Controller /api/v1/auth -> Login UI (Next.js): 429 Too Many Requests\n- Login UI (Next.js) -> User: \"Too many attempts, slow down\"\n  else if allowed:\n- Rate Limiter (slowapi) -> Auth Controller /api/v1/auth: ok\n- Auth Controller /api/v1/auth -> AuthService: authenticate(email, password)\n- AuthService -> User DB: find user by email\n- User DB -> AuthService: user | none\n[alt User not found / wrong password]\n- AuthService -> User DB: incr"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_03: User Logout (token invalidation + client cleanup)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_03: User Logout (token invalidation + client cleanup)\n\nParticipants: User, Frontend, Auth Controller /api/v1/auth/logout, AuthService, DB.",
+      "Flow:\n- User -> Frontend: Click \"Logout\"\n- Frontend -> Auth Controller /api/v1/auth/logout: POST /api/v1/auth/logout (Bearer token / cookie)\n- Auth Controller /api/v1/auth/logout -> Auth Controller /api/v1/auth/logout: oauth2_scheme → extract token\n- Auth Controller /api/v1/auth/logout -> AuthService: logout(token)\n[alt token missing / invalid]\n- AuthService -> Auth Controller /api/v1/auth/logout: 401\n- Auth Controller /api/v1/auth/logout -> Frontend: 401\n- Frontend -> Frontend: clear local state anyway\n  else if valid:\n- AuthService -> DB: invalidate session / blacklist token (clear last_activity)\n- DB -> AuthService: ok\n- AuthService -> Auth Controller /api/v1/auth/logout: { message: \"Logged out\" }\n- Auth Controller /api/v1/auth/logout -> Frontend: 200 OK (clear auth_token cookie)\n- Frontend -> Frontend: reset Auth Context; purge cached queries\n- Frontend -> User: Redirect → /login"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_04: Session Timeout Handling (idle warning → keep-alive or auto-logout)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_04: Session Timeout Handling (idle warning → keep-alive or auto-logout)\n\nParticipants: User, Frontend (session watcher), Auth Controller /api/v1/auth, DB.",
+      "Flow:\n[loop every N seconds (idle watcher)]\n- Frontend (session watcher) -> Auth Controller /api/v1/auth: GET /api/v1/auth/session-status (cookie)\n- Auth Controller /api/v1/auth -> DB: read last_activity\n- DB -> Auth Controller /api/v1/auth: last_activity\n- Auth Controller /api/v1/auth -> Auth Controller /api/v1/auth: remaining = timeout − (now − last_activity)\n- Auth Controller /api/v1/auth -> Frontend (session watcher): { is_active, remaining_minutes, warning_threshold }\n[alt remaining > warning]\n- Frontend (session watcher) -> Frontend (session watcher): stay silent\n  else if remaining ≤ warning threshold:\n- Frontend (session watcher) -> User: Show \"Session expiring soon\" modal\n[alt User clicks \"Stay logged in\"]\n- User -> Frontend (session watcher): Continue\n- Frontend (session watcher) -> Auth Controller /api/v1/auth: POST /api/v1/auth/ping\n- Auth Controller /api/v1/auth -> DB: updat"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_05: User Profile Update (questionnaire/profile + dependent-analysis refresh)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_05: User Profile Update (questionnaire/profile + dependent-analysis refresh)\n\nParticipants: User, Frontend, Users Controller /api/v1/users/profile, ProfileService, DB.",
+      "Flow:\n- User -> Frontend: Edit profile (skills, experience, goals, questionnaire answers)\n- Frontend -> Frontend: client-side validation\n- Frontend -> Users Controller /api/v1/users/profile: POST /api/v1/users/profile { profile fields } (JWT)\n- Users Controller /api/v1/users/profile -> Users Controller /api/v1/users/profile: get_current_user (auth)\n- Users Controller /api/v1/users/profile -> ProfileService: update_profile(user_id, profile_in)\n- ProfileService -> DB: load existing user_profile\n[alt profile not found]\n- DB -> ProfileService: none\n- ProfileService -> Users Controller /api/v1/users/profile: None\n- Users Controller /api/v1/users/profile -> Frontend: 404 Not Found\n- Frontend -> User: \"Profile not found\"\n  else if exists:\n- DB -> ProfileService: profile row\n- ProfileService -> DB: UPDATE user_profile (skills, answers, derived fields)\n- DB -> ProfileService: updated\n- ProfileSer"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_06: Account Settings (password, notifications, language, privacy, deactivate/delete)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_06: Account Settings (password, notifications, language, privacy, deactivate/delete)\n\nParticipants: User, Settings UI, Settings Controller /api/v1/settings, Settings/UserService, DB.",
+      "Flow:\n- User -> Settings UI: Open Settings\n- Settings UI -> Settings Controller /api/v1/settings: GET /api/v1/settings (JWT)\n- Settings Controller /api/v1/settings -> DB: load settings (profile, prefs, privacy)\n- DB -> Settings Controller /api/v1/settings: SettingsResponse\n- Settings Controller /api/v1/settings -> Settings UI: current settings\n- Settings UI -> User: Render settings tabs\n[alt Change password]\n- User -> Settings UI: old + new password\n- Settings UI -> Settings Controller /api/v1/settings: PATCH /settings/password\n- Settings Controller /api/v1/settings -> Settings/UserService: verify old hash → set new hash\n[alt old password wrong]\n- Settings/UserService -> Settings Controller /api/v1/settings: 400\n- Settings Controller /api/v1/settings -> Settings UI: 400 \"Wrong current password\"\n  else if ok:\n- Settings/UserService -> DB: UPDATE password_hash\n- Settings Controller /api/v1"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_07: Beginner User Guide (onboarding walkthrough + AI assistant)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_07: Beginner User Guide (onboarding walkthrough + AI assistant)\n\nParticipants: New User, Frontend (guided tour), Backend /api/v1/ai/general-chat, AI Route + generalBot, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n- New User -> Frontend (guided tour): First login → \"Show me around\"\n- Frontend (guided tour) -> Frontend (guided tour): render step-by-step tour (static onboarding content)\n- Frontend (guided tour) -> New User: Step 1…N (create idea, run analysis, teams, credits)\n[opt User asks a question in-context]\n- New User -> Frontend (guided tour): \"How do I start my first idea?\"\n- Frontend (guided tour) -> Backend /api/v1/ai/general-chat: POST /api/v1/ai/general-chat { message, history }\n- Backend /api/v1/ai/general-chat -> Backend /api/v1/ai/general-chat: check_ai_usage (chat gate ~0 credits)\n- Backend /api/v1/ai/general-chat -> AI Route + generalBot: forward (x-api-key + x-plan-name)\n- AI Route + generalBot -> DB: _load_pipeline_snapshot(user_id) (what the user has done so far)\n- DB -> AI Route + generalBot: snapshot\n- AI Route + generalBot -> AI Route + generalBot: _classify_intent → gen"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_08: Business Concept Guide (explains each analysis section on demand)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_08: Business Concept Guide (explains each analysis section on demand)\n\nParticipants: User, Frontend, Backend /api/v1/ai/general-chat, AI Route + generalBot, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n- User -> Frontend: Open \"Business Concepts\" guide (TAM/SAM/SOM, CAC, LTV, lean canvas…)\n- Frontend -> Frontend: render concept library (static cards)\n- Frontend -> User: Concept explanations + examples\n[opt Explain this for MY idea\"]\n- User -> Frontend: \"What does SOM mean for my idea?\"\n- Frontend -> Backend /api/v1/ai/general-chat: POST /api/v1/ai/general-chat { message, history }\n- Backend /api/v1/ai/general-chat -> AI Route + generalBot: forward (x-api-key + x-plan-name)\n- AI Route + generalBot -> DB: load pipeline snapshot + relevant section (e.g. market_potential)\n- DB -> AI Route + generalBot: context\n- AI Route + generalBot -> AI Route + generalBot: _classify_intent → chat_about_data (section = market_potential)\n- AI Route + generalBot -> LLM (Llama-3.3-70B): Llama-3.3-70B (concept-tutor prompt + the user's real numbers)\n- LLM (Llama-3.3-70B) -> AI Route + generalBot: conce"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_09: Create New Idea (AI-bot intake OR manual · draft until Approve)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_09: Create New Idea (AI-bot intake OR manual · draft until Approve)\n\nParticipants: Founder, Frontend, Backend /api/v1/ai/idea-intake, AI Route /pipeline/idea-intake, IdeaIntake + Problem + IdeaGen, LLM (Llama-3.3-70B), DB (draft store + ideas).",
+      "Flow:\n- Founder -> Frontend: Click \"New Idea\"\n- Frontend -> Founder: Choose: 🤖 AI bot | ✍️ Manual\n[alt Path A: AI conversational intake]\nPhase A · gather the idea by chat:\n- Founder -> Frontend: Describe idea / answer questions\n- Frontend -> Backend /api/v1/ai/idea-intake: POST /idea-intake { message, history }\n- Backend /api/v1/ai/idea-intake -> AI Route /pipeline/idea-intake: POST /pipeline/idea-intake (x-api-key)\n- AI Route /pipeline/idea-intake -> IdeaIntake + Problem + IdeaGen: run_idea_intake(message, history)\n- IdeaIntake + Problem + IdeaGen -> LLM (Llama-3.3-70B): Llama-3.3-70B, JSON (decide: ready vs needs_clarification)\n- LLM (Llama-3.3-70B) -> IdeaIntake + Problem + IdeaGen: reply + status\n- AI Route /pipeline/idea-intake -> Backend /api/v1/ai/idea-intake: { status, reply, questions|intake }\n- Backend /api/v1/ai/idea-intake -> Frontend: reply (SSE typing effect)\n[alt needs_cla"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_10: Idea Scoring (feasibility 0–100 computed in code, anchored to budget)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_10: Idea Scoring (feasibility 0–100 computed in code, anchored to budget)\n\nParticipants: User, Frontend, Backend /api/v1/ai/...; /ideas, AI Agents (pipeline), Rubric Math (code-side score), DB (ideas + *_results).",
+      "Flow:\nScore produced during analysis:\n- AI Agents (pipeline) -> AI Agents (pipeline): sections generated (problems, market, competition, unit economics) → see seq_23–31\n- AI Agents (pipeline) -> Rubric Math (code-side score): weighted rubric: problem urgency (grounded) + market demand + competition headroom + budget fit\n- Rubric Math (code-side score) -> Rubric Math (code-side score): fit_to_budget() — penalize ideas that overreach the founder's capital\n- Rubric Math (code-side score) -> AI Agents (pipeline): feasibility 0–100 + provenance (basis per factor)\n- AI Agents (pipeline) -> DB (ideas + *_results): store feasibility (+ problem_validation_score) on the idea + section results\n- DB (ideas + *_results) -> AI Agents (pipeline): saved\nUser views the score:\n- User -> Frontend: Open idea / Ideas list\n- Frontend -> Backend /api/v1/ai/...; /ideas: GET /api/v1/ideas/{id} (and section resul"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_11: Idea Filtering & Sorting (budget / skills / feasibility)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_11: Idea Filtering & Sorting (budget / skills / feasibility)\n\nParticipants: User, Frontend, Backend GET /api/v1/ideas, IdeaService, DB.",
+      "Flow:\n- User -> Frontend: Set filters (min/max budget, skills, min feasibility) + sort field/order\n- Frontend -> Backend GET /api/v1/ideas: GET /api/v1/ideas?min_budget&max_budget &skills&feasibility&sort_by&sort_order (JWT)\n[alt min_budget > max_budget]\n- Backend GET /api/v1/ideas -> Frontend: 400 Invalid range\n- Frontend -> User: Show validation error\n  else if valid:\n- Backend GET /api/v1/ideas -> Backend GET /api/v1/ideas: parse skills CSV → list\n- Backend GET /api/v1/ideas -> IdeaService: get_user_ideas(filters, sort)\n- IdeaService -> DB: SELECT ideas WHERE owner/shared + budget BETWEEN + feasibility ≥ ? + skills overlap ORDER BY sort_by sort_order\n- DB -> IdeaService: filtered + sorted rows\n- IdeaService -> Backend GET /api/v1/ideas: list[IdeaRead]\n- Backend GET /api/v1/ideas -> Frontend: 200 OK\n- Frontend -> User: Render filtered idea cards (empty-state if none match)"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_12: Archive / Unarchive Idea",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_12: Archive / Unarchive Idea\n\nParticipants: User, Frontend, Backend /api/v1/ideas, IdeaService, DB.",
+      "Flow:\n[alt Archive]\n- User -> Frontend: Idea menu → \"Archive\"\n- Frontend -> Backend /api/v1/ideas: PATCH /api/v1/ideas/{id}/archive (JWT)\n- Backend /api/v1/ideas -> IdeaService: archive_idea(id, user_id)\n- IdeaService -> DB: verify ownership / edit rights\n[alt not owner / no access]\n- DB -> IdeaService: forbidden\n- IdeaService -> Backend /api/v1/ideas: 403\n- Backend /api/v1/ideas -> Frontend: 403 Forbidden\n  else if allowed:\n- IdeaService -> DB: UPDATE ideas SET is_archived = true\n- DB -> IdeaService: updated IdeaRead\n- IdeaService -> Backend /api/v1/ideas: idea\n- Backend /api/v1/ideas -> Frontend: 200 OK\n- Frontend -> User: Idea moved to Archived (hidden from active list)\n  else if Unarchive:\n- User -> Frontend: Archived list → \"Unarchive\"\n- Frontend -> Backend /api/v1/ideas: PATCH /api/v1/ideas/{id}/unarchive (JWT)\n- Backend /api/v1/ideas -> IdeaService: unarchive_idea(id, user_id)\n- I"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_13: Compare Business Ideas (side-by-side metrics)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_13: Compare Business Ideas (side-by-side metrics)\n\nParticipants: User, Frontend (compare view), Backend /api/v1/ideas | /ai, DB.",
+      "Flow:\n- User -> Frontend (compare view): Select 2–3 ideas → \"Compare\"\n[loop each selected idea]\n- Frontend (compare view) -> Backend /api/v1/ideas | /ai: GET /api/v1/ideas/{id} (JWT)\n- Backend /api/v1/ideas | /ai -> DB: verify access + read idea (feasibility, budget, scores)\n- DB -> Backend /api/v1/ideas | /ai: idea\n- Backend /api/v1/ideas | /ai -> Frontend (compare view): IdeaRead\n[opt deep compare (analysis sections)]\n- Frontend (compare view) -> Backend /api/v1/ideas | /ai: GET /api/v1/ai/market-potential?idea_id=... (+ unit-economics, competition)\n- Backend /api/v1/ideas | /ai -> Backend /api/v1/ideas | /ai: resolve owner id; forward to AI service\n- Backend /api/v1/ideas | /ai -> DB: (AI) read *_results for idea\n- DB -> Backend /api/v1/ideas | /ai: section data\n- Backend /api/v1/ideas | /ai -> Frontend (compare view): section JSON\n- Frontend (compare view) -> Frontend (compare view):"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_14: Share Idea (public read-only link OR team/group sharing)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_14: Share Idea (public read-only link OR team/group sharing)\n\nParticipants: Owner, Frontend, Backend /api/v1/ideas/share | /groups, Share/IdeaService, DB, Recipient.",
+      "Flow:\n[alt Public share link]\n- Owner -> Frontend: \"Create share link\" (read-only)\n- Frontend -> Backend /api/v1/ideas/share | /groups: POST /api/v1/ideas/share { idea_id, scope }\n- Backend /api/v1/ideas/share | /groups -> Share/IdeaService: verify ownership → create token\n- Share/IdeaService -> DB: INSERT share token (idea_id, expiry, scope)\n- DB -> Share/IdeaService: token\n- Share/IdeaService -> Backend /api/v1/ideas/share | /groups: ShareResponse { url }\n- Backend /api/v1/ideas/share | /groups -> Frontend: 200 OK share URL\n- Frontend -> Owner: Copy link\nRecipient opens link:\n- Recipient -> Frontend: GET /share/{token} (no login)\n- Frontend -> Backend /api/v1/ideas/share | /groups: resolve token → read-only idea snapshot\n- Backend /api/v1/ideas/share | /groups -> DB: validate token (not revoked/expired)\n[alt revoked / expired]\n- DB -> Backend /api/v1/ideas/share | /groups: invalid\n- Ba"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_15: Export Idea as PDF (assemble all sections → document)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_15: Export Idea as PDF (assemble all sections → document)\n\nParticipants: User, Frontend (PDF renderer), Backend /api/v1/ai/* ; /ideas, DB.",
+      "Flow:\n- User -> Frontend (PDF renderer): Open idea → \"Export as PDF\"\n- Frontend (PDF renderer) -> User: Choose sections + language\nGather all content:\n- Frontend (PDF renderer) -> Backend /api/v1/ai/* ; /ideas: GET /api/v1/ideas/{id}/content?lang\n- Backend /api/v1/ai/* ; /ideas -> DB: read idea (in requested language)\n- DB -> Backend /api/v1/ai/* ; /ideas: idea content\n- Backend /api/v1/ai/* ; /ideas -> Frontend (PDF renderer): idea\n[loop each analysis section]\n- Frontend (PDF renderer) -> Backend /api/v1/ai/* ; /ideas: GET /api/v1/ai/?idea_id=...\n- Backend /api/v1/ai/* ; /ideas -> Backend /api/v1/ai/* ; /ideas: resolve owner id → forward to AI service\n- Backend /api/v1/ai/* ; /ideas -> DB: (AI) read *_results\n- DB -> Backend /api/v1/ai/* ; /ideas: section JSON\n- Backend /api/v1/ai/* ; /ideas -> Frontend (PDF renderer): section data\n[alt missing / ungenerated sections]\n- Frontend (PDF re"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_16: Accept Team Invitation (token → membership + idea access)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_16: Accept Team Invitation (token → membership + idea access)\n\nParticipants: Invitee, Frontend, Backend /api/v1/groups/invites/accept, GroupService, NotificationService, DB.",
+      "Flow:\n- Invitee -> Frontend: Click invite link (email) → /invite?token=...\n- Frontend -> Frontend: require login (if needed → seq_02)\n- Invitee -> Frontend: \"Accept invitation\"\n- Frontend -> Backend /api/v1/groups/invites/accept: POST /api/v1/groups/invites/accept?token=... (JWT)\n- Backend /api/v1/groups/invites/accept -> GroupService: process_invite(token, user_id)\n- GroupService -> DB: load invite by token\n[alt invalid / expired / already used]\n- DB -> GroupService: invalid\n- GroupService -> Backend /api/v1/groups/invites/accept: 400 / 410\n- Backend /api/v1/groups/invites/accept -> Frontend: Invite not valid\n- Frontend -> Invitee: \"This invitation expired\"\n  else if email mismatch / already a member:\n- DB -> GroupService: conflict\n- GroupService -> Backend /api/v1/groups/invites/accept: 409\n- Backend /api/v1/groups/invites/accept -> Frontend: 409\n- Frontend -> Invitee: \"Already a membe"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_17: Team Management (create group, invite, join requests)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_17: Team Management (create group, invite, join requests)\n\nParticipants: Owner, Frontend, Backend /api/v1/groups, GroupService, NotificationService, DB, Applicant.",
+      "Flow:\nCreate team:\n- Owner -> Frontend: \"Create team\"\n- Frontend -> Backend /api/v1/groups: POST /api/v1/groups { name }\n- Backend /api/v1/groups -> GroupService: create_group(name, owner_id)\n- GroupService -> DB: INSERT group + owner membership (OWNER)\n- DB -> GroupService: group\n- GroupService -> Backend /api/v1/groups: GroupResponse\n- Backend /api/v1/groups -> Frontend: 200 OK\nInvite a member:\n- Owner -> Frontend: Invite by email + role (+ idea access)\n- Frontend -> Backend /api/v1/groups: POST /api/v1/groups/{id}/invites { email, role, idea_ids }\n- Backend /api/v1/groups -> GroupService: _ensure_group_admin; create invite token\n- GroupService -> DB: INSERT invite (token, role, accessible_ideas)\n- GroupService -> NotificationService: email invite link (BackgroundTask)\n- NotificationService -> Owner: 📧 invite email (→ seq_16)\n- GroupService -> Backend /api/v1/groups: invite\n- Backend /"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_18: Change Team Member Role (OWNER / EDITOR / VIEWER)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_18: Change Team Member Role (OWNER / EDITOR / VIEWER)\n\nParticipants: Owner, Frontend, Backend PATCH /api/v1/groups/members/{id}, GroupService, NotificationService, DB.",
+      "Flow:\n- Owner -> Frontend: Members list → change a member's role\n- Frontend -> Backend PATCH /api/v1/groups/members/{id}: PATCH /api/v1/groups/members/{member_id} { role } (JWT)\n- Backend PATCH /api/v1/groups/members/{id} -> GroupService: update_group_member(member_id, actor_id, role)\n- GroupService -> DB: load member + group; check actor is admin/owner\n[alt actor not owner/admin]\n- DB -> GroupService: forbidden\n- GroupService -> Backend PATCH /api/v1/groups/members/{id}: 403\n- Backend PATCH /api/v1/groups/members/{id} -> Frontend: 403 Forbidden\n- Frontend -> Owner: \"Only the owner can change roles\"\n  else if target is the owner / last owner:\n- DB -> GroupService: invalid\n- GroupService -> Backend PATCH /api/v1/groups/members/{id}: 400\n- Backend PATCH /api/v1/groups/members/{id} -> Frontend: 400 \"Can't change owner role\"\n  else if allowed:\n- DB -> GroupService: member\n- GroupService -> D"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_19: Assign Member to Ideas (per-idea access control)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_19: Assign Member to Ideas (per-idea access control)\n\nParticipants: Owner, Frontend, Backend PATCH /api/v1/groups/members/{id}, GroupService, NotificationService, DB, Member.",
+      "Flow:\n- Owner -> Frontend: Member panel → pick which ideas they can access\n- Frontend -> Backend PATCH /api/v1/groups/members/{id}: PATCH /api/v1/groups/members/{member_id} { idea_ids: [...] } (JWT)\n- Backend PATCH /api/v1/groups/members/{id} -> GroupService: update_group_member(member_id, actor_id, idea_ids)\n- GroupService -> DB: verify actor is owner/admin + all idea_ids belong to actor\n[alt not owner / idea not owned]\n- DB -> GroupService: forbidden\n- GroupService -> Backend PATCH /api/v1/groups/members/{id}: 403\n- Backend PATCH /api/v1/groups/members/{id} -> Frontend: 403 Forbidden\n  else if allowed:\n- GroupService -> DB: UPDATE member.accessible_ideas = idea_ids (grant + revoke diff)\n- DB -> GroupService: updated member\n- GroupService -> NotificationService: notify member \"ideas shared with you\"\n- NotificationService -> GroupService: queued\n- GroupService -> Backend PATCH /api/v1/gr"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_20: Skills Gap Identification (AI) → assign skill-role to teammates",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_20: Skills Gap Identification (AI) → assign skill-role to teammates\n\nParticipants: Owner, Frontend, Backend /api/v1/ai ; /api/v1/groups, SkillsGap Agent (bizifyAI), LLM (Llama-3.3-70B), NotificationService, DB.",
+      "Flow:\n1. Skills gap computed for the idea (LLM-only):\n- Backend /api/v1/ai ; /api/v1/groups -> SkillsGap Agent (bizifyAI): run_skills_gap(idea_text, founder_skills)\n- SkillsGap Agent (bizifyAI) -> LLM (Llama-3.3-70B): Llama-3.3-70B, JSON, temp≈0.2 (skills-gap prompt)\n- LLM (Llama-3.3-70B) -> SkillsGap Agent (bizifyAI): { your_skills, required_skills, skill_gaps }\n- SkillsGap Agent (bizifyAI) -> SkillsGap Agent (bizifyAI): parse_llm_json (fallback to founder skills on error)\n- SkillsGap Agent (bizifyAI) -> DB: persist with the idea\n2. Owner reviews gaps & assigns roles:\n- Owner -> Frontend: Open idea → \"Skills Gap\"\n- Frontend -> Backend /api/v1/ai ; /api/v1/groups: GET skills gap (idea)\n- Backend /api/v1/ai ; /api/v1/groups -> DB: read skill_gaps\n- DB -> Backend /api/v1/ai ; /api/v1/groups: gaps + required skills\n- Backend /api/v1/ai ; /api/v1/groups -> Frontend: data\n- Frontend -> Owner:"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_21: Personalized Idea Chatbot (Phase B refinement of the draft seed)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_21: Personalized Idea Chatbot (Phase B refinement of the draft seed)\n\nParticipants: Founder, Frontend, Backend /api/v1/ai/idea-intake/chat, AI Route /pipeline/idea-intake/chat, PersonalizeIdeaChat (run_idea_refinement_chat), LLM (Llama-3.3-70B), DB (draft seed + problems).",
+      "Flow:\nOpening message (bot speaks first):\n- Frontend -> Backend /api/v1/ai/idea-intake/chat: POST /idea-intake/start-chat\n- Backend /api/v1/ai/idea-intake/chat -> AI Route /pipeline/idea-intake/chat: forward (x-api-key + x-plan-name)\n- AI Route /pipeline/idea-intake/chat -> DB (draft seed + problems): check pipeline status (problems_done/done) + load draft seed + problems\n[alt problems not done / no draft]\n- DB (draft seed + problems) -> AI Route /pipeline/idea-intake/chat: not ready\n- AI Route /pipeline/idea-intake/chat -> Backend /api/v1/ai/idea-intake/chat: 409\n- Backend /api/v1/ai/idea-intake/chat -> Frontend: 409 \"still running\"\n  else if ready:\n- DB (draft seed + problems) -> AI Route /pipeline/idea-intake/chat: seed + problems evidence\n- AI Route /pipeline/idea-intake/chat -> PersonalizeIdeaChat (run_idea_refinement_chat): run_idea_refinement_chat(user_message=None)\n- PersonalizeI"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_22: AI Agent 1 — Profile Analysis (LLM-only, runs as pipeline step 1)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_22: AI Agent 1 — Profile Analysis (LLM-only, runs as pipeline step 1)\n\nParticipants: Founder, Frontend (Next.js), Backend API /api/v1/ai/run, AI Service /pipeline/run, Orchestrator (BackgroundTask), ProfileAnalysis Agent, LLM (DeepInfra · Llama-3.3-70B), DB (AI-owned tables).",
+      "Flow:\n1. Trigger the pipeline:\n- Founder -> Frontend (Next.js): Finish questionnaire / start analysis\n- Frontend (Next.js) -> Backend API /api/v1/ai/run: POST /api/v1/ai/run (JWT cookie)\n- Backend API /api/v1/ai/run -> Backend API /api/v1/ai/run: check_ai_usage (credit gate) resolve user_id from JWT\n- Backend API /api/v1/ai/run -> AI Service /pipeline/run: POST /pipeline/run x-api-key, x-plan-name { user_id, idea_id }\n- AI Service /pipeline/run -> AI Service /pipeline/run: verify_api_key\n- AI Service /pipeline/run -> Orchestrator (BackgroundTask): schedule BackgroundTask run_new_user_pipeline(user_id, questionnaire, skills)\n- AI Service /pipeline/run -> Backend API /api/v1/ai/run: 202 { status: \"running\" }\n- Backend API /api/v1/ai/run -> Frontend (Next.js): 202 Accepted\n- Frontend (Next.js) -> Founder: Show progress / to-do list\n2. Step 1 · Profile Analysis (async, no web search):\n- Orch"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_23: AI Agent 2 — Problem Discovery (web-sourced + 0–100 scoring)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_23: AI Agent 2 — Problem Discovery (web-sourced + 0–100 scoring)\n\nParticipants: Orchestrator (BackgroundTask), ProblemDiscovery Agent, Search Pipeline (Tavily→Serper), Tavily / Serper (web), Extraction LLM (Llama-3.1-8B), Main LLM (Llama-3.3-70B), Rubric Math (code-side score), AI Judge (quality gate), DB.",
+      "Flow:\n- Idea -> aware: if an idea exists, it searches for the\n- Orchestrator (BackgroundTask) -> ProblemDiscovery Agent: run_problem_discovery(profile, questionnaire, idea?, language)\n- ProblemDiscovery Agent -> ProblemDiscovery Agent: _build_search_queries() (industry + pains + region keywords)\n1. Web research (Tavily primary):\n- ProblemDiscovery Agent -> Search Pipeline (Tavily→Serper): run_search_pipeline(queries, schema, include_domains, tavily keys)\n- Search Pipeline (Tavily→Serper) -> Tavily / Serper (web): parallel Tavily search (domain-filtered, 3/ query)\n[alt Tavily key quota / 429]\n- Tavily / Serper (web) -> Search Pipeline (Tavily→Serper): quota error\n- Search Pipeline (Tavily→Serper) -> Search Pipeline (Tavily→Serper): rotate to next TAVILY_API_KEY_n\n[alt Tavily unavailable / empty]\n- Search Pipeline (Tavily→Serper) -> Tavily / Serper (web): Serper + BeautifulSoup fallback\n- "
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_24: AI Agent 4 — Customers (full 3-tier on-demand flow)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_24: AI Agent 4 — Customers (full 3-tier on-demand flow)\n\nParticipants: User, Frontend, Backend /api/v1/ai/customers, AI Route /pipeline/customers/{uid}, Customers Agent, Search (Tavily→Serper), LLM (Llama-3.3-70B), AI Judge, DB.",
+      "Flow:\n1. Request (backend gating + 3-tier auth):\n- User -> Frontend: Open \"Customers\" section / Regenerate\n- Frontend -> Backend /api/v1/ai/customers: POST /api/v1/ai/customers { idea_id } (JWT cookie)\n- Backend /api/v1/ai/customers -> Backend /api/v1/ai/customers: check_ai_usage → enough credits?\n[alt No credits / plan gate]\n- Backend /api/v1/ai/customers -> Frontend: 402 / 403\n- Frontend -> User: \"Upgrade or top-up credits\"\n  else if Allowed:\n- Backend /api/v1/ai/customers -> Backend /api/v1/ai/customers: _resolve_ai_user_id(idea_id, require_edit) → OWNER id (handles shared ideas + IDOR)\n- Backend /api/v1/ai/customers -> AI Route /pipeline/customers/{uid}: POST /pipeline/customers/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/customers/{uid} -> AI Route /pipeline/customers/{uid}: verify_api_key; middleware binds user_id + section\n- AI Route /pipeline/customers/{uid} -> DB: set_c"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_25: AI Agent 5 — Competition (web-sourced competitor mapping)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_25: AI Agent 5 — Competition (web-sourced competitor mapping)\n\nParticipants: User, Frontend, Backend /api/v1/ai/competition, AI Route /pipeline/competition/{uid}, Competition Agent, Search (Tavily→Serper), LLM (Llama-3.3-70B), AI Judge, DB.",
+      "Flow:\n- User -> Frontend: Open \"Competition\" / Regenerate\n- Frontend -> Backend /api/v1/ai/competition: POST /api/v1/ai/competition { idea_id }\n- Backend /api/v1/ai/competition -> Backend /api/v1/ai/competition: check_ai_usage; resolve OWNER id (require_edit)\n- Backend /api/v1/ai/competition -> AI Route /pipeline/competition/{uid}: POST /pipeline/competition/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/competition/{uid} -> DB: load idea + problems (+ customers)\n- DB -> AI Route /pipeline/competition/{uid}: context rows\n- AI Route /pipeline/competition/{uid} -> Competition Agent: run_competition_analysis(idea, problems, customers, language)\nWeb research: real competitors:\n- Competition Agent -> Search (Tavily→Serper): run_search_pipeline (competitor names, pricing, G2/Capterra, ProductHunt, funding queries)\n- Search (Tavily→Serper) -> Search (Tavily→Serper): Tavily domain-filtered"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_26: AI Agent 6 — Market Potential (web data + TAM/SAM/SOM computed in code)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_26: AI Agent 6 — Market Potential (web data + TAM/SAM/SOM computed in code)\n\nParticipants: User, Frontend, Backend /api/v1/ai/market-potential, AI Route /pipeline/market-potential/{uid}, MarketPotential Agent, Search (Tavily ADVANCED→Serper), LLM (Llama-3.3-70B), Sizing + Rubric Math (code), AI Judge, DB.",
+      "Flow:\n- User -> Frontend: Open \"Market Potential\" / Regenerate\n- Frontend -> Backend /api/v1/ai/market-potential: POST /api/v1/ai/market-potential { idea_id }\n- Backend /api/v1/ai/market-potential -> Backend /api/v1/ai/market-potential: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/market-potential -> AI Route /pipeline/market-potential/{uid}: POST /pipeline/market-potential/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/market-potential/{uid} -> DB: load idea + problems + customers + competition\n- DB -> AI Route /pipeline/market-potential/{uid}: context\n- AI Route /pipeline/market-potential/{uid} -> MarketPotential Agent: run_market_potential(...)\n- MarketPotential Agent -> MarketPotential Agent: derive target region (MENA / Egypt / Gulf / Global)\nMarket data is REQUIRED (LLM alone unreliable):\n- MarketPotential Agent -> Search (Tavily ADVANCED→Serper): run_search_pipeline"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_27: AI Agent 7 — Idea Strategy (positioning, differentiation, GTM thesis)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_27: AI Agent 7 — Idea Strategy (positioning, differentiation, GTM thesis)\n\nParticipants: User, Frontend, Backend /api/v1/ai/idea-strategy, AI Route /pipeline/idea-strategy/{uid}, IdeaStrategy Agent, Search (Tavily→Serper), LLM (Llama-3.3-70B), AI Judge, DB.",
+      "Flow:\n- User -> Frontend: Open \"Idea Strategy\" / Regenerate\n- Frontend -> Backend /api/v1/ai/idea-strategy: POST /api/v1/ai/idea-strategy { idea_id }\n- Backend /api/v1/ai/idea-strategy -> Backend /api/v1/ai/idea-strategy: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/idea-strategy -> AI Route /pipeline/idea-strategy/{uid}: POST /pipeline/idea-strategy/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/idea-strategy/{uid} -> DB: load idea + problems + customers + competition + market\n- DB -> AI Route /pipeline/idea-strategy/{uid}: upstream context\n- AI Route /pipeline/idea-strategy/{uid} -> IdeaStrategy Agent: run_idea_strategy(...)\n- IdeaStrategy Agent -> Search (Tavily→Serper): run_search_pipeline (positioning, differentiation, GTM patterns, business-model benchmarks)\n- Search (Tavily→Serper) -> Search (Tavily→Serper): Tavily (rotation) → Llama-8B extract → Serper fallback\n- S"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_28: AI Agent 8 — Business Model (lean canvas + revenue streams)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_28: AI Agent 8 — Business Model (lean canvas + revenue streams)\n\nParticipants: User, Frontend, Backend /api/v1/ai/business-model, AI Route /pipeline/business-model/{uid}, BusinessModel Agent, Search (Tavily→Serper), LLM (Llama-3.3-70B), AI Judge, DB.",
+      "Flow:\n- User -> Frontend: Open \"Business Model\" / Regenerate\n- Frontend -> Backend /api/v1/ai/business-model: POST /api/v1/ai/business-model { idea_id }\n- Backend /api/v1/ai/business-model -> Backend /api/v1/ai/business-model: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/business-model -> AI Route /pipeline/business-model/{uid}: POST /pipeline/business-model/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/business-model/{uid} -> DB: load idea + customers + competition + market + strategy\n- DB -> AI Route /pipeline/business-model/{uid}: context\n- AI Route /pipeline/business-model/{uid} -> BusinessModel Agent: run_business_model(...)\n- BusinessModel Agent -> Search (Tavily→Serper): run_search_pipeline (revenue-model benchmarks, pricing models, channel + cost-structure references)\n- Search (Tavily→Serper) -> Search (Tavily→Serper): Tavily (rotation) → Llama-8B extract → Serper"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_29: AI Agent 9 — Functions List (feature breakdown + gap functions)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_29: AI Agent 9 — Functions List (feature breakdown + gap functions)\n\nParticipants: User, Frontend, Backend /api/v1/ai/functions-list, AI Route /pipeline/functions-list/{uid}, FunctionsList Agent, Search (Tavily→Serper), LLM (Llama-3.3-70B), AI Judge, DB.",
+      "Flow:\n- User -> Frontend: Open \"Functions / Features\" / Regenerate\n- Frontend -> Backend /api/v1/ai/functions-list: POST /api/v1/ai/functions-list { idea_id }\n- Backend /api/v1/ai/functions-list -> Backend /api/v1/ai/functions-list: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/functions-list -> AI Route /pipeline/functions-list/{uid}: POST /pipeline/functions-list/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/functions-list/{uid} -> DB: load idea + customers + competition + business_model\n- DB -> AI Route /pipeline/functions-list/{uid}: context\n- AI Route /pipeline/functions-list/{uid} -> FunctionsList Agent: run_functions_list(...)\n- FunctionsList Agent -> Search (Tavily→Serper): run_search_pipeline (feature benchmarks, must-have capabilities, competitor feature sets)\n- Search (Tavily→Serper) -> Search (Tavily→Serper): Tavily (rotation) → Llama-8B extract → Serper fallba"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_30: AI Agent 10 — MVP Planning (scope, milestones, build sequence)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_30: AI Agent 10 — MVP Planning (scope, milestones, build sequence)\n\nParticipants: User, Frontend, Backend /api/v1/ai/mvp-planning, AI Route /pipeline/mvp-planning/{uid}, MVPPlanning Agent, Search (Tavily→Serper), LLM (Llama-3.3-70B), AI Judge, DB.",
+      "Flow:\n- User -> Frontend: Open \"MVP Plan\" / Regenerate\n- Frontend -> Backend /api/v1/ai/mvp-planning: POST /api/v1/ai/mvp-planning { idea_id }\n- Backend /api/v1/ai/mvp-planning -> Backend /api/v1/ai/mvp-planning: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/mvp-planning -> AI Route /pipeline/mvp-planning/{uid}: POST /pipeline/mvp-planning/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/mvp-planning/{uid} -> DB: load idea + functions_list + customers + budget\n- DB -> AI Route /pipeline/mvp-planning/{uid}: context\n- AI Route /pipeline/mvp-planning/{uid} -> MVPPlanning Agent: run_mvp_planning(...)\n- MVPPlanning Agent -> Search (Tavily→Serper): run_search_pipeline (MVP scoping patterns, build-time benchmarks, no-code/stack references)\n- Search (Tavily→Serper) -> Search (Tavily→Serper): Tavily (rotation) → Llama-8B extract → Serper fallback\n- Search (Tavily→Serper) -> MVPPlannin"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_31: AI Agent 11 — Unit Economics (LLM gives assumptions · code does ALL math)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_31: AI Agent 11 — Unit Economics (LLM gives assumptions · code does ALL math)\n\nParticipants: User, Frontend, Backend /api/v1/ai/unit-economics, AI Route /pipeline/unit-economics/{uid}, UnitEconomics Agent, Search (Tavily→Serper), LLM (Llama-3.3-70B), Finance Math (unit_econ + statements), AI Judge, DB.",
+      "Flow:\n- User -> Frontend: Open \"Unit Economics\" / Regenerate\n- Frontend -> Backend /api/v1/ai/unit-economics: POST /api/v1/ai/unit-economics { idea_id }\n- Backend /api/v1/ai/unit-economics -> Backend /api/v1/ai/unit-economics: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/unit-economics -> AI Route /pipeline/unit-economics/{uid}: POST /pipeline/unit-economics/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/unit-economics/{uid} -> DB: load idea + customers + market + strategy + business_model + mvp + founder budget\n- DB -> AI Route /pipeline/unit-economics/{uid}: context (+ budget anchor)\n- AI Route /pipeline/unit-economics/{uid} -> UnitEconomics Agent: run_unit_economics(...)\n- UnitEconomics Agent -> Search (Tavily→Serper): run_search_pipeline(advanced) (CAC / LTV / churn / margin benchmarks)\n- Search (Tavily→Serper) -> Search (Tavily→Serper): Tavily (rotation) → Llama-8B ex"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_32: AI Agent 12 — Go-To-Market (channels, launch motion, acquisition)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_32: AI Agent 12 — Go-To-Market (channels, launch motion, acquisition)\n\nParticipants: User, Frontend, Backend /api/v1/ai/go-to-market, AI Route /pipeline/go-to-market/{uid}, GoToMarket Agent, Search (Tavily→Serper), LLM (Llama-3.3-70B), AI Judge, DB.",
+      "Flow:\n- User -> Frontend: Open \"Go-To-Market\" / Regenerate\n- Frontend -> Backend /api/v1/ai/go-to-market: POST /api/v1/ai/go-to-market { idea_id }\n- Backend /api/v1/ai/go-to-market -> Backend /api/v1/ai/go-to-market: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/go-to-market -> AI Route /pipeline/go-to-market/{uid}: POST /pipeline/go-to-market/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/go-to-market/{uid} -> DB: load idea + customers + competition + strategy + business_model + unit_economics\n- DB -> AI Route /pipeline/go-to-market/{uid}: full upstream context\n- AI Route /pipeline/go-to-market/{uid} -> GoToMarket Agent: run_go_to_market(...)\n- GoToMarket Agent -> Search (Tavily→Serper): run_search_pipeline (channel benchmarks, CAC by channel, launch-playbook references)\n- Search (Tavily→Serper) -> Search (Tavily→Serper): Tavily (rotation) → Llama-8B extract → Serper fallb"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_33: AI Agent 13 — Final Audit (cross-checks all sections; LLM-only) + Improve",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_33: AI Agent 13 — Final Audit (cross-checks all sections; LLM-only) + Improve\n\nParticipants: User, Frontend, Backend /api/v1/ai/audit, AI Route /pipeline/audit/{uid}, FinalAudit Agent, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n1. Generate audit:\n- User -> Frontend: Open \"Business Plan Audit\" / Run\n- Frontend -> Backend /api/v1/ai/audit: POST /api/v1/ai/audit { idea_id }\n- Backend /api/v1/ai/audit -> Backend /api/v1/ai/audit: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/audit -> AI Route /pipeline/audit/{uid}: POST /pipeline/audit/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/audit/{uid} -> FinalAudit Agent: run_final_audit(user_id, idea_id, language)\n- FinalAudit Agent -> DB: _collect_sections() — load EVERY saved section (customers…go-to-market + unit econ)\n[alt no sections]\n- DB -> FinalAudit Agent: empty\n- FinalAudit Agent -> AI Route /pipeline/audit/{uid}: ValueError \"run pipeline first\"\n- AI Route /pipeline/audit/{uid} -> Backend /api/v1/ai/audit: 4xx\n  else if sections present:\n- DB -> FinalAudit Agent: all section JSON\n- FinalAudit Agent -> LLM (Llama-3.3-70B): Llama-3.3-70B, JSON,"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_34: Marketing Agent 1 — Customer Research (LLM-only, consumes pipeline)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_34: Marketing Agent 1 — Customer Research (LLM-only, consumes pipeline)\n\nParticipants: User, Frontend, Backend /api/v1/ai/marketing/customer-research, AI Route /pipeline/customer-research/{uid}, CustomerResearch Agent, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n- User -> Frontend: Open Marketing → \"Customer Research\" / Regenerate\n- Frontend -> Backend /api/v1/ai/marketing/customer-research: POST .../customer-research { idea_id }\n- Backend /api/v1/ai/marketing/customer-research -> Backend /api/v1/ai/marketing/customer-research: check_ai_usage; resolve OWNER id (require_edit)\n- Backend /api/v1/ai/marketing/customer-research -> AI Route /pipeline/customer-research/{uid}: POST /pipeline/customer-research/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/customer-research/{uid} -> DB: _load_pipeline_deps(idea_id) (idea, problems, customers, competition, market…)\n[alt idea/problems missing]\n- DB -> AI Route /pipeline/customer-research/{uid}: none\n- AI Route /pipeline/customer-research/{uid} -> Backend /api/v1/ai/marketing/customer-research: 409 \"Complete pipeline first\"\n- Backend /api/v1/ai/marketing/customer-research -> Frontend: 409\n  else"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_35: Marketing Agent 2 — Copywriting (headlines, landing & ad copy)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_35: Marketing Agent 2 — Copywriting (headlines, landing & ad copy)\n\nParticipants: User, Frontend, Backend /api/v1/ai/marketing/copywriting, AI Route /pipeline/copywriting/{uid}, Copywriting Agent, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n- User -> Frontend: Open Marketing → \"Copywriting\" / Regenerate\n- Frontend -> Backend /api/v1/ai/marketing/copywriting: POST .../copywriting { idea_id }\n- Backend /api/v1/ai/marketing/copywriting -> Backend /api/v1/ai/marketing/copywriting: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/marketing/copywriting -> AI Route /pipeline/copywriting/{uid}: POST /pipeline/copywriting/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/copywriting/{uid} -> DB: _load_pipeline_deps + prior marketing (customer_research, strategy, business_model)\n- DB -> AI Route /pipeline/copywriting/{uid}: context\n- AI Route /pipeline/copywriting/{uid} -> Copywriting Agent: run_copywriting(idea, …, customer_research, language)\n- Copywriting Agent -> LLM (Llama-3.3-70B): Llama-3.3-70B, JSON mode (copywriting_prompt + context)\n- LLM (Llama-3.3-70B) -> Copywriting Agent: hero headlines, taglines, value pr"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_36: Marketing Agent 3 — Pricing (tiers, anchoring, discounts)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_36: Marketing Agent 3 — Pricing (tiers, anchoring, discounts)\n\nParticipants: User, Frontend, Backend /api/v1/ai/marketing/pricing, AI Route /pipeline/pricing/{uid}, Pricing Agent, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n- User -> Frontend: Open Marketing → \"Pricing\" / Regenerate\n- Frontend -> Backend /api/v1/ai/marketing/pricing: POST .../pricing { idea_id }\n- Backend /api/v1/ai/marketing/pricing -> Backend /api/v1/ai/marketing/pricing: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/marketing/pricing -> AI Route /pipeline/pricing/{uid}: POST /pipeline/pricing/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/pricing/{uid} -> DB: load idea + problems + customers + competition + business_model + unit_economics + customer_research\n- DB -> AI Route /pipeline/pricing/{uid}: context (incl. unit economics → real cost basis)\n- AI Route /pipeline/pricing/{uid} -> Pricing Agent: run_pricing(...)\n- Pricing Agent -> LLM (Llama-3.3-70B): Llama-3.3-70B, JSON mode (pricing_prompt + context)\n- LLM (Llama-3.3-70B) -> Pricing Agent: pricing tiers, price points, anchoring strategy, discounts/promos, psycho"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_37: Marketing Agent 4 — Launch Strategy (phased go-live plan)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_37: Marketing Agent 4 — Launch Strategy (phased go-live plan)\n\nParticipants: User, Frontend, Backend /api/v1/ai/marketing/launch-strategy, AI Route /pipeline/launch-strategy/{uid}, LaunchStrategy Agent, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n- User -> Frontend: Open Marketing → \"Launch Strategy\" / Regenerate\n- Frontend -> Backend /api/v1/ai/marketing/launch-strategy: POST .../launch-strategy { idea_id }\n- Backend /api/v1/ai/marketing/launch-strategy -> Backend /api/v1/ai/marketing/launch-strategy: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/marketing/launch-strategy -> AI Route /pipeline/launch-strategy/{uid}: POST /pipeline/launch-strategy/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/launch-strategy/{uid} -> DB: load pipeline (incl. go-to-market) + prior marketing\n- DB -> AI Route /pipeline/launch-strategy/{uid}: context\n- AI Route /pipeline/launch-strategy/{uid} -> LaunchStrategy Agent: run_launch_strategy(...)\n- LaunchStrategy Agent -> LLM (Llama-3.3-70B): Llama-3.3-70B, JSON mode (launch_strategy_prompt + context)\n- LLM (Llama-3.3-70B) -> LaunchStrategy Agent: pre-launch / launch / post-launch pha"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_38: Marketing Agent 5 — Ad Creative (concepts, hooks, CTAs per platform)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_38: Marketing Agent 5 — Ad Creative (concepts, hooks, CTAs per platform)\n\nParticipants: User, Frontend, Backend /api/v1/ai/marketing/ad-creative, AI Route /pipeline/ad-creative/{uid}, AdCreative Agent, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n- User -> Frontend: Open Marketing → \"Ad Creative\" / Regenerate\n- Frontend -> Backend /api/v1/ai/marketing/ad-creative: POST .../ad-creative { idea_id }\n- Backend /api/v1/ai/marketing/ad-creative -> Backend /api/v1/ai/marketing/ad-creative: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/marketing/ad-creative -> AI Route /pipeline/ad-creative/{uid}: POST /pipeline/ad-creative/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/ad-creative/{uid} -> DB: load pipeline + copywriting + customer_research\n- DB -> AI Route /pipeline/ad-creative/{uid}: context\n- AI Route /pipeline/ad-creative/{uid} -> AdCreative Agent: run_ad_creative(...)\n- AdCreative Agent -> LLM (Llama-3.3-70B): Llama-3.3-70B, JSON mode (ad_creative_prompt + context)\n- LLM (Llama-3.3-70B) -> AdCreative Agent: ad concepts, scroll-stopping hooks, visual direction briefs, primary text + CTA, platform variants (Meta /"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_39: Marketing Agent 6 — Social Media (content calendar + platform plan)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_39: Marketing Agent 6 — Social Media (content calendar + platform plan)\n\nParticipants: User, Frontend, Backend /api/v1/ai/marketing/social-media, AI Route /pipeline/social-media/{uid}, SocialMedia Agent, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n- User -> Frontend: Open Marketing → \"Social Media\" / Regenerate\n- Frontend -> Backend /api/v1/ai/marketing/social-media: POST .../social-media { idea_id }\n- Backend /api/v1/ai/marketing/social-media -> Backend /api/v1/ai/marketing/social-media: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/marketing/social-media -> AI Route /pipeline/social-media/{uid}: POST /pipeline/social-media/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/social-media/{uid} -> DB: load pipeline + copywriting + customer_research\n- DB -> AI Route /pipeline/social-media/{uid}: context\n- AI Route /pipeline/social-media/{uid} -> SocialMedia Agent: run_social_media(...)\n- SocialMedia Agent -> LLM (Llama-3.3-70B): Llama-3.3-70B, JSON mode (social_media_prompt + context)\n- LLM (Llama-3.3-70B) -> SocialMedia Agent: platform strategy, content pillars, post ideas, posting cadence, 2-week content calendar, "
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_40: Marketing Agent 7 — Marketing Ideas (growth tactics & campaigns)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_40: Marketing Agent 7 — Marketing Ideas (growth tactics & campaigns)\n\nParticipants: User, Frontend, Backend /api/v1/ai/marketing/marketing-ideas, AI Route /pipeline/marketing-ideas/{uid}, MarketingIdeas Agent, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n- User -> Frontend: Open Marketing → \"Marketing Ideas\" / Regenerate\n- Frontend -> Backend /api/v1/ai/marketing/marketing-ideas: POST .../marketing-ideas { idea_id }\n- Backend /api/v1/ai/marketing/marketing-ideas -> Backend /api/v1/ai/marketing/marketing-ideas: check_ai_usage; resolve OWNER id\n- Backend /api/v1/ai/marketing/marketing-ideas -> AI Route /pipeline/marketing-ideas/{uid}: POST /pipeline/marketing-ideas/{owner} x-api-key + x-plan-name\n- AI Route /pipeline/marketing-ideas/{uid} -> DB: load full pipeline + ALL prior marketing sections\n- DB -> AI Route /pipeline/marketing-ideas/{uid}: context (research, copy, pricing, launch, ad, social)\n- AI Route /pipeline/marketing-ideas/{uid} -> MarketingIdeas Agent: run_marketing_ideas(...)\n- MarketingIdeas Agent -> LLM (Llama-3.3-70B): Llama-3.3-70B, JSON mode (marketing_ideas_prompt + context)\n- LLM (Llama-3.3-70B) -> MarketingIdeas A"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_41: Idea Translation (translate all stored sections EN ⇄ AR)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_41: Idea Translation (translate all stored sections EN ⇄ AR)\n\nParticipants: User, Frontend, Backend /api/v1/ai/translate, AI Route /pipeline/translate/idea, Translation Agent, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n- User -> Frontend: Idea shown in EN → click \"عربى\" (Arabic)\n- Frontend -> Backend /api/v1/ai/translate: POST /api/v1/ai/translate { idea_id, target_language=\"ar\" }\n- Backend /api/v1/ai/translate -> Backend /api/v1/ai/translate: check access (owner / shared) + plan gate\n- Backend /api/v1/ai/translate -> AI Route /pipeline/translate/idea: POST /pipeline/translate/idea x-api-key { idea_id, user_id, target_language }\n- AI Route /pipeline/translate/idea -> Translation Agent: translate_idea(user_id, idea_id, target_language)\n- Translation Agent -> DB: load ALL stored sections for this idea (idea, customers, competition, market, … marketing)\n- DB -> Translation Agent: section JSON blobs\n[loop per section (skip already-target-language / empty)]\n- Translation Agent -> LLM (Llama-3.3-70B): Llama-3.3-70B, JSON mode (translate values, PRESERVE keys + numbers)\n- LLM (Llama-3.3-70B) -> Translat"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_42: Section Explainer Bot (per-section SSE streaming chat)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_42: Section Explainer Bot (per-section SSE streaming chat)\n\nParticipants: User, Frontend (EventSource), Backend /api/v1/ai//chat/stream, AI Route /pipeline//{uid}/chat/stream, sse_chat_stream helper, LLM (Llama-3.3-70B, stream=True), DB.",
+      "Flow:\n- User -> Frontend (EventSource): Ask \"Why is CAC so high here?\" on a section\n- Frontend (EventSource) -> Backend /api/v1/ai//chat/stream: POST //chat/stream { message, history, idea_id } (JWT)\n- Backend /api/v1/ai//chat/stream -> Backend /api/v1/ai//chat/stream: resolve OWNER id; bind x-api-key + x-plan-name\n- Backend /api/v1/ai//chat/stream -> AI Route /pipeline//{uid}/chat/stream: POST /pipeline//{owner}/chat/stream\n- AI Route /pipeline//{uid}/chat/stream -> DB: load current section analysis\n[alt section not generated yet]\n- DB -> AI Route /pipeline//{uid}/chat/stream: none\n- AI Route /pipeline//{uid}/chat/stream -> Backend /api/v1/ai//chat/stream: 409 (before stream opens)\n- Backend /api/v1/ai//chat/stream -> Frontend (EventSource): 409\n  else if exists:\n- DB -> AI Route /pipeline//{uid}/chat/stream: section data\n- AI Route /pipeline//{uid}/chat/stream -> AI Route /pipeline//{u"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_43: AI Idea Name Suggestion (catchy startup names, LLM-only)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_43: AI Idea Name Suggestion (catchy startup names, LLM-only)\n\nParticipants: User, Frontend, Backend /api/v1/ai/ideas/{id}/suggest-name, AI Route /pipeline/suggest-name/{uid}, NameSuggestion Agent, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n- User -> Frontend: On an idea → \"Suggest names\"\n- Frontend -> Backend /api/v1/ai/ideas/{id}/suggest-name: POST /api/v1/ai/ideas/{idea_id}/suggest-name\n- Backend /api/v1/ai/ideas/{id}/suggest-name -> Backend /api/v1/ai/ideas/{id}/suggest-name: check_ai_usage; resolve OWNER id (require_edit)\n- Backend /api/v1/ai/ideas/{id}/suggest-name -> AI Route /pipeline/suggest-name/{uid}: POST /pipeline/suggest-name/{owner} x-api-key + x-plan-name { idea_id }\n- AI Route /pipeline/suggest-name/{uid} -> DB: load idea (+ customers, competition, market, strategy for tone/positioning)\n[alt no idea]\n- DB -> AI Route /pipeline/suggest-name/{uid}: none\n- AI Route /pipeline/suggest-name/{uid} -> Backend /api/v1/ai/ideas/{id}/suggest-name: 409 \"Run the pipeline first\"\n- Backend /api/v1/ai/ideas/{id}/suggest-name -> Frontend: 409\n  else if idea exists:\n- DB -> AI Route /pipeline/suggest-name/{uid}: idea +"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_44: AI Execution Roadmap (skeleton + ~20 parallel milestone expansions)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_44: AI Execution Roadmap (skeleton + ~20 parallel milestone expansions)\n\nParticipants: User, Frontend, Backend /api/v1/ai/roadmap, AI Route /pipeline/roadmap/{uid}, RoadmapAgent (BackgroundTask), Thread Pool (parallel LLM), LLM (Llama-3.3-70B), DB (execution_* tables).",
+      "Flow:\n1. Trigger generation (async):\n- User -> Frontend: \"Build my execution roadmap\"\n- Frontend -> Backend /api/v1/ai/roadmap: POST /api/v1/ai/roadmap/generate { idea_id }\n- Backend /api/v1/ai/roadmap -> AI Route /pipeline/roadmap/{uid}: POST /pipeline/roadmap/{owner}/generate x-api-key + x-plan-name\n- AI Route /pipeline/roadmap/{uid} -> DB (execution_* tables): verify idea ready\n[alt idea not ready]\n- DB (execution_* tables) -> AI Route /pipeline/roadmap/{uid}: none\n- AI Route /pipeline/roadmap/{uid} -> Backend /api/v1/ai/roadmap: 409\n- Backend /api/v1/ai/roadmap -> Frontend: 409\n  else if ready:\n- AI Route /pipeline/roadmap/{uid} -> RoadmapAgent (BackgroundTask): BackgroundTask run_roadmap_generation\n- AI Route /pipeline/roadmap/{uid} -> Backend /api/v1/ai/roadmap: 202 { status: \"generating\" }\n- Backend /api/v1/ai/roadmap -> Frontend: 202\n- Frontend -> Frontend: poll status\n2. Build t"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_45: AI Business-Plan Validation & Scoring (upload PDF → critique → improved doc)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_45: AI Business-Plan Validation & Scoring (upload PDF → critique → improved doc)\n\nParticipants: User, Frontend, Backend /api/v1/ai/validate, AI Route /pipeline/validate/{section}/{uid}, ValidationAgent, LLM (Llama-3.3-70B), DB.",
+      "Flow:\n- User -> Frontend: Upload a PDF for a section (mode: generic | bizify)\n- Frontend -> Backend /api/v1/ai/validate: POST /validate/{section}/{uid} multipart: file, validation_mode, idea_id\n- Backend /api/v1/ai/validate -> Backend /api/v1/ai/validate: validate: PDF only, ≤15 MB, non-empty; check plan gate\n- Backend /api/v1/ai/validate -> AI Route /pipeline/validate/{section}/{uid}: forward (x-api-key)\n- AI Route /pipeline/validate/{section}/{uid} -> ValidationAgent: run_validation(section, mode, pdf_bytes, idea_id)\n1. Extract + classify:\n- ValidationAgent -> ValidationAgent: extract_pdf_text(pdf_bytes)\n[alt empty / image-only PDF]\n- ValidationAgent -> AI Route /pipeline/validate/{section}/{uid}: raise ValueError → 422\n- AI Route /pipeline/validate/{section}/{uid} -> Backend /api/v1/ai/validate: 422\n- Backend /api/v1/ai/validate -> Frontend: \"Upload a text-based PDF\"\n  else if text ok"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_46: General Startup Assistant Bot (intent routing + can RUN agents)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_46: General Startup Assistant Bot (intent routing + can RUN agents)\n\nParticipants: User, Frontend, Backend /api/v1/ai/general-chat, AI Route + generalBot, LLM (Llama-3.3-70B), Section Agents (pipeline), DB.",
+      "Flow:\n- User -> Frontend: Ask the assistant anything\n- Frontend -> Backend /api/v1/ai/general-chat: POST /api/v1/ai/general-chat { message, history }\n- Backend /api/v1/ai/general-chat -> Backend /api/v1/ai/general-chat: check_ai_usage (chat gate ≈ 0 credits)\n- Backend /api/v1/ai/general-chat -> AI Route + generalBot: forward (x-api-key + x-plan-name)\n- AI Route + generalBot -> DB: _load_pipeline_snapshot(user_id)\n- DB -> AI Route + generalBot: what's done / available\n- AI Route + generalBot -> AI Route + generalBot: check pending confirmation in history\n- AI Route + generalBot -> LLM (Llama-3.3-70B): _classify_intent(message, history, snapshot)\n- LLM (Llama-3.3-70B) -> AI Route + generalBot: { intent, section }\n[alt out_of_scope]\n- AI Route + generalBot -> Backend /api/v1/ai/general-chat: canned out-of-scope reply\n  else if pipeline_status:\n- AI Route + generalBot -> DB: read pipeline st"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_47: Full Pipeline Orchestration (new-user: Profile → Problems → Idea → sections)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_47: Full Pipeline Orchestration (new-user: Profile → Problems → Idea → sections)\n\nParticipants: Founder, Frontend (live to-do list), Backend /api/v1/ai/run, AI Route /pipeline/run, Orchestrator (BackgroundTask), Pipeline Agents, DB (pipeline_runs + results).",
+      "Flow:\nKick off (returns immediately):\n- Founder -> Frontend (live to-do list): Finish questionnaire → \"Generate my idea\"\n- Frontend (live to-do list) -> Backend /api/v1/ai/run: POST /api/v1/ai/run { idea_id? }\n- Backend /api/v1/ai/run -> AI Route /pipeline/run: POST /pipeline/run x-api-key + x-plan-name { user_id }\n- AI Route /pipeline/run -> Orchestrator (BackgroundTask): BackgroundTask run_new_user_pipeline (questionnaire, skills)\n- AI Route /pipeline/run -> Backend /api/v1/ai/run: 202 { status: running }\n- Backend /api/v1/ai/run -> Frontend (live to-do list): 202\n- Frontend (live to-do list) -> Founder: Show step checklist\nOrchestrated run (async, sequential; sets current_section for token billing):\n[group 1 · Profile Analysis (LLM-only)]\n- Orchestrator (BackgroundTask) -> DB (pipeline_runs + results): status running, step=profile\n- Orchestrator (BackgroundTask) -> Pipeline Agents: ru"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_48: AI Partner Matching (suggest suppliers/manufacturers for an idea)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_48: AI Partner Matching (suggest suppliers/manufacturers for an idea)\n\nParticipants: User, Frontend, Backend /api/v1/marketplace, AI Route /pipeline/partners/suggest-for-idea, Matching (crud.suggest_partners_for_idea), DB (idea + partner_profiles).",
+      "Flow:\n- User -> Frontend: Open idea → \"Find partners / suppliers\"\n- Frontend -> Backend /api/v1/marketplace: GET /api/v1/marketplace/suggest?idea_id (JWT)\n- Backend /api/v1/marketplace -> Backend /api/v1/marketplace: verify idea access; resolve OWNER id\n- Backend /api/v1/marketplace -> AI Route /pipeline/partners/suggest-for-idea: GET /pipeline/partners/suggest-for-idea ?idea_id&user_id&limit (x-api-key)\n- AI Route /pipeline/partners/suggest-for-idea -> Matching (crud.suggest_partners_for_idea): suggest_partners_for_idea(idea_id, user_id, limit)\n- Matching (crud.suggest_partners_for_idea) -> DB (idea + partner_profiles): load idea (industry, category, needs, region from analysis)\n- DB (idea + partner_profiles) -> Matching (crud.suggest_partners_for_idea): idea attributes\n- Matching (crud.suggest_partners_for_idea) -> DB (idea + partner_profiles): query APPROVED partner_profiles (industry"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_49: Idea Overview Chat (post-pipeline chat about the whole idea, SSE)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_49: Idea Overview Chat (post-pipeline chat about the whole idea, SSE)\n\nParticipants: User, Frontend (ai-chat, EventSource), Backend /api/v1/ai/chat[/stream], AI Route /pipeline/chat[/stream], sse_chat_stream, LLM (Llama-3.3-70B, stream), DB.",
+      "Flow:\n- User -> Frontend (ai-chat, EventSource): Open idea AI chat → ask a question\n- Frontend (ai-chat, EventSource) -> Backend /api/v1/ai/chat[/stream]: POST /api/v1/ai/chat/stream { message } (JWT)\n- Backend /api/v1/ai/chat[/stream] -> Backend /api/v1/ai/chat[/stream]: resolve OWNER id; x-api-key + x-plan-name\n- Backend /api/v1/ai/chat[/stream] -> AI Route /pipeline/chat[/stream]: POST /pipeline/chat/stream\n- AI Route /pipeline/chat[/stream] -> DB: check pipeline status = \"done\"; load idea + profile + problems + questionnaire + intake\n[alt pipeline not done / missing context]\n- DB -> AI Route /pipeline/chat[/stream]: not ready\n- AI Route /pipeline/chat[/stream] -> Backend /api/v1/ai/chat[/stream]: 409\n- Backend /api/v1/ai/chat[/stream] -> Frontend (ai-chat, EventSource): 409\n  else if ready:\n- DB -> AI Route /pipeline/chat[/stream]: full idea context + chat history\n- AI Route /pipelin"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_50: Onboarding Questionnaire & Skills (feeds the AI pipeline)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_50: Onboarding Questionnaire & Skills (feeds the AI pipeline)\n\nParticipants: New User, Frontend (wizard), Profile Controller /api/v1/profile, ProfileService, DB.",
+      "Flow:\nLoad skill catalog:\n- New User -> Frontend (wizard): Start onboarding\n- Frontend (wizard) -> Profile Controller /api/v1/profile: GET /profile/skill-categories ; /skills\n- Profile Controller /api/v1/profile -> DB: read skill pools\n- DB -> Profile Controller /api/v1/profile: categories + skills\n- Profile Controller /api/v1/profile -> Frontend (wizard): catalog\n- Frontend (wizard) -> New User: Show questionnaire + skill picker\n[alt Complete the questionnaire]\n- New User -> Frontend (wizard): Answer questions + pick skills\n- Frontend (wizard) -> Profile Controller /api/v1/profile: POST /profile/questionnaire [answers]\n- Profile Controller /api/v1/profile -> ProfileService: submit_full_questionnaire(user_id, answers)\n- ProfileService -> DB: upsert user_profile.questionnaire_json + skills_json\n- DB -> ProfileService: saved\n- Profile Controller /api/v1/profile -> Frontend (wizard): Questi"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_51: Credit Gating & Usage (check_ai_usage runs before every AI call)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_51: Credit Gating & Usage (check_ai_usage runs before every AI call)\n\nParticipants: User, Frontend, check_ai_usage (dependency), UsageRepo / SubscriptionRepo, AI Pipeline router, AI Service, DB.",
+      "Flow:\nBalance widget:\n- User -> Frontend: Open dashboard\n- Frontend -> check_ai_usage (dependency): GET /api/v1/usage (free, no gate)\n- check_ai_usage (dependency) -> UsageRepo / SubscriptionRepo: active sub → plan_type (free|pro|premium|payg)\n- UsageRepo / SubscriptionRepo -> DB: grant Free monthly credits if due; reconcile subscriber limit\n- DB -> UsageRepo / SubscriptionRepo: credit_info + ppf + chat counters\n- check_ai_usage (dependency) -> Frontend: balance, plan, chat limit\n- Frontend -> User: Credits remaining + plan badge\nGate on an AI action (POST):\n- User -> Frontend: Run a section / chat\n- Frontend -> check_ai_usage (dependency): POST /api/v1/ai/\n- check_ai_usage (dependency) -> check_ai_usage (dependency): method GET/PATCH/DELETE → always free → pass\n- check_ai_usage (dependency) -> UsageRepo / SubscriptionRepo: get_active_by_user → features_json\n- UsageRepo / SubscriptionRep"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_52: Subscription Purchase by Card (Paymob iframe / PayPal) + webhook activation",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_52: Subscription Purchase by Card (Paymob iframe / PayPal) + webhook activation\n\nParticipants: User, Frontend, Billing Controller /api/v1/billing, PaymentService, Gateway (Paymob / PayPal), DB (subscriptions).",
+      "Flow:\n- User -> Frontend: Open Pricing → choose Pro / Premium\n- Frontend -> Billing Controller /api/v1/billing: GET /api/v1/billing/plans\n- Billing Controller /api/v1/billing -> DB (subscriptions): active plans\n- DB (subscriptions) -> Billing Controller /api/v1/billing: plans\n- Billing Controller /api/v1/billing -> Frontend: plan list + prices (EGP)\n[alt Paymob card (Egypt)]\n- User -> Frontend: Pay with card\n- Frontend -> Billing Controller /api/v1/billing: POST /billing/paymob/subscribe { plan_id, billing }\n- Billing Controller /api/v1/billing -> PaymentService: create_paymob_payment(plan, user)\n- PaymentService -> Gateway (Paymob / PayPal): auth + create order + payment key\n- Gateway (Paymob / PayPal) -> PaymentService: iframe URL\n- PaymentService -> DB (subscriptions): record PENDING subscription/order\n- PaymentService -> Billing Controller /api/v1/billing: { iframe_url }\n- Billing Co"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_53: Credit Top-up — Pay-Per-Feature (PPF section credits)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_53: Credit Top-up — Pay-Per-Feature (PPF section credits)\n\nParticipants: User, Frontend, Billing Controller /api/v1/billing/ppf, PaymentService, Gateway (Paymob / PayPal), DB (ai_usage).",
+      "Flow:\n- User -> Frontend: Out of credits → \"Buy section runs\"\n- Frontend -> Billing Controller /api/v1/billing/ppf: GET /billing/ppf/balance\n- Billing Controller /api/v1/billing/ppf -> DB (ai_usage): read ppf_purchased / ppf_used\n- DB (ai_usage) -> Billing Controller /api/v1/billing/ppf: { purchased, used, remaining }\n- Billing Controller /api/v1/billing/ppf -> Frontend: balance\n- User -> Frontend: Choose quantity (1–10) [+ optional feature_key]\n[alt Paymob card]\n- Frontend -> Billing Controller /api/v1/billing/ppf: POST /billing/ppf/paymob { quantity, feature_key, billing }\n[alt quantity 10]\n- Billing Controller /api/v1/billing/ppf -> Frontend: 400\n  else if valid:\n- Billing Controller /api/v1/billing/ppf -> PaymentService: create_ppf_paymob_payment(quantity, user)\n- PaymentService -> Gateway (Paymob / PayPal): create order + payment key\n- Gateway (Paymob / PayPal) -> PaymentService: if"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_54: InstaPay Manual Payment + Admin Approval (subscription or PPF)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_54: InstaPay Manual Payment + Admin Approval (subscription or PPF)\n\nParticipants: User, Frontend, Billing /api/v1/billing/instapay, PaymentService, DB, Admin, Admin /api/v1/admin/billing/instapay, NotificationService.",
+      "Flow:\n1. User submits an InstaPay reference:\n- User -> Frontend: Pay via InstaPay app → copy reference #\n- Frontend -> Billing /api/v1/billing/instapay: POST /billing/instapay/subscribe { plan_id, reference } (or /instapay/ppf { quantity, reference })\n[alt bad quantity for PPF]\n- Billing /api/v1/billing/instapay -> Frontend: 400\n  else if ok:\n- Billing /api/v1/billing/instapay -> PaymentService: create_instapay_subscription / _ppf\n- PaymentService -> DB: insert PENDING instapay payment (reference, amount)\n- PaymentService -> Billing /api/v1/billing/instapay: pending record\n- Billing /api/v1/billing/instapay -> Frontend: 202 Accepted (awaiting review)\n- Frontend -> User: \"Payment submitted — pending admin approval\"\n2. Admin reviews pending payments:\n- Admin -> Admin /api/v1/admin/billing/instapay: GET /admin/billing/instapay/pending\n- Admin /api/v1/admin/billing/instapay -> DB: list PENDI"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_55: Subscription Management (view plan, usage, cancel)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_55: Subscription Management (view plan, usage, cancel)\n\nParticipants: User, Frontend, Billing Controller /api/v1/billing, PaymentService, DB.",
+      "Flow:\nView current subscription:\n- User -> Frontend: Open \"Billing / Plan\"\n- Frontend -> Billing Controller /api/v1/billing: GET /billing/subscription (JWT)\n- Billing Controller /api/v1/billing -> PaymentService: get_user_subscription(user_id)\n- PaymentService -> DB: active subscription + plan\n[alt none active]\n- DB -> PaymentService: none\n- PaymentService -> Billing Controller /api/v1/billing: None\n- Billing Controller /api/v1/billing -> Frontend: 404 (treated as Free)\n- Frontend -> User: Show Free plan + upgrade CTA\n  else if active:\n- DB -> PaymentService: subscription\n- PaymentService -> Billing Controller /api/v1/billing: SubscriptionRead (plan, renews_at, status)\n- Billing Controller /api/v1/billing -> Frontend: subscription\n- Frontend -> Billing Controller /api/v1/billing: GET /api/v1/usage (credits + chat limits — seq_51)\n- Billing Controller /api/v1/billing -> Frontend: balance\n"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_56: Payment Methods Management (list, add, set default, delete)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_56: Payment Methods Management (list, add, set default, delete)\n\nParticipants: User, Frontend, Controller /api/v1/payment-methods, DB (payment_methods).",
+      "Flow:\nList:\n- User -> Frontend: Open \"Payment methods\"\n- Frontend -> Controller /api/v1/payment-methods: GET /payment-methods (JWT)\n- Controller /api/v1/payment-methods -> DB (payment_methods): SELECT methods WHERE user_id\n- DB (payment_methods) -> Controller /api/v1/payment-methods: list (masked card / wallet)\n- Controller /api/v1/payment-methods -> Frontend: methods\n- Frontend -> User: Saved methods (default badge)\nAdd:\n- User -> Frontend: Add method (tokenized by gateway)\n- Frontend -> Controller /api/v1/payment-methods: POST /payment-methods { token, label }\n- Controller /api/v1/payment-methods -> DB (payment_methods): INSERT method (store gateway token only, never raw PAN)\n- DB (payment_methods) -> Controller /api/v1/payment-methods: created (201)\n- Controller /api/v1/payment-methods -> Frontend: 201 Created\n- Frontend -> User: Method added\nSet default:\n- User -> Frontend: \"Make def"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_57: Notifications (list, real-time SSE stream, mark read, settings)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_57: Notifications (list, real-time SSE stream, mark read, settings)\n\nParticipants: User, Frontend, Controller /api/v1/notifications, NotificationService, DB.",
+      "Flow:\nInitial load:\n- User -> Frontend: Open app / bell icon\n- Frontend -> Controller /api/v1/notifications: GET /notifications (JWT)\n- Controller /api/v1/notifications -> DB: list notifications + unread count\n- DB -> Controller /api/v1/notifications: NotificationList\n- Controller /api/v1/notifications -> Frontend: items + unread badge\n- Frontend -> User: Notification list\nReal-time stream (SSE):\n- Frontend -> Controller /api/v1/notifications: GET /notifications/stream (EventSource)\n[loop while connected]\n- NotificationService -> Controller /api/v1/notifications: new notification event\n- Controller /api/v1/notifications -> Frontend: data: { notification }\n- Frontend -> User: Live toast + badge++\nMark read:\n- User -> Frontend: Open a notification\n- Frontend -> Controller /api/v1/notifications: PATCH /notifications/{id}/status { read }\n- Controller /api/v1/notifications -> DB: update statu"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_58: Chat Sessions Management (history for AI chats)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_58: Chat Sessions Management (history for AI chats)\n\nParticipants: User, Frontend, Controller /api/v1/chat, DB (chat_sessions, chat_messages).",
+      "Flow:\nList + open a session:\n- User -> Frontend: Open AI chat panel\n- Frontend -> Controller /api/v1/chat: GET /chat/sessions?idea_id&section_slug (JWT)\n- Controller /api/v1/chat -> DB (chat_sessions, chat_messages): query sessions WHERE user_id (+ idea) filter by section in JSON meta\n- DB (chat_sessions, chat_messages) -> Controller /api/v1/chat: sessions (title, preview)\n- Controller /api/v1/chat -> Frontend: session list\n- Frontend -> User: Past conversations\nCreate a session:\n- User -> Frontend: \"New chat\"\n- Frontend -> Controller /api/v1/chat: POST /chat/sessions { idea_id, section_slug, title }\n- Controller /api/v1/chat -> DB (chat_sessions, chat_messages): INSERT chat_session (summary_json meta)\n- DB (chat_sessions, chat_messages) -> Controller /api/v1/chat: session\n- Controller /api/v1/chat -> Frontend: 201 Created\nLoad + append messages:\n- Frontend -> Controller /api/v1/chat: GE"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_59: Partner Registration & Application (mentor / supplier / manufacturer)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_59: Partner Registration & Application (mentor / supplier / manufacturer)\n\nParticipants: Applicant, Frontend, Users Controller /api/v1/users/register-partner, UserService / PartnerService, File Storage, DB.",
+      "Flow:\n- Applicant -> Frontend: Choose \"Become a partner\" → role (mentor / supplier / manufacturer)\n- Applicant -> Frontend: Fill company details + upload docs (PDF/images)\n- Frontend -> Users Controller /api/v1/users/register-partner: POST /users/register-partner multipart: email, role, password, files, company…\n- Users Controller /api/v1/users/register-partner -> Users Controller /api/v1/users/register-partner: validate role + parse services/experience JSON\n- Users Controller /api/v1/users/register-partner -> UserService / PartnerService: create_user(user_in, partner_profile_in, files)\n- UserService / PartnerService -> DB: check existing email (overwrite if unverified)\n[alt verified email exists]\n- DB -> UserService / PartnerService: conflict\n- UserService / PartnerService -> Users Controller /api/v1/users/register-partner: 400\n- Users Controller /api/v1/users/register-partner -> Fronte"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_60: Admin — Partner Approval / Rejection",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_60: Admin — Partner Approval / Rejection\n\nParticipants: Admin, Admin UI, Admin Controller /api/v1/admin (RoleChecker ADMIN), PartnerService, NotificationService, DB.",
+      "Flow:\nReview queue:\n- Admin -> Admin UI: Open \"Partner requests\"\n- Admin UI -> Admin Controller /api/v1/admin (RoleChecker ADMIN): GET /admin/requests (JWT + ADMIN role)\n- Admin Controller /api/v1/admin (RoleChecker ADMIN) -> Admin Controller /api/v1/admin (RoleChecker ADMIN): RoleChecker([ADMIN])\n[alt not admin]\n- Admin Controller /api/v1/admin (RoleChecker ADMIN) -> Admin UI: 403 Forbidden\n  else:\n- Admin Controller /api/v1/admin (RoleChecker ADMIN) -> DB: list PENDING partner_profiles (+ documents)\n- DB -> Admin Controller /api/v1/admin (RoleChecker ADMIN): pending requests\n- Admin Controller /api/v1/admin (RoleChecker ADMIN) -> Admin UI: queue\n- Admin -> Admin UI: Open a request → review docs\n[alt Approve]\n- Admin -> Admin UI: \"Approve\"\n- Admin UI -> Admin Controller /api/v1/admin (RoleChecker ADMIN): PATCH /admin/approve/{profile_id}\n- Admin Controller /api/v1/admin (RoleChecker ADM"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_61: Admin — User Management, Stats, Platform Config, Security Logs",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_61: Admin — User Management, Stats, Platform Config, Security Logs\n\nParticipants: Admin, Admin UI, Admin Controller /api/v1/admin (RoleChecker ADMIN), AdminService, DB.",
+      "Flow:\n- Admin -> Admin UI: Open Admin dashboard\n- Admin UI -> Admin Controller /api/v1/admin (RoleChecker ADMIN): GET /admin/stats\n- Admin Controller /api/v1/admin (RoleChecker ADMIN) -> Admin Controller /api/v1/admin (RoleChecker ADMIN): RoleChecker([ADMIN])\n- Admin Controller /api/v1/admin (RoleChecker ADMIN) -> DB: aggregate counts (users, ideas, revenue…)\n- DB -> Admin Controller /api/v1/admin (RoleChecker ADMIN): stats\n- Admin Controller /api/v1/admin (RoleChecker ADMIN) -> Admin UI: dashboard metrics\n- Admin UI -> Admin: Overview\nBrowse / search users:\n- Admin -> Admin UI: Search users\n- Admin UI -> Admin Controller /api/v1/admin (RoleChecker ADMIN): GET /admin/users (list) | /admin/users/search?email\n- Admin Controller /api/v1/admin (RoleChecker ADMIN) -> DB: query users\n- DB -> Admin Controller /api/v1/admin (RoleChecker ADMIN): UserRead[]\n- Admin Controller /api/v1/admin (RoleCh"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_62: Marketplace Browse & Facets (suppliers / manufacturers / mentors)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_62: Marketplace Browse & Facets (suppliers / manufacturers / mentors)\n\nParticipants: User, Frontend, Controller /api/v1/marketplace, DB (partner_profiles).",
+      "Flow:\nFacets (filter sidebar):\n- User -> Frontend: Open Marketplace\n- Frontend -> Controller /api/v1/marketplace: GET /marketplace/facets?type&q (JWT)\n- Controller /api/v1/marketplace -> DB (partner_profiles): COUNT by partner_type, category_slug, business_model WHERE approved + not archived\n- DB (partner_profiles) -> Controller /api/v1/marketplace: type_counts + categories + business_models\n- Controller /api/v1/marketplace -> Frontend: facets\n- Frontend -> User: Tabs + filter chips with counts\nBrowse (paged):\n- User -> Frontend: Pick type/category/search + page\n- Frontend -> Controller /api/v1/marketplace: GET /marketplace/browse?type&category &business_model&q&page&page_size\n- Controller /api/v1/marketplace -> DB (partner_profiles): SELECT page + total COUNT (parametrized)\n- DB (partner_profiles) -> Controller /api/v1/marketplace: items + total\n- Controller /api/v1/marketplace -> Front"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_63: Data Export (account data — async job + download)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_63: Data Export (account data — async job + download)\n\nParticipants: User, Frontend, Controller /api/v1/export, ExportService (BackgroundTask), DB, File Storage.",
+      "Flow:\nRequest export:\n- User -> Frontend: Settings → \"Export my data\"\n- Frontend -> Controller /api/v1/export: POST /api/v1/export (JWT)\n- Controller /api/v1/export -> DB: create export job (status=pending)\n- Controller /api/v1/export -> ExportService (BackgroundTask): BackgroundTask build_export(user_id)\n- Controller /api/v1/export -> Frontend: 202 ExportJobResponse (pending)\n- Frontend -> User: \"Preparing your export…\"\nBuild the archive (async):\n- ExportService (BackgroundTask) -> DB: collect user data (profile, ideas, sections, chats, billing)\n- DB -> ExportService (BackgroundTask): records\n- ExportService (BackgroundTask) -> File Storage: write archive (JSON/zip)\n- File Storage -> ExportService (BackgroundTask): file ref\n- ExportService (BackgroundTask) -> DB: job status = ready (+ file ref)\nPoll + download:\n[loop until ready / failed]\n- Frontend -> Controller /api/v1/export: GET /ap"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_64: Document Import for AI (upload → extract text → reuse downstream)",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_64: Document Import for AI (upload → extract text → reuse downstream)\n\nParticipants: User, Frontend, Controller /api/v1/imports, ImportService, DB (imported_documents).",
+      "Flow:\nUpload + extract:\n- User -> Frontend: Upload a document (PDF / DOCX)\n- Frontend -> Controller /api/v1/imports: POST /imports/upload (multipart file, JWT)\n[alt no file]\n- Controller /api/v1/imports -> Frontend: 400 \"No file uploaded\"\n  else:\n- Controller /api/v1/imports -> ImportService: process_and_save_document(file, user_id)\n- ImportService -> ImportService: extract text (PDF/DOCX parser)\n- ImportService -> DB (imported_documents): INSERT document (filename, content_type, extracted_text, owner)\n- DB (imported_documents) -> ImportService: document\n- ImportService -> Controller /api/v1/imports: document\n- Controller /api/v1/imports -> Frontend: 200 { document_id, filename }\n- Frontend -> User: \"Document ready\"\nReuse extracted text for AI:\n- User -> Frontend: Use document in an AI flow (e.g. validation seq_45 / context)\n- Frontend -> Controller /api/v1/imports: GET /imports/{documen"
+    ]
+  },
+  {
+    "title": "Bizify flow — UC_65: Idea Favorite / Convert to Business / Delete + Edit",
+    "source_type": "project",
+    "source_url": null,
+    "texts": [
+      "UC_65: Idea Favorite / Convert to Business / Delete + Edit\n\nParticipants: User, Frontend, Backend /api/v1/ideas, IdeaService, DB.",
+      "Flow:\n[alt Favorite / Unfavorite]\n- User -> Frontend: Toggle star on an idea\n- Frontend -> Backend /api/v1/ideas: POST /ideas/{id}/favorite (or DELETE /ideas/{id}/favorite)\n- Backend /api/v1/ideas -> DB: INSERT/DELETE idea_favorites (user, idea)\n- DB -> Backend /api/v1/ideas: ok\n- Backend /api/v1/ideas -> Frontend: 204\n- Frontend -> Backend /api/v1/ideas: GET /ideas/favorites (refresh list)\n- Backend /api/v1/ideas -> DB: ideas joined favorites\n- DB -> Backend /api/v1/ideas: favorites\n- Backend /api/v1/ideas -> Frontend: list\n- Frontend -> User: Updated favorites\n  else if Edit idea fields:\n- User -> Frontend: Edit title/description/budget\n- Frontend -> Backend /api/v1/ideas: PATCH /ideas/{id} { fields }\n- Backend /api/v1/ideas -> IdeaService: update_idea (verify edit rights)\n- IdeaService -> DB: UPDATE ideas\n[alt no access]\n- IdeaService -> Backend /api/v1/ideas: 403\n- Backend /api/v1/id"
+    ]
+  }
+]
