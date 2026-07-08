@@ -25,6 +25,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     if (ref.current) ref.current.style.transform = "";
   };
 
+  // Open the live demo without triggering the card's navigation to the detail page.
+  const openDemo = (e: React.MouseEvent | React.KeyboardEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (project.links.demo) window.open(project.links.demo, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -48,13 +55,33 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           }}
         />
         <div className="relative">
-          <div className="mb-5 flex items-start justify-between">
-            <span
-              className="rounded-full px-3 py-1 font-[family-name:var(--font-mono)] text-[11px]"
-              style={{ background: `${project.accent}1f`, color: project.accent }}
-            >
-              {project.period}
-            </span>
+          <div className="mb-5 flex items-start justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span
+                className="rounded-full px-3 py-1 font-[family-name:var(--font-mono)] text-[11px]"
+                style={{ background: `${project.accent}1f`, color: project.accent }}
+              >
+                {project.period}
+              </span>
+              {project.links.demo && (
+                <span
+                  role="link"
+                  tabIndex={0}
+                  aria-label="Open live demo in a new tab"
+                  onClick={openDemo}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") openDemo(e);
+                  }}
+                  className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 font-[family-name:var(--font-mono)] text-[11px] font-medium text-emerald-300 transition-colors hover:border-emerald-400/70 hover:bg-emerald-400/20"
+                >
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                  </span>
+                  Live demo ↗
+                </span>
+              )}
+            </div>
             <span className="text-(--color-ink-faint) transition-transform duration-300 group-hover:translate-x-1 group-hover:text-(--color-ink)">
               →
             </span>
