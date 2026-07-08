@@ -61,7 +61,7 @@ PROJECTS = [
             "Structured AI output needs strict schemas and regeneration paths, not free-form text.",
             "Payment integration (PayPal + Paymob) taught defensive webhook handling early.",
         ],
-        "links": {"demo": "https://bizifyai-production.up.railway.app/"},
+        "links": {"demo": "https://bizify-v2.vercel.app/"},
     },
     {
         "slug": "fentech",
@@ -268,7 +268,7 @@ KNOWLEDGE = [
             "and real-time business insights. Tech: React.js, FastAPI, PostgreSQL, SQLAlchemy, Redis, "
             "JWT/OAuth, SSE streaming, PayPal API, Paymob, and the OpenAI SDK. It ranked Top 4 among "
             "graduation projects at Helwan National University. Bizify is live at "
-            "https://bizifyai-production.up.railway.app/",
+            "https://bizify-v2.vercel.app/",
         ],
     ),
     (

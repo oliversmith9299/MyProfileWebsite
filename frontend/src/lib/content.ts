@@ -102,7 +102,7 @@ export const projects: Project[] = [
       "Structured AI output needs strict schemas and regeneration paths, not free-form text.",
       "Payment integration teaches defensive engineering: idempotent webhooks and reconciliation.",
     ],
-    links: { demo: "https://bizifyai-production.up.railway.app/" },
+    links: { demo: "https://bizify-v2.vercel.app/" },
     accent: "#8b5cf6",
   },
   {
