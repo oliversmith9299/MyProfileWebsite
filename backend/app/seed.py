@@ -124,6 +124,43 @@ PROJECTS = [
         ],
         "links": {},
     },
+    {
+        "slug": "bookish",
+        "title": "Bookish — Bilingual Library Management System",
+        "tagline": "An abandoned .NET skeleton rehabilitated into a deployable, bilingual library.",
+        "period": "2024 – 2025",
+        "featured": True,
+        "sort_order": 3,
+        "description": (
+            "A clean 4-layer rewrite of a DEPI library monolith, rehabilitated from an abandoned "
+            "skeleton into a deployable ASP.NET Core 8 app: a REST API with an MVC front-end, migrated "
+            "from SQL Server to PostgreSQL, secured, containerized, and shipped as an 'Antiquarian' "
+            "vintage bilingual (Arabic/English) library platform."
+        ),
+        "problem": (
+            "The inherited codebase compiled but didn't run: only ~2 of 6 features were wired end to "
+            "end, sessions and auth were commented out, login methods threw NotImplementedException, "
+            "and plaintext secrets pointed at dead SQL Server credentials."
+        ),
+        "solution": (
+            "A 7-phase rehabilitation: fix the runtime blockers, migrate SQL Server to PostgreSQL, "
+            "build full API and frontend parity, hash passwords with ASP.NET Identity, containerize "
+            "with Docker, and redesign into a bilingual library with borrow/buy flows, an admin panel, "
+            "and EGP pricing, deployed to Railway."
+        ),
+        "tech": ["ASP.NET Core 8", "C#", "EF Core", "PostgreSQL", "Npgsql", "Docker", "Railway", "ASP.NET Identity", "MVC", "REST API"],
+        "metrics": [
+            {"label": "Architecture", "value": "4-layer"},
+            {"label": "New API controllers", "value": "10"},
+            {"label": "Languages", "value": "Arabic / English"},
+        ],
+        "lessons": [
+            "Reviving abandoned code is about runtime wiring, not compile errors — sessions, routes, unimplemented methods.",
+            "Migrating SQL Server to PostgreSQL is easiest when the UI is a pure API consumer with no DbContext of its own.",
+            "Legacy plaintext passwords can auto-upgrade to hashes on the first successful login.",
+        ],
+        "links": {"demo": "https://vivacious-trust-production-dfa4.up.railway.app/"},
+    },
 ]
 
 EXPERIENCE = [
@@ -183,7 +220,11 @@ EXPERIENCE = [
         "start": "04/2024",
         "end": "12/2024",
         "sort_order": 4,
-        "bullets": ["Full-stack .NET web development scholarship track."],
+        "bullets": [
+            "Full-stack .NET web development scholarship track.",
+            "Built a Library management system (ASP.NET Core 8 MVC, EF Core, SQL Server) — members, "
+            "books, checkouts, orders, penalties — later re-architected into the layered Bookish platform.",
+        ],
     },
     {
         "org": "ITI",
@@ -292,6 +333,35 @@ KNOWLEDGE = [
         ],
     ),
     (
+        "Project: Bookish",
+        "project",
+        [
+            "Bookish is a bilingual (Arabic/English) library management system I built by rewriting a "
+            "DEPI library monolith into a clean 4-layer ASP.NET Core 8 solution: a REST API "
+            "(YatApp.API), a BLL with domain models and DTOs, a DAL with EF Core plus "
+            "Repository/UnitOfWork, and an MVC front-end that consumes the API. I took it from an "
+            "abandoned skeleton (only ~2 of 6 features wired, sessions/auth commented out, login "
+            "methods throwing NotImplementedException) to a working app: I migrated the database from "
+            "SQL Server to PostgreSQL (Npgsql), added 10 API controllers for full parity, hashed "
+            "passwords with ASP.NET Identity, containerized the API and UI with Docker, and redesigned "
+            "it into an 'Antiquarian' vintage bilingual library with borrow/buy flows, an admin panel, "
+            "RTL Arabic support, and EGP pricing. It is deployed on Railway and live at "
+            "https://vivacious-trust-production-dfa4.up.railway.app/",
+        ],
+    ),
+    (
+        "Project: DEPI Library (original)",
+        "project",
+        [
+            "During my DEPI (Digital Egypt Pioneers Initiative) .NET scholarship in 2024 I built a "
+            "Library management system as a single-project ASP.NET Core 8 MVC monolith with EF Core "
+            "8 and SQL Server. It covered members and roles, books with authors/categories/series, "
+            "checkouts (borrow/return), orders with payments and shipping, and penalties. I later "
+            "re-architected that monolith into the layered Bookish platform. The original source is on "
+            "GitHub at https://github.com/Afnan-Hany/DEPI-Project.git",
+        ],
+    ),
+    (
         "Skills",
         "cv",
         [
@@ -383,12 +453,19 @@ async def seed(db: Session) -> None:
         db.commit()
         logger.info("Seeded projects, experience, certificates, blog")
 
-    # Knowledge base
-    kb_count = db.execute(select(func.count()).select_from(KnowledgeDocument)).scalar() or 0
-    if kb_count == 0:
-        for title, source_type, texts in KNOWLEDGE:
-            await rag.ingest_document(db, title=title, source_type=source_type, texts=texts)
-        logger.info("Seeded knowledge base (%d documents)", len(KNOWLEDGE))
+    # Knowledge base — idempotent per document title so entries added later
+    # (e.g. new projects) are ingested on the next boot of an existing deployment.
+    existing_titles = set(
+        db.execute(select(KnowledgeDocument.title)).scalars().all()
+    )
+    added = 0
+    for title, source_type, texts in KNOWLEDGE:
+        if title in existing_titles:
+            continue
+        await rag.ingest_document(db, title=title, source_type=source_type, texts=texts)
+        added += 1
+    if added:
+        logger.info("Seeded knowledge base (%d new documents)", added)
 
     # Deep Bizify knowledge — gated separately so it can be added to an already
     # seeded database (existing deployment) on the next boot.

@@ -160,6 +160,38 @@ export const projects: Project[] = [
     links: {},
     accent: "#fb7185",
   },
+  {
+    slug: "bookish",
+    title: "Bookish",
+    tagline: "Bilingual Library Management System · ASP.NET Core",
+    period: "2024 to 2025",
+    description:
+      "A clean 4-layer rewrite of a DEPI library monolith, rehabilitated from an abandoned skeleton into a deployable ASP.NET Core 8 app: a REST API with an MVC front-end, migrated from SQL Server to PostgreSQL, secured, containerized, and shipped as an 'Antiquarian' vintage bilingual (Arabic/English) library platform.",
+    problem:
+      "The inherited codebase compiled but didn't run: only ~2 of 6 features were wired end to end, sessions and auth were commented out, login methods threw NotImplementedException, and plaintext secrets pointed at dead SQL Server credentials.",
+    solution:
+      "A 7-phase rehabilitation: fix the runtime blockers, migrate SQL Server to PostgreSQL, build full API and frontend parity, hash passwords with ASP.NET Identity, containerize with Docker, and redesign into a bilingual library with borrow/buy flows, an admin panel, and EGP pricing, deployed to Railway.",
+    architecture: [
+      "4-layer solution: API, BLL (domain + DTOs), DAL (EF Core, Repository/UnitOfWork), MVC UI",
+      "MVC front-end is a pure API consumer over a typed HttpClient (System.Net.Http.Json)",
+      "PostgreSQL via Npgsql, with EF migrations run on API startup",
+      "Cookie-based localization (Localizer + CultureController) with RTL Arabic support",
+      "Dockerized API and UI, deployed to Railway alongside Postgres",
+    ],
+    tech: ["ASP.NET Core 8", "C#", "EF Core", "PostgreSQL", "Npgsql", "Docker", "Railway", "ASP.NET Identity", "MVC", "REST API"],
+    metrics: [
+      { label: "Architecture", value: "4-layer" },
+      { label: "New API controllers", value: "10" },
+      { label: "Languages", value: "AR / EN" },
+    ],
+    lessons: [
+      "Reviving abandoned code is about runtime wiring, not compile errors: sessions, routes, and unimplemented methods.",
+      "Migrating SQL Server to PostgreSQL is easiest when the UI is a pure API consumer with no DbContext of its own.",
+      "Legacy plaintext passwords can auto-upgrade to hashes on the first successful login.",
+    ],
+    links: { demo: "https://vivacious-trust-production-dfa4.up.railway.app/" },
+    accent: "#d9a34a",
+  },
 ];
 
 export const timeline = [
@@ -183,9 +215,10 @@ export const timeline = [
     year: "2024",
     title: "DEPI, .NET Scholarship",
     detail:
-      "Selected for the Digital Egypt Pioneers Initiative scholarship (April to December 2024). Trained full-stack web development on the Microsoft stack: C#, ASP.NET MVC, SQL Server, REST API design, and testing fundamentals, building complete database-backed web applications.",
+      "Selected for the Digital Egypt Pioneers Initiative scholarship (April to December 2024). Trained full-stack web development on the Microsoft stack: C#, ASP.NET MVC, SQL Server, REST API design, and testing fundamentals. My project was a Library management system (ASP.NET Core 8 MVC, EF Core, SQL Server) covering members, books, checkouts, orders, and penalties, which I later re-architected into the layered Bookish platform.",
     kind: "education",
-    tags: ["C#", "ASP.NET MVC", "SQL Server"],
+    tags: ["C#", "ASP.NET MVC", "SQL Server", "EF Core"],
+    link: { label: "DEPI-Project (Library) on GitHub", href: "https://github.com/Afnan-Hany/DEPI-Project.git" },
   },
   {
     year: "2024",

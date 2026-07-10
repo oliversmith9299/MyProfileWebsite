@@ -35,6 +35,16 @@ export function Timeline() {
               {item.title}
             </h3>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-(--color-ink-dim)">{item.detail}</p>
+            {"link" in item && item.link && (
+              <a
+                href={item.link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-(--color-cyan) transition-colors hover:text-(--color-ink)"
+              >
+                {item.link.label} ↗
+              </a>
+            )}
             <div className="mt-3 flex flex-wrap gap-2">
               {item.tags.map((tag) => (
                 <span
