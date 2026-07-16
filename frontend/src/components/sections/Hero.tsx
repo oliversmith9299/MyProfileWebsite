@@ -179,7 +179,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 2 }}
-            className="mt-14 grid max-w-xl grid-cols-2 gap-6 sm:grid-cols-4"
+            className="mt-14 grid max-w-2xl grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5"
           >
             {person.stats.map((s) => (
               /* col-reverse keeps dt-before-dd markup while showing the value on

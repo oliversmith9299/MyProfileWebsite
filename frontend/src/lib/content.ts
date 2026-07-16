@@ -23,12 +23,13 @@ export const person = {
     "I design and ship production AI systems: multi-agent orchestrators, RAG pipelines, and LLM products with real backends, real users, and real payments.",
   about: [
     "I'm an AI developer from Cairo who treats AI like a product discipline, not a demo. At IBM's AI internship I built LLM-powered chatbots, multimodal solutions with speech and bilingual English/Arabic OCR, and MCP-based pipelines that automate agent workflows.",
-    "My graduation project, Bizify, an AI-powered startup development platform, ranked Top 4 among graduation projects at Helwan National University, where I'm completing my B.I.D.T major with a 3.79 GPA (Excellent).",
+    "My graduation project, Bizify, an AI-powered startup development platform, ranked Top 4 among graduation projects at Helwan National University, where I'm completing my B.I.D.T major with a 3.79 GPA (Excellent), ranked 14th in my class (top 3%).",
     "Before AI, I built full-stack foundations: a .NET web development scholarship at the Digital Egypt Pioneers Initiative, Flutter training at ITI, and an IT internship at TAQA Arabia automating data migration into SAP. I've also taught software engineering and algorithms at the Digital Egypt Cubs Initiative.",
   ],
   stats: [
     { value: "3.79", label: "GPA (Excellent)" },
-    { value: "Top 4", label: "Graduation project rank" },
+    { value: "14th", label: "Class rank (top 3%)" },
+    { value: "Top 4", label: "Graduation rank" },
     { value: "3", label: "AI products shipped" },
     { value: "2", label: "Internships (IBM, TAQA)" },
   ],
@@ -69,7 +70,7 @@ export interface Project {
   tech: string[];
   metrics: { label: string; value: string }[];
   lessons: string[];
-  links: { github?: string; demo?: string };
+  links: { github?: string; demo?: string; video?: string };
   accent: string;
 }
 
@@ -80,7 +81,7 @@ export const projects: Project[] = [
     tagline: "AI-Powered Startup Development Platform",
     period: "2025 to 2026",
     description:
-      "Graduation project at Helwan National University (BIDT program), ranked Top 4. Bizify helps entrepreneurs generate, validate, and execute startup ideas with AI-assisted market research, competitor analysis, supplier discovery, business planning, roadmap tracking, and real-time insights.",
+      "Graduation project at Helwan National University (BIDT program), ranked Top 4. Bizify helps entrepreneurs generate, validate, and execute startup ideas with AI-assisted market research, competitor analysis, supplier discovery, business planning, roadmap tracking, and real-time insights, in a bilingual Arabic/English interface.",
     problem:
       "First-time founders drown in scattered advice. Validating an idea means weeks of manual market research, competitor spreadsheets, and guesswork on unit economics.",
     solution:
@@ -96,13 +97,14 @@ export const projects: Project[] = [
       { label: "Graduation rank", value: "Top 4" },
       { label: "AI plan sections", value: "9+" },
       { label: "Payment providers", value: "2" },
+      { label: "Languages", value: "AR / EN" },
     ],
     lessons: [
       "SSE streaming transforms perceived AI latency. Users tolerate long generations when they watch progress.",
       "Structured AI output needs strict schemas and regeneration paths, not free-form text.",
       "Payment integration teaches defensive engineering: idempotent webhooks and reconciliation.",
     ],
-    links: { demo: "https://bizify-v2.vercel.app/" },
+    links: { demo: "https://bizify-v2.vercel.app/", video: "https://youtu.be/sgl-jmdl4U4" },
     accent: "#8b5cf6",
   },
   {
@@ -218,7 +220,9 @@ export const timeline = [
       "Selected for the Digital Egypt Pioneers Initiative scholarship (April to December 2024). Trained full-stack web development on the Microsoft stack: C#, ASP.NET MVC, SQL Server, REST API design, and testing fundamentals. My project was a Library management system (ASP.NET Core 8 MVC, EF Core, SQL Server) covering members, books, checkouts, orders, and penalties, which I later re-architected into the layered Bookish platform.",
     kind: "education",
     tags: ["C#", "ASP.NET MVC", "SQL Server", "EF Core"],
-    link: { label: "DEPI-Project (Library) on GitHub", href: "https://github.com/Afnan-Hany/DEPI-Project.git" },
+    links: [
+      { label: "DEPI-Project (Library) on GitHub", href: "https://github.com/Afnan-Hany/DEPI-Project.git" },
+    ],
   },
   {
     year: "2024",
@@ -256,9 +260,13 @@ export const timeline = [
     year: "2026",
     title: "Bizify, Top 4 Graduation Project",
     detail:
-      "Led the AI platform that helps entrepreneurs generate, validate, and execute startup ideas: market research, competitor analysis, supplier discovery, business planning, and real-time insights. React, FastAPI, PostgreSQL, Redis, and the OpenAI SDK, with PayPal and Paymob payments. Ranked Top 4 among graduation projects. Graduating with a 3.79 GPA, grade Excellent.",
+      "Led the AI platform that helps entrepreneurs generate, validate, and execute startup ideas: market research, competitor analysis, supplier discovery, business planning, and real-time insights, in a bilingual Arabic/English interface. React, FastAPI, PostgreSQL, Redis, and the OpenAI SDK, with PayPal and Paymob payments. Ranked Top 4 among graduation projects. Graduating with a 3.79 GPA, grade Excellent, ranked 14th in my class (top 3%).",
     kind: "award",
     tags: ["FastAPI", "React", "OpenAI SDK", "Payments"],
+    links: [
+      { label: "Bizify live site", href: "https://bizify-v2.vercel.app/" },
+      { label: "Project video", href: "https://youtu.be/sgl-jmdl4U4" },
+    ],
   },
 ] as const;
 
@@ -308,15 +316,41 @@ export const softwareSkills = [
   { group: "Quality & Security", items: ["Jest", "TDD", "JWT", "SSL/TLS", "CORS", "Power Automate"] },
 ] as const;
 
-export const certificates = [
-  { title: "NASA Space Apps Challenge", issuer: "NASA", year: "2025" },
-  { title: "Machine Learning with Python (V2)", issuer: "IBM", year: "2025" },
-  { title: "Generative AI and LLMs", issuer: "IBM track", year: "2025" },
+/** `url` is the public verification page for the certificate, taken from the CV. */
+export const certificates: {
+  title: string;
+  issuer: string;
+  year: string;
+  url?: string;
+}[] = [
+  {
+    title: "NASA Space Apps Challenge",
+    issuer: "NASA",
+    year: "2025",
+    url: "https://drive.google.com/file/d/1Eh8DC1C-JFIUb_0kLkvC5kKwq9NdMkrm/view?usp=drivesdk",
+  },
+  {
+    title: "Machine Learning with Python (V2)",
+    issuer: "IBM",
+    year: "2025",
+    url: "https://www.credly.com/badges/ac3e8e41-dae6-45fc-ba3d-e53531cc41f3/linked_in_profile",
+  },
+  {
+    title: "Generative AI and LLMs",
+    issuer: "IBM track",
+    year: "2025",
+    url: "https://www.coursera.org/account/accomplishments/verify/CC1G1DK50Z70",
+  },
   { title: "Computer Vision", issuer: "Certificate", year: "2025" },
-  { title: "AI Fundamentals", issuer: "Certificate", year: "2024" },
+  {
+    title: "AI Fundamentals",
+    issuer: "Certificate",
+    year: "2024",
+    url: "https://www.credly.com/badges/25ac5bb8-00d5-4bef-95ab-21cc0ef22c27/linked_in_profile",
+  },
   { title: "MLOps Concepts", issuer: "Certificate", year: "2025" },
   { title: "AWS AI Practitioner", issuer: "AWS, expected Aug 2026", year: "2026" },
-] as const;
+];
 
 export const services = [
   { title: "AI Chatbots", desc: "RAG-grounded assistants that answer from your data and never hallucinate." },

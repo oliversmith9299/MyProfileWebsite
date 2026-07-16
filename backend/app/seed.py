@@ -38,7 +38,8 @@ PROJECTS = [
             "Graduation project at Helwan National University (BIDT program), ranked Top 4 among "
             "graduation projects. Bizify helps entrepreneurs generate, validate, and execute startup "
             "ideas through AI-assisted market research, competitor analysis, supplier discovery, "
-            "business planning, roadmap tracking, and real-time business insights."
+            "business planning, roadmap tracking, and real-time business insights, in a bilingual "
+            "Arabic/English interface."
         ),
         "problem": (
             "First-time founders drown in scattered advice: validating an idea means weeks of manual "
@@ -55,13 +56,14 @@ PROJECTS = [
             {"label": "Graduation project rank", "value": "Top 4"},
             {"label": "AI-generated plan sections", "value": "9+"},
             {"label": "Payment providers integrated", "value": "2"},
+            {"label": "Languages", "value": "AR / EN"},
         ],
         "lessons": [
             "Streaming (SSE) transforms perceived AI latency — users tolerate long generations when they see progress.",
             "Structured AI output needs strict schemas and regeneration paths, not free-form text.",
             "Payment integration (PayPal + Paymob) taught defensive webhook handling early.",
         ],
-        "links": {"demo": "https://bizify-v2.vercel.app/"},
+        "links": {"demo": "https://bizify-v2.vercel.app/", "video": "https://youtu.be/sgl-jmdl4U4"},
     },
     {
         "slug": "fentech",
@@ -209,7 +211,7 @@ EXPERIENCE = [
         "end": "06/2026",
         "sort_order": 3,
         "bullets": [
-            "Grade: Excellent — GPA 3.79.",
+            "Grade: Excellent — GPA 3.79. Ranked 14th in my class (top 3%).",
             "Graduation project (Bizify) ranked Top 4 among graduation projects.",
         ],
     },
@@ -237,13 +239,30 @@ EXPERIENCE = [
     },
 ]
 
+# `url` is the public verification page for the certificate, taken from the CV.
 CERTIFICATES = [
-    {"title": "NASA Space Apps Challenge", "issuer": "NASA"},
-    {"title": "Computer Vision", "issuer": ""},
-    {"title": "AI Fundamentals", "issuer": ""},
-    {"title": "Machine Learning with Python (V2)", "issuer": "IBM"},
-    {"title": "Generative AI and LLMs", "issuer": ""},
-    {"title": "MLOps Concepts", "issuer": ""},
+    {
+        "title": "NASA Space Apps Challenge",
+        "issuer": "NASA",
+        "url": "https://drive.google.com/file/d/1Eh8DC1C-JFIUb_0kLkvC5kKwq9NdMkrm/view?usp=drivesdk",
+    },
+    {"title": "Computer Vision", "issuer": "", "url": None},
+    {
+        "title": "AI Fundamentals",
+        "issuer": "",
+        "url": "https://www.credly.com/badges/25ac5bb8-00d5-4bef-95ab-21cc0ef22c27/linked_in_profile",
+    },
+    {
+        "title": "Machine Learning with Python (V2)",
+        "issuer": "IBM",
+        "url": "https://www.credly.com/badges/ac3e8e41-dae6-45fc-ba3d-e53531cc41f3/linked_in_profile",
+    },
+    {
+        "title": "Generative AI and LLMs",
+        "issuer": "",
+        "url": "https://www.coursera.org/account/accomplishments/verify/CC1G1DK50Z70",
+    },
+    {"title": "MLOps Concepts", "issuer": "", "url": None},
     {"title": "AWS AI Practitioner", "issuer": "AWS", "url": None},
 ]
 
@@ -267,7 +286,8 @@ KNOWLEDGE = [
         "cv",
         [
             "I'm studying for a B.A. in Humanities, Commerce & Business Administration with a major "
-            "in B.I.D.T at Helwan National University (09/2022 – 06/2026). Grade: Excellent, GPA 3.79. "
+            "in B.I.D.T at Helwan National University (09/2022 – 06/2026). Grade: Excellent, GPA 3.79, "
+            "and I'm ranked 14th in my class, which is the top 3%. "
             "My graduation project, Bizify, ranked Top 4 among graduation projects.",
             "I completed a scholarship in the .NET Web Development track at the Digital Egypt Pioneers "
             "Initiative (04/2024 – 12/2024), and Flutter cross-platform mobile development training at "
@@ -306,10 +326,11 @@ KNOWLEDGE = [
             "Bizify is my graduation project: an AI-powered startup development platform that helps "
             "entrepreneurs generate, validate, and execute startup ideas through AI-assisted market "
             "research, competitor analysis, supplier discovery, business planning, roadmap tracking, "
-            "and real-time business insights. Tech: React.js, FastAPI, PostgreSQL, SQLAlchemy, Redis, "
+            "and real-time business insights. Its interface is bilingual, in Arabic and English. "
+            "Tech: React.js, FastAPI, PostgreSQL, SQLAlchemy, Redis, "
             "JWT/OAuth, SSE streaming, PayPal API, Paymob, and the OpenAI SDK. It ranked Top 4 among "
             "graduation projects at Helwan National University. Bizify is live at "
-            "https://bizify-v2.vercel.app/",
+            "https://bizify-v2.vercel.app/ and there's a project video at https://youtu.be/sgl-jmdl4U4",
         ],
     ),
     (
@@ -382,6 +403,14 @@ KNOWLEDGE = [
             "My certificates include: NASA Space Apps Challenge, Computer Vision, AI Fundamentals, "
             "Machine Learning with Python (V2), Generative AI and LLMs, and MLOps Concepts. I'm "
             "preparing for the AWS AI Practitioner certification, expected August 2026.",
+            "Several of my certificates can be verified online: the NASA Space Apps Challenge "
+            "certificate at https://drive.google.com/file/d/1Eh8DC1C-JFIUb_0kLkvC5kKwq9NdMkrm/view, "
+            "Machine Learning with Python (V2) at "
+            "https://www.credly.com/badges/ac3e8e41-dae6-45fc-ba3d-e53531cc41f3/linked_in_profile, "
+            "AI Fundamentals at "
+            "https://www.credly.com/badges/25ac5bb8-00d5-4bef-95ab-21cc0ef22c27/linked_in_profile, "
+            "and Generative AI and LLMs at "
+            "https://www.coursera.org/account/accomplishments/verify/CC1G1DK50Z70",
             "Services I offer: AI chatbots, LLM applications, automation, FastAPI APIs, machine "
             "learning, computer vision, OCR, AI consulting, and AI MVP development.",
         ],

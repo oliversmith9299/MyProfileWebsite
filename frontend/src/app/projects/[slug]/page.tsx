@@ -8,6 +8,13 @@ import { CommandPalette } from "@/components/ui/CommandPalette";
 import { PageAnalytics } from "@/components/PageAnalytics";
 import { projects } from "@/lib/content";
 
+/** Columns follow the metric count so the last cell never sits alone on its own row. */
+const METRIC_COLS: Record<number, string> = {
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-3",
+  4: "sm:grid-cols-4",
+};
+
 export function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
 }
@@ -62,7 +69,11 @@ export default async function ProjectPage({
           <p className="mt-6 text-[15px] leading-relaxed text-(--color-ink-dim)">{project.description}</p>
         </header>
 
-        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
+        <div
+          className={`mt-10 grid grid-cols-2 gap-4 ${
+            METRIC_COLS[project.metrics.length] ?? "sm:grid-cols-3"
+          }`}
+        >
           {project.metrics.map((m) => (
             <div key={m.label} className="card p-5 text-center">
               <p className="font-[family-name:var(--font-display)] text-2xl font-bold text-gradient">{m.value}</p>
@@ -138,6 +149,16 @@ export default async function ProjectPage({
               style={{ background: project.accent }}
             >
               Visit live site ↗
+            </a>
+          )}
+          {project.links.video && (
+            <a
+              href={project.links.video}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass rounded-full px-7 py-3.5 text-sm font-semibold text-(--color-ink) transition-colors hover:border-(--color-violet)"
+            >
+              Watch the video ↗
             </a>
           )}
           {project.links.github && (

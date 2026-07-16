@@ -7,6 +7,13 @@ import { useRef } from "react";
 import { Section } from "@/components/ui/Section";
 import { projects, type Project } from "@/lib/content";
 
+/** Columns follow the metric count so the last cell never sits alone on its own row. */
+const METRIC_COLS: Record<number, string> = {
+  2: "sm:grid-cols-2",
+  3: "sm:grid-cols-3",
+  4: "sm:grid-cols-4",
+};
+
 /** 3D-tilting project card with accent lighting that follows the cursor. */
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const ref = useRef<HTMLAnchorElement>(null);
@@ -110,7 +117,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               </span>
             )}
           </div>
-          <div className="mt-6 grid grid-cols-2 gap-4 border-t border-(--color-line) pt-5 sm:grid-cols-3">
+          <div
+            className={`mt-6 grid grid-cols-2 gap-4 border-t border-(--color-line) pt-5 ${
+              METRIC_COLS[project.metrics.length] ?? "sm:grid-cols-3"
+            }`}
+          >
             {project.metrics.map((m) => (
               <div key={m.label}>
                 <p className="font-[family-name:var(--font-display)] text-lg font-bold text-(--color-ink)">
