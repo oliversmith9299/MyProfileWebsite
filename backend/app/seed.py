@@ -242,11 +242,20 @@ EXPERIENCE = [
 # `url` is the public verification page for the certificate, taken from the CV.
 CERTIFICATES = [
     {
+        "title": "AI Engineer Agentic Track",
+        "issuer": "Udemy",
+        "url": "https://ude.my/UC-d82bcf9a-9315-43d6-83c3-0a8134599b40",
+    },
+    {
         "title": "NASA Space Apps Challenge",
         "issuer": "NASA",
         "url": "https://drive.google.com/file/d/1Eh8DC1C-JFIUb_0kLkvC5kKwq9NdMkrm/view?usp=drivesdk",
     },
-    {"title": "Computer Vision", "issuer": "", "url": None},
+    {
+        "title": "Computer Vision",
+        "issuer": "Udemy",
+        "url": "https://www.udemy.com/certificate/UC-971e9999-e551-4778-a7d5-73a113bdfc06/",
+    },
     {
         "title": "AI Fundamentals",
         "issuer": "",
@@ -262,7 +271,11 @@ CERTIFICATES = [
         "issuer": "",
         "url": "https://www.coursera.org/account/accomplishments/verify/CC1G1DK50Z70",
     },
-    {"title": "MLOps Concepts", "issuer": "", "url": None},
+    {
+        "title": "MLOps Concepts",
+        "issuer": "DataCamp",
+        "url": "https://www.datacamp.com/completed/statement-of-accomplishment/course/36b6391c88777c2bf8b087843f751bb75db50dc0",
+    },
     {"title": "AWS AI Practitioner", "issuer": "AWS", "url": None},
 ]
 
@@ -400,17 +413,23 @@ KNOWLEDGE = [
         "Certificates & goals",
         "cv",
         [
-            "My certificates include: NASA Space Apps Challenge, Computer Vision, AI Fundamentals, "
-            "Machine Learning with Python (V2), Generative AI and LLMs, and MLOps Concepts. I'm "
-            "preparing for the AWS AI Practitioner certification, expected August 2026.",
-            "Several of my certificates can be verified online: the NASA Space Apps Challenge "
+            "My certificates include: AI Engineer Agentic Track, NASA Space Apps Challenge, "
+            "Computer Vision, AI Fundamentals, Machine Learning with Python (V2), Generative AI and "
+            "LLMs, and MLOps Concepts. I'm preparing for the AWS AI Practitioner certification, "
+            "expected August 2026.",
+            "Most of my certificates can be verified online: the AI Engineer Agentic Track at "
+            "https://ude.my/UC-d82bcf9a-9315-43d6-83c3-0a8134599b40, the NASA Space Apps Challenge "
             "certificate at https://drive.google.com/file/d/1Eh8DC1C-JFIUb_0kLkvC5kKwq9NdMkrm/view, "
+            "Computer Vision at "
+            "https://www.udemy.com/certificate/UC-971e9999-e551-4778-a7d5-73a113bdfc06/, "
             "Machine Learning with Python (V2) at "
             "https://www.credly.com/badges/ac3e8e41-dae6-45fc-ba3d-e53531cc41f3/linked_in_profile, "
             "AI Fundamentals at "
             "https://www.credly.com/badges/25ac5bb8-00d5-4bef-95ab-21cc0ef22c27/linked_in_profile, "
-            "and Generative AI and LLMs at "
-            "https://www.coursera.org/account/accomplishments/verify/CC1G1DK50Z70",
+            "Generative AI and LLMs at "
+            "https://www.coursera.org/account/accomplishments/verify/CC1G1DK50Z70, and MLOps "
+            "Concepts at https://www.datacamp.com/completed/statement-of-accomplishment/course/"
+            "36b6391c88777c2bf8b087843f751bb75db50dc0",
             "Services I offer: AI chatbots, LLM applications, automation, FastAPI APIs, machine "
             "learning, computer vision, OCR, AI consulting, and AI MVP development.",
         ],

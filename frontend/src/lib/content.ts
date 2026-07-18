@@ -324,6 +324,12 @@ export const certificates: {
   url?: string;
 }[] = [
   {
+    title: "AI Engineer Agentic Track",
+    issuer: "Udemy",
+    year: "2025",
+    url: "https://ude.my/UC-d82bcf9a-9315-43d6-83c3-0a8134599b40",
+  },
+  {
     title: "NASA Space Apps Challenge",
     issuer: "NASA",
     year: "2025",
@@ -341,14 +347,24 @@ export const certificates: {
     year: "2025",
     url: "https://www.coursera.org/account/accomplishments/verify/CC1G1DK50Z70",
   },
-  { title: "Computer Vision", issuer: "Certificate", year: "2025" },
+  {
+    title: "Computer Vision",
+    issuer: "Udemy",
+    year: "2025",
+    url: "https://www.udemy.com/certificate/UC-971e9999-e551-4778-a7d5-73a113bdfc06/",
+  },
   {
     title: "AI Fundamentals",
     issuer: "Certificate",
     year: "2024",
     url: "https://www.credly.com/badges/25ac5bb8-00d5-4bef-95ab-21cc0ef22c27/linked_in_profile",
   },
-  { title: "MLOps Concepts", issuer: "Certificate", year: "2025" },
+  {
+    title: "MLOps Concepts",
+    issuer: "DataCamp",
+    year: "2025",
+    url: "https://www.datacamp.com/completed/statement-of-accomplishment/course/36b6391c88777c2bf8b087843f751bb75db50dc0",
+  },
   { title: "AWS AI Practitioner", issuer: "AWS, expected Aug 2026", year: "2026" },
 ];
 
